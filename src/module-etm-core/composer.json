@@ -1,0 +1,45 @@
+{
+    "name": "ainnomix/module-etm-core",
+    "description": "Magento 2 Entity types manager. Core functionality",
+    "type": "magento2-module",
+    "version": "0.0.1",
+    "keywords": [
+        "magento",
+        "magento2",
+        "entity-type-manager",
+        "etm",
+        "core"
+    ],
+    "homepage": "https://github.com/Ainnomix/magento2-etm",
+    "authors": [
+        {
+            "name": "Roman Tomchak",
+            "email": "romantomchak@gmail.com"
+        }
+    ],
+    "support": {
+        "issues": "https://github.com/Ainnomix/magento2-etm/issues"
+    },
+    "require": {
+        "magento/framework": "100.1.*",
+        "magento/module-eav": "100.1.*"
+    },
+    "autoload": {
+        "files": [
+            "registration.php"
+        ],
+        "psr-4": {
+            "Ainnomix\\EtmCore\\": ""
+        }
+    },
+    "suggest": {
+        "ainnomix/module-etm-adminhtml": "Provides UI interface for entity type management",
+        "ainnomix/module-etm-api": "Provides API functionality for custom entity types",
+        "ainnomix/module-etm-staging": "Adds staging functionality for custom entity types. Allowed only for Magento Enterprise Edition"
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "1.0-dev"
+        }
+    }
+}
