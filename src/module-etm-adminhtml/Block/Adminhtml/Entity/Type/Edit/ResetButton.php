@@ -12,21 +12,27 @@ declare(strict_types=1);
  * @license   Open Software License ("OSL") v. 3.0
  */
 
-namespace Ainnomix\EtmAdminhtml\Controller\Adminhtml\Entity\Type;
+namespace Ainnomix\EtmAdminhtml\Block\Adminhtml\Entity\Type\Edit;
+
+use Magento\Framework\View\Element\UiComponent\Control\ButtonProviderInterface;
 
 /**
- * New entity type action class
+ * {{DESCRIPTION}}
  *
  * @category Ainnomix_EtmAdminhtml
  * @package  Ainnomix\EtmAdminhtml
  * @author   Roman Tomchak <romantomchak@ainnomix.com>
  */
-class NewAction extends \Magento\Backend\App\Action
+class ResetButton implements ButtonProviderInterface
 {
 
-    public function execute()
+    public function getButtonData(): array
     {
-        $resultPage = $this->resultFactory->create(\Magento\Framework\Controller\ResultFactory::TYPE_FORWARD);
-        return $resultPage->forward('edit');
+        return [
+            'label' => __('Reset'),
+            'class' => 'reset',
+            'on_click' => 'location.reload();',
+            'sort_order' => 30
+        ];
     }
 }

@@ -61,7 +61,7 @@ class EntityTypeActions extends Column
             foreach ($dataSource['data']['items'] as &$item) {
                 $item[$this->getData('name')]['edit'] = [
                     'href' => $this->urlBuilder->getUrl(
-                        '*/*/edit',
+                        'etm/entity_type/edit',
                         ['id' => $item['entity_type_id']]
                     ),
                     'label' => __('Edit'),
@@ -70,7 +70,7 @@ class EntityTypeActions extends Column
 
                 $item[$this->getData('name')]['delete'] = [
                     'href' => $this->urlBuilder->getUrl(
-                        '*/*/delete',
+                        'etm/entity_type/delete',
                         ['id' => $item['entity_type_id']]
                     ),
                     'label' => __('Delete'),

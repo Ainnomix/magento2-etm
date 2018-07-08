@@ -14,6 +14,8 @@ declare(strict_types=1);
 
 namespace Ainnomix\EtmAdminhtml\Controller\Adminhtml\Entity\Type;
 
+use Ainnomix\EtmAdminhtml\Model\Entity\Type\TypeManagement;
+
 /**
  * Edit entity type action class
  *
@@ -24,8 +26,34 @@ namespace Ainnomix\EtmAdminhtml\Controller\Adminhtml\Entity\Type;
 class Edit extends \Magento\Backend\App\Action
 {
 
-    public function execute()
+    /**
+     * @var TypeManagement
+     */
+    private $typeManagement;
+
+    public function __construct(\Magento\Backend\App\Action\Context $context, TypeManagement $typeManagement)
     {
-        // TODO: Implement execute() method.
+        parent::__construct($context);
+
+        $this->typeManagement = $typeManagement;
+    }
+
+    public function execute(): \Magento\Framework\View\Result\Page
+    {
+        $entityTypeId = $this->getRequest()->getParam('id');
+        $entityType = $this->typeManagement->getById((int) $entityTypeId);
+
+        $resultPage = $this->resultFactory->create(\Magento\Framework\Controller\ResultFactory::TYPE_PAGE);
+
+        $resultPage->setActiveMenu('Ainnomix_EtmAdminhtml::management_index');
+        $resultPage->getConfig()->getTitle()->prepend(__('Entity Type Manager'));
+
+        if ($entityType->getEntityTypeId()) {
+            $resultPage->getConfig()->getTitle()->prepend(__('Edit %1', $entityType->getEntityTypeCode()));
+        } else {
+            $resultPage->getConfig()->getTitle()->prepend(__('Create entity type'));
+        }
+
+        return $this->resultFactory->create(\Magento\Framework\Controller\ResultFactory::TYPE_PAGE);
     }
 }
