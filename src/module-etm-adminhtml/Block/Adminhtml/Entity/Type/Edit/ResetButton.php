@@ -17,7 +17,7 @@ namespace Ainnomix\EtmAdminhtml\Block\Adminhtml\Entity\Type\Edit;
 use Magento\Framework\View\Element\UiComponent\Control\ButtonProviderInterface;
 
 /**
- * {{DESCRIPTION}}
+ * Reset button config provider class
  *
  * @category Ainnomix_EtmAdminhtml
  * @package  Ainnomix\EtmAdminhtml
@@ -26,6 +26,11 @@ use Magento\Framework\View\Element\UiComponent\Control\ButtonProviderInterface;
 class ResetButton implements ButtonProviderInterface
 {
 
+    /**
+     * Retrieve button configuration data
+     *
+     * @return array
+     */
     public function getButtonData(): array
     {
         return [

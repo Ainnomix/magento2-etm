@@ -17,7 +17,7 @@ namespace Ainnomix\EtmAdminhtml\Block\Adminhtml\Entity\Type\Edit;
 use Magento\Framework\View\Element\UiComponent\Control\ButtonProviderInterface;
 
 /**
- * {{DESCRIPTION}}
+ * Go back button config provider class
  *
  * @category Ainnomix_EtmAdminhtml
  * @package  Ainnomix\EtmAdminhtml
@@ -36,6 +36,11 @@ class BackButton implements ButtonProviderInterface
         $this->urlBuilder = $urlBuilder;
     }
 
+    /**
+     * Retrieve button configuration data
+     *
+     * @return array
+     */
     public function getButtonData(): array
     {
         return [
@@ -46,6 +51,11 @@ class BackButton implements ButtonProviderInterface
         ];
     }
 
+    /**
+     * Generate url to the base entity types page
+     *
+     * @return string
+     */
     public function getBackUrl(): string
     {
         return $this->urlBuilder->getUrl('*/*/');

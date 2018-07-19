@@ -14,6 +14,7 @@ declare(strict_types=1);
 
 namespace Ainnomix\EtmAdminhtml\Controller\Adminhtml\Entity\Type;
 
+use Magento\Framework\Controller\ResultFactory;
 use Ainnomix\EtmAdminhtml\Model\Entity\Type\TypeManagement;
 
 /**
@@ -43,7 +44,7 @@ class Edit extends \Magento\Backend\App\Action
         $entityTypeId = $this->getRequest()->getParam('id');
         $entityType = $this->typeManagement->getById((int) $entityTypeId);
 
-        $resultPage = $this->resultFactory->create(\Magento\Framework\Controller\ResultFactory::TYPE_PAGE);
+        $resultPage = $this->resultFactory->create(ResultFactory::TYPE_PAGE);
 
         $resultPage->setActiveMenu('Ainnomix_EtmAdminhtml::management_index');
         $resultPage->getConfig()->getTitle()->prepend(__('Entity Type Manager'));
@@ -54,6 +55,6 @@ class Edit extends \Magento\Backend\App\Action
             $resultPage->getConfig()->getTitle()->prepend(__('Create entity type'));
         }
 
-        return $this->resultFactory->create(\Magento\Framework\Controller\ResultFactory::TYPE_PAGE);
+        return $this->resultFactory->create(ResultFactory::TYPE_PAGE);
     }
 }

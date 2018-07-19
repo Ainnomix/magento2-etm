@@ -14,6 +14,8 @@ declare(strict_types=1);
 
 namespace Ainnomix\EtmAdminhtml\Controller\Adminhtml\Entity\Type;
 
+use Magento\Framework\Controller\ResultFactory;
+
 /**
  * New entity type action class
  *
@@ -26,7 +28,7 @@ class NewAction extends \Magento\Backend\App\Action
 
     public function execute()
     {
-        $resultPage = $this->resultFactory->create(\Magento\Framework\Controller\ResultFactory::TYPE_FORWARD);
+        $resultPage = $this->resultFactory->create(ResultFactory::TYPE_FORWARD);
         return $resultPage->forward('edit');
     }
 }

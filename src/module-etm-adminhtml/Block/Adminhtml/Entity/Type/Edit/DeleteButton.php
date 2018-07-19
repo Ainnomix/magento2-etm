@@ -16,11 +16,10 @@ namespace Ainnomix\EtmAdminhtml\Block\Adminhtml\Entity\Type\Edit;
 
 use Magento\Framework\UrlInterface;
 use Magento\Framework\App\RequestInterface;
-use Ainnomix\EtmAdminhtml\Model\Entity\Type\TypeManagement;
 use Magento\Framework\View\Element\UiComponent\Control\ButtonProviderInterface;
 
 /**
- * {{DESCRIPTION}}
+ * Delete entity type button config provider class
  *
  * @category Ainnomix_EtmAdminhtml
  * @package  Ainnomix\EtmAdminhtml
@@ -35,37 +34,34 @@ class DeleteButton implements ButtonProviderInterface
     private $urlBuilder;
 
     /**
-     * @var TypeManagement
-     */
-    private $typeManagement;
-
-    /**
      * @var RequestInterface
      */
     private $request;
 
     public function __construct(
         UrlInterface $urlBuilder,
-        TypeManagement $typeManagement,
         RequestInterface $request
     ) {
         $this->urlBuilder = $urlBuilder;
-        $this->typeManagement = $typeManagement;
         $this->request = $request;
     }
 
+    /**
+     * Retrieve button configuration data
+     *
+     * @return array
+     */
     public function getButtonData(): array
     {
-        $id = (int) $this->request->getParam('id');
-        $entity = $this->typeManagement->getById($id);
+        $entityTypeId = (int) $this->request->getParam('id');
 
-        if ($entity->getEntityTypeId()) {
+        if ($entityTypeId) {
             return [
                 'label' => __('Delete Entity Type'),
                 'class' => 'delete',
                 'id' => 'entity-type-edit-delete-button',
                 'data_attribute' => [
-                    'url' => $this->getDeleteUrl($id)
+                    'url' => $this->getDeleteUrl($entityTypeId)
                 ],
                 'on_click' => '',
                 'sort_order' => 20,
@@ -75,8 +71,15 @@ class DeleteButton implements ButtonProviderInterface
         return [];
     }
 
-    public function getDeleteUrl($entityId): string
+    /**
+     * Generate delete url for current entity type model
+     *
+     * @param int $entityTypeId Entity type ID
+     *
+     * @return string
+     */
+    public function getDeleteUrl(int $entityTypeId): string
     {
-        return $this->urlBuilder->getUrl('*/*/delete', ['id' => $entityId]);
+        return $this->urlBuilder->getUrl('*/*/delete', ['id' => $entityTypeId]);
     }
 }

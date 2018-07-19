@@ -26,6 +26,11 @@ use Magento\Framework\View\Element\UiComponent\Control\ButtonProviderInterface;
 class SaveButton implements ButtonProviderInterface
 {
 
+    /**
+     * Retrieve button configuration data
+     *
+     * @return array
+     */
     public function getButtonData(): array
     {
         $data = [

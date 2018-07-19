@@ -19,7 +19,6 @@ use Ainnomix\EtmCore\Api\Data\EntityTypeInterfaceFactory;
 use Ainnomix\EtmCore\Api\EntityTypeRepositoryInterface;
 use Magento\Framework\Exception\NoSuchEntityException;
 
-
 /**
  * {{DESCRIPTION}}
  *
@@ -40,11 +39,6 @@ class TypeManagement
      */
     private $entityTypeFactory;
 
-    /**
-     * @var EntityTypeInterface[]
-     */
-    private $cachedEntities = [];
-
     public function __construct(
         EntityTypeRepositoryInterface $entityTypeRepository,
         EntityTypeInterfaceFactory $entityTypeFactory
@@ -55,16 +49,12 @@ class TypeManagement
 
     public function getById(int $entityTypeId): EntityTypeInterface
     {
-        if (isset($this->cachedEntities[$entityTypeId])) {
-            return $this->cachedEntities[$entityTypeId];
-        }
-
         try {
             $entityTypeModel = $this->entityTypeRepository->getById($entityTypeId);
         } catch (NoSuchEntityException $exception) {
             $entityTypeModel = $this->entityTypeFactory->create();
         }
 
-        return $this->cachedEntities[$entityTypeId] = $entityTypeModel;
+        return $entityTypeModel;
     }
 }

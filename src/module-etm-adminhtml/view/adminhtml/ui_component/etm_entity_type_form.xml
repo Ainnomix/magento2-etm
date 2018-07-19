@@ -29,6 +29,7 @@
         </argument>
         <settings>
             <submitUrl path="etm/entity_type/save"/>
+            <validateUrl path="etm/entity_type/validate"/>
         </settings>
         <dataProvider class="Ainnomix\EtmAdminhtml\Ui\Component\Form\Entity\Type\DataProvider" name="etm_entity_type_form_data_source">
             <settings>
