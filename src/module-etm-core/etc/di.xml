@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
-    <preference for="Ainnomix\EtmCore\Api\Data\EntityTypeInterface" type="Ainnomix\EtmCore\Model\Entity\Type" />
-    <preference for="Ainnomix\EtmCore\Api\EntityTypeRepositoryInterface" type="Ainnomix\EtmCore\Model\Entity\TypeRepository" />
-    <preference for="Ainnomix\EtmCore\Api\Data\EntityTypeSearchResultsInterface" type="Magento\Framework\Api\SearchResults" />
+    <!--<preference for="Ainnomix\EtmCore\Api\Data\EntityTypeInterface" type="Ainnomix\EtmCore\Model\Entity\Type" />-->
+    <!--<preference for="Ainnomix\EtmCore\Api\EntityTypeRepositoryInterface" type="Ainnomix\EtmCore\Model\Entity\TypeRepository" />-->
+    <!--<preference for="Ainnomix\EtmCore\Api\Data\EntityTypeSearchResultsInterface" type="Magento\Framework\Api\SearchResults" />-->
 </config>

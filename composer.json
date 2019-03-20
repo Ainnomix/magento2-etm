@@ -2,10 +2,10 @@
     "name": "ainnomix/etm",
     "description": "Magento 2 Entity type manager",
     "type": "magento2-module",
-    "version": "0.0.1",
     "keywords": [
         "magento",
         "magento2",
+        "entity-type",
         "entity-type-manager",
         "etm"
     ],
@@ -20,29 +20,26 @@
         "issues": "https://github.com/Ainnomix/magento2-etm/issues"
     },
     "require": {
-        "magento/framework": "100.1.*",
-        "magento/module-eav": "100.1.*",
-        "magento/module-backend": "100.1.*",
-        "magento/module-ui": "100.1.*"
+        "magento/framework": "~102.0.0",
+        "magento/module-eav": "~102.0.0",
+        "magento/module-backend": "~101.0.0",
+        "magento/module-ui": "~101.1.0"
     },
     "replace": {
-        "ainnomix/module-etm-core": "self.version",
-        "ainnomix/module-etm-adminhtml": "self.version",
         "ainnomix/module-etm-api": "self.version",
-        "ainnomix/module-etm-staging": "self.version"
+        "ainnomix/module-etm-core": "self.version",
+        "ainnomix/module-etm-admin-ui": "self.version"
     },
     "autoload": {
         "files": [
-            "src/module-etm-core/registration.php",
-            "src/module-etm-adminhtml/registration.php",
             "src/module-etm-api/registration.php",
-            "src/module-etm-staging/registration.php"
+            "src/module-etm-core/registration.php",
+            "src/module-etm-admin-ui/registration.php"
         ],
         "psr-4": {
-            "Ainnomix\\EtmCore\\": "src/module-etm-core",
-            "Ainnomix\\EtmAdminhtml\\": "src/module-etm-adminhtml",
             "Ainnomix\\EtmApi\\": "src/module-etm-api",
-            "Ainnomix\\EtmStaging\\": "src/module-etm-staging"
+            "Ainnomix\\EtmCore\\": "src/module-etm-core",
+            "Ainnomix\\EtmAdminUi\\": "src/module-etm-admin-ui"
         }
     },
     "extra": {

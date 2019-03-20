@@ -3,7 +3,7 @@
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:App/etc/routes.xsd">
     <router id="admin">
         <route id="etm" frontName="etm">
-            <module name="Ainnomix_EtmAdminhtml" before="Magento_Backend" />
+            <module name="Ainnomix_EtmAdminUi" before="Magento_Backend" />
         </route>
     </router>
 </config>

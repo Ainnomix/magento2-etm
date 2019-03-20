@@ -2,10 +2,10 @@
     "name": "ainnomix/module-etm-api",
     "description": "Magento 2 Entity types manager. API implementation for entity types manager",
     "type": "magento2-module",
-    "version": "0.0.1",
     "keywords": [
         "magento",
         "magento2",
+        "entity-type",
         "entity-type-manager",
         "etm",
         "staging"
@@ -21,9 +21,8 @@
         "issues": "https://github.com/Ainnomix/magento2-etm/issues"
     },
     "require": {
-        "magento/framework": "100.1.*",
-        "magento/module-eav": "100.1.*",
-        "ainnomix/etm-core": "~0.1"
+        "magento/framework": "~102.0.0",
+        "magento/module-eav": "~102.0.0"
     },
     "autoload": {
         "files": [
@@ -34,7 +33,8 @@
         }
     },
     "suggest": {
-        "ainnomix/module-etm-adminhtml": "Provides UI interface for entity type management",
+        "ainnomix/module-etm-core": "Provides core functionality for entity type type management",
+        "ainnomix/module-etm-admin-ui": "Provides UI interface for entity type management",
         "ainnomix/module-etm-staging": "Adds staging functionality for custom entity types. Allowed only for Magento Enterprise Edition"
     },
     "extra": {
