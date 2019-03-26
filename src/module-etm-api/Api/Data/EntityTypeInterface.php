@@ -4,7 +4,7 @@
  * versions in the future.
  *
  * @category  Ainnomix_Etm
- * @package   Ainnomix\EtmAdminUi
+ * @package   Ainnomix\EtmApi
  * @author    Roman Tomchak <romantomchak@gmail.com>
  * @copyright 2019 Ainnomix
  * @license   Open Software License ("OSL") v. 3.0
@@ -12,18 +12,16 @@
 
 declare(strict_types=1);
 
-namespace Ainnomix\EtmAdminUi\Model\ResourceModel\Entity\Type\Grid;
-
-use Magento\Framework\View\Element\UiComponent\DataProvider\SearchResult;
+namespace Ainnomix\EtmApi\Api\Data;
 
 /**
- * Entity types collection class for adminhtml grid
+ * Entity type model interface
  *
  * @category Ainnomix_Etm
- * @package  Ainnomix\EtmAdminUi
+ * @package  Ainnomix\EtmApi
  * @author   Roman Tomchak <romantomchak@gmail.com>
  */
-class Collection extends SearchResult
+interface EntityTypeInterface
 {
 
 }

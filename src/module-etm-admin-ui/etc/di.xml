@@ -1,16 +1,17 @@
 <?xml version="1.0"?>
 
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
-    <!--<type name="Magento\Framework\View\Element\UiComponent\DataProvider\CollectionFactory">-->
-        <!--<arguments>-->
-            <!--<argument name="collections" xsi:type="array">-->
-                <!--<item name="etm_entity_type_listing_data_source" xsi:type="string">Ainnomix\EtmAdminhtml\Model\ResourceModel\Entity\Type\Grid\Collection</item>-->
-            <!--</argument>-->
-        <!--</arguments>-->
-    <!--</type>-->
-    <!--<type name="Ainnomix\EtmAdminhtml\Model\ResourceModel\Entity\Type\Grid\Collection">-->
-        <!--<arguments>-->
-            <!--<argument name="mainTable" xsi:type="string">eav_entity_type</argument>-->
-        <!--</arguments>-->
-    <!--</type>-->
+    <type name="Magento\Framework\View\Element\UiComponent\DataProvider\CollectionFactory">
+        <arguments>
+            <argument name="collections" xsi:type="array">
+                <item name="etm_entity_type_form_data_source" xsi:type="string">Ainnomix\EtmAdminUi\Model\ResourceModel\Entity\Type\Grid\Collection</item>
+                <item name="etm_entity_type_listing_data_source" xsi:type="string">Ainnomix\EtmAdminUi\Model\ResourceModel\Entity\Type\Grid\Collection</item>
+            </argument>
+        </arguments>
+    </type>
+    <type name="Ainnomix\EtmAdminUi\Model\ResourceModel\Entity\Type\Grid\Collection">
+        <arguments>
+            <argument name="mainTable" xsi:type="string">eav_entity_type</argument>
+        </arguments>
+    </type>
 </config>

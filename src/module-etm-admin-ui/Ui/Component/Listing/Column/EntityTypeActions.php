@@ -1,18 +1,18 @@
 <?php
-declare(strict_types=1);
-
 /**
  * Do not edit or add to this file if you wish to upgrade Entity Type Manager to newer
  * versions in the future.
  *
- * @category  Ainnomix_EtmAdminhtml
- * @package   Ainnomix\EtmAdminhtml
+ * @category  Ainnomix_Etm
+ * @package   Ainnomix\EtmAdminUi
  * @author    Roman Tomchak <romantomchak@gmail.com>
- * @copyright 2018 Ainnomix
+ * @copyright 2019 Ainnomix
  * @license   Open Software License ("OSL") v. 3.0
  */
 
-namespace Ainnomix\EtmAdminhtml\Ui\Component\Listing\Column;
+declare(strict_types=1);
+
+namespace Ainnomix\EtmAdminUi\Ui\Component\Listing\Column;
 
 use Magento\Framework\View\Element\UiComponent\ContextInterface;
 use Magento\Framework\View\Element\UiComponentFactory;
@@ -22,9 +22,9 @@ use Magento\Framework\UrlInterface;
 /**
  * Grid action provider for entity types grid
  *
- * @category Ainnomix_EtmAdminhtml
- * @package  Ainnomix\EtmAdminhtml
- * @author   Roman Tomchak <romantomchak@ainnomix.com>
+ * @category Ainnomix_Etm
+ * @package  Ainnomix\EtmAdminUi
+ * @author   Roman Tomchak <romantomchak@gmail.com>
  */
 class EntityTypeActions extends Column
 {

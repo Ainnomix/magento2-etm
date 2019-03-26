@@ -8,7 +8,7 @@ declare(strict_types=1);
  * @category  Ainnomix_EtmAdminhtml
  * @package   Ainnomix\EtmAdminhtml
  * @author    Roman Tomchak <romantomchak@gmail.com>
- * @copyright 2018 Ainnomix
+ * @copyright 2019 Ainnomix
  * @license   Open Software License ("OSL") v. 3.0
  */
 
@@ -24,7 +24,7 @@ use Ainnomix\EtmAdminhtml\Controller\Adminhtml\Entity\Type\Validation\Helper as 
  *
  * @category Ainnomix_EtmAdminhtml
  * @package  Ainnomix\EtmAdminhtml
- * @author   Roman Tomchak <romantomchak@ainnomix.com>
+ * @author   Roman Tomchak <romantomchak@gmail.com>
  */
 class Validate extends \Magento\Backend\App\Action
 {

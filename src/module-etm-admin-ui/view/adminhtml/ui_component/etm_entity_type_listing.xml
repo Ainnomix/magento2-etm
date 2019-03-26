@@ -74,7 +74,7 @@
                 <label translate="true">Code</label>
             </settings>
         </column>
-        <actionsColumn name="actions" class="Ainnomix\EtmAdminhtml\Ui\Component\Listing\Column\EntityTypeActions">
+        <actionsColumn name="actions" class="Ainnomix\EtmAdminUi\Ui\Component\Listing\Column\EntityTypeActions">
             <settings>
                 <indexField>entity_type_id</indexField>
             </settings>

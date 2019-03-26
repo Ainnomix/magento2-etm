@@ -1,56 +1,76 @@
 <?php
+/**
+ * Do not edit or add to this file if you wish to upgrade Entity Type Manager to newer
+ * versions in the future.
+ *
+ * @category  Ainnomix_Etm
+ * @package   Ainnomix\EtmCore
+ * @author    Roman Tomchak <romantomchak@gmail.com>
+ * @copyright 2019 Ainnomix
+ * @license   Open Software License ("OSL") v. 3.0
+ */
+
+declare(strict_types=1);
 
 namespace Ainnomix\EtmCore\Model\Entity;
 
-use Magento\Framework\Api\SearchCriteriaInterface;
-use Magento\Framework\Exception\NoSuchEntityException;
-use Ainnomix\EtmCore\Api\Data\EntityTypeInterface;
-use Ainnomix\EtmCore\Api\EntityTypeRepositoryInterface;
-use Ainnomix\EtmCore\Api\Data\EntityTypeSearchResultsInterface;
+use Ainnomix\EtmApi\Api\EntityTypeRepositoryInterface;
+use Ainnomix\EtmApi\Api\Data\EntityTypeSearchResultsInterface;
+use Ainnomix\EtmApi\Api\Data\EntityTypeSearchResultsInterfaceFactory;
+use Ainnomix\EtmCore\Model\ResourceModel\Entity\Type\CollectionFactory;
+use Magento\Framework\Api\SearchCriteria\CollectionProcessorInterface;
 
+/**
+ * Entity type model repository class
+ *
+ * @category Ainnomix_Etm
+ * @package  Ainnomix\EtmCore
+ * @author   Roman Tomchak <romantomchak@gmail.com>
+ */
 class TypeRepository implements EntityTypeRepositoryInterface
 {
 
     /**
-     * @var \Ainnomix\EtmCore\Api\Data\EntityTypeInterfaceFactory
+     * @var CollectionFactory
      */
-    private $entityTypeFactory;
+    protected $collectionFactory;
 
     /**
-     * @var \Ainnomix\EtmCore\Model\ResourceModel\Entity\Type
+     * @var EntityTypeSearchResultsInterfaceFactory
      */
-    private $resourceModel;
+    protected $searchResultsFactory;
+
+    /**
+     * @var CollectionProcessorInterface
+     */
+    protected $collectionProcessor;
 
     public function __construct(
-        \Ainnomix\EtmCore\Api\Data\EntityTypeInterfaceFactory $entityTypeFactory,
-        \Ainnomix\EtmCore\Model\ResourceModel\Entity\Type $resourceModel
+        CollectionFactory $collectionFactory,
+        EntityTypeSearchResultsInterfaceFactory $searchResultsFactory,
+        CollectionProcessorInterface $collectionProcessor
     ) {
-        $this->entityTypeFactory = $entityTypeFactory;
-        $this->resourceModel = $resourceModel;
+        $this->collectionFactory = $collectionFactory;
+        $this->searchResultsFactory = $searchResultsFactory;
+        $this->collectionProcessor = $collectionProcessor;
     }
 
-    public function save(EntityTypeInterface $entityType): EntityTypeInterface
+    /**
+     * {@inheritdoc}
+     */
+    public function getList(\Magento\Framework\Api\SearchCriteriaInterface $criteria): EntityTypeSearchResultsInterface
     {
+        /** @var \Ainnomix\EtmCore\Model\ResourceModel\Entity\Type\Collection $collection */
+        $collection = $this->collectionFactory->create();
 
-    }
+        $this->collectionProcessor->process($criteria, $collection);
 
-    public function get(string $entityTypeCode): EntityTypeInterface
-    {
+        /** @var EntityTypeSearchResultsInterface $searchResults */
+        $searchResults = $this->searchResultsFactory->create();
+        $searchResults->setSearchCriteria($criteria);
+        $searchResults->setItems($collection->getItems());
+        $searchResults->setTotalCount($collection->getSize());
 
-    }
-
-    public function getById(int $entityTypeId): EntityTypeInterface
-    {
-        throw new NoSuchEntityException();
-    }
-
-    public function delete(EntityTypeInterface $entityType)
-    {
-
-    }
-
-    public function getList(SearchCriteriaInterface $searchCriteria): EntityTypeSearchResultsInterface
-    {
-
+        return $searchResults;
     }
 }

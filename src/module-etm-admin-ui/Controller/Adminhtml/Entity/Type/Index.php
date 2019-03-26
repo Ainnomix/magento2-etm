@@ -1,6 +1,4 @@
 <?php
-declare(strict_types=1);
-
 /**
  * Do not edit or add to this file if you wish to upgrade Entity Type Manager to newer
  * versions in the future.
@@ -12,10 +10,11 @@ declare(strict_types=1);
  * @license   Open Software License ("OSL") v. 3.0
  */
 
+declare(strict_types=1);
+
 namespace Ainnomix\EtmAdminUi\Controller\Adminhtml\Entity\Type;
 
 use Magento\Framework\Controller\ResultFactory;
-use Magento\Framework\Controller\ResultInterface;
 use Magento\Framework\App\Action\HttpGetActionInterface as HttpGetActionInterface;
 
 /**
@@ -23,7 +22,7 @@ use Magento\Framework\App\Action\HttpGetActionInterface as HttpGetActionInterfac
  *
  * @category Ainnomix_Etm
  * @package  Ainnomix\EtmAdminUi
- * @author   Roman Tomchak <romantomchak@ainnomix.com>
+ * @author   Roman Tomchak <romantomchak@gmail.com>
  */
 class Index extends \Magento\Backend\App\Action implements HttpGetActionInterface
 {
@@ -31,9 +30,9 @@ class Index extends \Magento\Backend\App\Action implements HttpGetActionInterfac
     /**
      * Execute controller action
      *
-     * @return ResultInterface
+     * @return \Magento\Framework\View\Result\Page
      */
-    public function execute()
+    public function execute(): \Magento\Framework\View\Result\Page
     {
         $resultPage = $this->resultFactory->create(ResultFactory::TYPE_PAGE);
 
