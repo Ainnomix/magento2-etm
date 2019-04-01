@@ -3,7 +3,7 @@
  * Do not edit or add to this file if you wish to upgrade Entity Type Manager to newer
  * versions in the future.
  *
- * @category  Ainnomix_Etm
+ * @category  Ainnomix
  * @package   Ainnomix\EtmAdminUi
  * @author    Roman Tomchak <romantomchak@gmail.com>
  * @copyright 2019 Ainnomix
@@ -20,7 +20,7 @@ use Magento\Framework\App\Action\HttpGetActionInterface as HttpGetActionInterfac
 /**
  * New entity type action class
  *
- * @category Ainnomix_Etm
+ * @category Ainnomix
  * @package  Ainnomix\EtmAdminUi
  * @author   Roman Tomchak <romantomchak@gmail.com>
  */

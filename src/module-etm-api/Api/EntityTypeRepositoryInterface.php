@@ -3,7 +3,7 @@
  * Do not edit or add to this file if you wish to upgrade Entity Type Manager to newer
  * versions in the future.
  *
- * @category  Ainnomix_Etm
+ * @category  Ainnomix
  * @package   Ainnomix\EtmApi
  * @author    Roman Tomchak <romantomchak@gmail.com>
  * @copyright 2019 Ainnomix
@@ -14,12 +14,17 @@ declare(strict_types=1);
 
 namespace Ainnomix\EtmApi\Api;
 
+use Ainnomix\EtmApi\Api\Data\EntityTypeInterface;
 use Ainnomix\EtmApi\Api\Data\EntityTypeSearchResultsInterface;
+use Magento\Framework\Api\SearchCriteriaInterface;
+use Magento\Framework\Exception\CouldNotDeleteException;
+use Magento\Framework\Exception\CouldNotSaveException;
+use Magento\Framework\Exception\NoSuchEntityException;
 
 /**
  * Entity type repository interface
  *
- * @category Ainnomix_Etm
+ * @category Ainnomix
  * @package  Ainnomix\EtmApi
  * @author   Roman Tomchak <romantomchak@gmail.com>
  */
@@ -27,11 +32,55 @@ interface EntityTypeRepositoryInterface
 {
 
     /**
-     * Retrieve entity types list
+     * Get Entity type by given entityTypeCode
      *
-     * @param \Magento\Framework\Api\SearchCriteriaInterface $criteria
+     * @param string $entityTypeCode
+     *
+     * @return EntityTypeInterface
+     *
+     * @throws NoSuchEntityException
+     */
+    public function get(string $entityTypeCode): EntityTypeInterface;
+
+    /**
+     * Get Entity type by given entityTypeId
+     *
+     * @param int $entityTypeId
+     *
+     * @return EntityTypeInterface
+     *
+     * @throws NoSuchEntityException
+     */
+    public function getById(int $entityTypeId): EntityTypeInterface;
+
+    /**
+     * Save Entity type data
+     *
+     * @param EntityTypeInterface $entityType
+     *
+     * @return int
+     *
+     * @throws CouldNotSaveException
+     */
+    public function save(EntityTypeInterface $entityType): int;
+
+    /**
+     * Delete entity type by ID. If entity does not exist do nothing
+     *
+     * @param int $entityTypeId Entity type ID
+     *
+     * @throws CouldNotDeleteException
+     * @throws NoSuchEntityException
+     */
+    public function deleteById(int $entityTypeId): void;
+
+    /**
+     * Find Entity types by given SearchCriteria
+     * SearchCriteria is not required because load all types is useful case
+     *
+     * @param SearchCriteriaInterface|null $criteria
      *
      * @return EntityTypeSearchResultsInterface
      */
-    public function getList(\Magento\Framework\Api\SearchCriteriaInterface $criteria): EntityTypeSearchResultsInterface;
+    public function getList(SearchCriteriaInterface $criteria = null): EntityTypeSearchResultsInterface;
 }

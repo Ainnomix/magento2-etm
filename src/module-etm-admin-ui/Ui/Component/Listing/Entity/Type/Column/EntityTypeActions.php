@@ -12,7 +12,7 @@
 
 declare(strict_types=1);
 
-namespace Ainnomix\EtmAdminUi\Ui\Component\Listing\Column;
+namespace Ainnomix\EtmAdminUi\Ui\Component\Listing\Entity\Type\Column;
 
 use Magento\Framework\View\Element\UiComponent\ContextInterface;
 use Magento\Framework\View\Element\UiComponentFactory;

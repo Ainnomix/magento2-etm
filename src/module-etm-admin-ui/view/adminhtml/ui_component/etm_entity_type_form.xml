@@ -1,10 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-
-
-
-
-
 <form xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Ui:etc/ui_configuration.xsd">
     <argument name="data" xsi:type="array">
         <item name="js_config" xsi:type="array">
@@ -29,6 +24,7 @@
                 <class>reset</class>
                 <label translate="true">Reset</label>
             </button>
+            <button name="save" class="Ainnomix\EtmAdminUi\Ui\Component\Form\Entity\Type\Control\SaveSplitButton"/>
         </buttons>
     </settings>
     <dataSource name="etm_entity_type_form_data_source" component="Magento_Ui/js/form/provider">
@@ -46,14 +42,9 @@
     <fieldset name="general" sortOrder="10">
         <settings>
             <label/>
-            <dataScope>entity_type</dataScope>
+            <dataScope>general</dataScope>
         </settings>
         <field name="entity_type_id" formElement="input" sortOrder="10">
-            <!--<argument name="data" xsi:type="array">-->
-                <!--<item name="config" xsi:type="array">-->
-                    <!--<item name="source" xsi:type="string">entity_type</item>-->
-                <!--</item>-->
-            <!--</argument>-->
             <settings>
                 <dataType>text</dataType>
                 <visible>false</visible>
@@ -61,32 +52,23 @@
             </settings>
         </field>
         <field name="entity_type_code" formElement="input" sortOrder="20">
-            <!--<argument name="data" xsi:type="array">-->
-                <!--<item name="config" xsi:type="array">-->
-                    <!--<item name="source" xsi:type="string">entity_type</item>-->
-                <!--</item>-->
-            <!--</argument>-->
             <settings>
                 <validation>
                     <rule name="required-entry" xsi:type="boolean">true</rule>
+                    <rule name="no-whitespace" xsi:type="boolean">true</rule>
                 </validation>
                 <dataType>text</dataType>
-                <label translate="true">Entity Code</label>
+                <label translate="true">Code</label>
                 <dataScope>entity_type_code</dataScope>
             </settings>
         </field>
         <field name="entity_type_name" formElement="input" sortOrder="30">
-            <!--<argument name="data" xsi:type="array">-->
-            <!--<item name="config" xsi:type="array">-->
-            <!--<item name="source" xsi:type="string">entity_type</item>-->
-            <!--</item>-->
-            <!--</argument>-->
             <settings>
                 <validation>
                     <rule name="required-entry" xsi:type="boolean">true</rule>
                 </validation>
                 <dataType>text</dataType>
-                <label translate="true">Entity Name</label>
+                <label translate="true">Name</label>
                 <dataScope>entity_type_name</dataScope>
             </settings>
         </field>

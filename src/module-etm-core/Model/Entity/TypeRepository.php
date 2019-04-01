@@ -14,11 +14,11 @@ declare(strict_types=1);
 
 namespace Ainnomix\EtmCore\Model\Entity;
 
-use Ainnomix\EtmApi\Api\EntityTypeRepositoryInterface;
+use Ainnomix\EtmApi\Api\Data\EntityTypeInterface;
 use Ainnomix\EtmApi\Api\Data\EntityTypeSearchResultsInterface;
-use Ainnomix\EtmApi\Api\Data\EntityTypeSearchResultsInterfaceFactory;
-use Ainnomix\EtmCore\Model\ResourceModel\Entity\Type\CollectionFactory;
-use Magento\Framework\Api\SearchCriteria\CollectionProcessorInterface;
+use Ainnomix\EtmApi\Api\EntityTypeRepositoryInterface;
+use Ainnomix\EtmCore\Model\Entity\Type\Command;
+use Magento\Framework\Api\SearchCriteriaInterface;
 
 /**
  * Entity type model repository class
@@ -31,46 +31,90 @@ class TypeRepository implements EntityTypeRepositoryInterface
 {
 
     /**
-     * @var CollectionFactory
+     * @var Command\GetInterface
      */
-    protected $collectionFactory;
+    protected $commandGet;
 
     /**
-     * @var EntityTypeSearchResultsInterfaceFactory
+     * @var Command\GetByIdInterface
      */
-    protected $searchResultsFactory;
+    protected $commandGetById;
 
     /**
-     * @var CollectionProcessorInterface
+     * @var Command\GetListInterface
      */
-    protected $collectionProcessor;
+    protected $commandGetList;
 
+    /**
+     * @var Command\SaveInterface
+     */
+    protected $commandSave;
+
+    /**
+     * @var Command\DeleteByIdInterface
+     */
+    protected $commandDeleteById;
+
+    /**
+     * TypeRepository constructor
+     *
+     * @param Command\GetInterface $commandGet
+     * @param Command\GetByIdInterface $commandGetById
+     * @param Command\GetListInterface $commandGetList
+     * @param Command\SaveInterface $commandSave
+     * @param Command\DeleteByIdInterface $commandDeleteById
+     */
     public function __construct(
-        CollectionFactory $collectionFactory,
-        EntityTypeSearchResultsInterfaceFactory $searchResultsFactory,
-        CollectionProcessorInterface $collectionProcessor
+        Command\GetInterface $commandGet,
+        Command\GetByIdInterface $commandGetById,
+        Command\GetListInterface $commandGetList,
+        Command\SaveInterface $commandSave,
+        Command\DeleteByIdInterface $commandDeleteById
     ) {
-        $this->collectionFactory = $collectionFactory;
-        $this->searchResultsFactory = $searchResultsFactory;
-        $this->collectionProcessor = $collectionProcessor;
+        $this->commandGet = $commandGet;
+        $this->commandGetById = $commandGetById;
+        $this->commandGetList = $commandGetList;
+        $this->commandSave = $commandSave;
+        $this->commandDeleteById = $commandDeleteById;
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
-    public function getList(\Magento\Framework\Api\SearchCriteriaInterface $criteria): EntityTypeSearchResultsInterface
+    public function get(string $entityTypeCode): EntityTypeInterface
     {
-        /** @var \Ainnomix\EtmCore\Model\ResourceModel\Entity\Type\Collection $collection */
-        $collection = $this->collectionFactory->create();
+        return $this->commandGet->execute($entityTypeCode);
+    }
 
-        $this->collectionProcessor->process($criteria, $collection);
+    /**
+     * {@inheritDoc}
+     */
+    public function getById(int $entityTypeId): EntityTypeInterface
+    {
+        return $this->commandGetById->execute($entityTypeId);
+    }
 
-        /** @var EntityTypeSearchResultsInterface $searchResults */
-        $searchResults = $this->searchResultsFactory->create();
-        $searchResults->setSearchCriteria($criteria);
-        $searchResults->setItems($collection->getItems());
-        $searchResults->setTotalCount($collection->getSize());
+    /**
+     * {@inheritDoc}
+     */
+    public function save(EntityTypeInterface $entityType): int
+    {
+        return $this->commandSave->execute($entityType);
+    }
 
-        return $searchResults;
+    /**
+     * {@inheritDoc}
+     */
+    public function deleteById(int $entityTypeId): void
+    {
+        $this->commandDeleteById->execute($entityTypeId);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getList(SearchCriteriaInterface $criteria = null): EntityTypeSearchResultsInterface
+    {
+        return $this->commandGetList->execute($criteria);
     }
 }

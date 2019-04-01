@@ -3,7 +3,7 @@
  * Do not edit or add to this file if you wish to upgrade Entity Type Manager to newer
  * versions in the future.
  *
- * @category  Ainnomix_Etm
+ * @category  Ainnomix
  * @package   Ainnomix\EtmAdminUi
  * @author    Roman Tomchak <romantomchak@gmail.com>
  * @copyright 2019 Ainnomix
@@ -15,12 +15,12 @@ declare(strict_types=1);
 namespace Ainnomix\EtmAdminUi\Controller\Adminhtml\Entity\Type;
 
 use Magento\Framework\Controller\ResultFactory;
-use Magento\Framework\App\Action\HttpGetActionInterface as HttpGetActionInterface;
+use Magento\Framework\App\Action\HttpGetActionInterface;
 
 /**
  * Entity type list action class
  *
- * @category Ainnomix_Etm
+ * @category Ainnomix
  * @package  Ainnomix\EtmAdminUi
  * @author   Roman Tomchak <romantomchak@gmail.com>
  */

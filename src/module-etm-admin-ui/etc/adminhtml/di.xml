@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <virtualType name="Ainnomix\EtmAdminUi\Ui\Component\Form\Entity\Type\Control\SaveSplitButton" type="Magento\Backend\Ui\Component\Control\SaveSplitButton">
+        <arguments>
+            <argument name="targetName" xsi:type="string">etm_entity_type_form.etm_entity_type_form</argument>
+        </arguments>
+    </virtualType>
+</config>

@@ -26,7 +26,7 @@
             </storageConfig>
             <updateUrl path="mui/index/render"/>
         </settings>
-        <dataProvider class="Magento\Framework\View\Element\UiComponent\DataProvider\DataProvider" name="etm_entity_type_listing_data_source">
+        <dataProvider class="Ainnomix\EtmAdminUi\Ui\Component\Listing\Entity\Type\DataProvider" name="etm_entity_type_listing_data_source">
             <settings>
                 <requestFieldName>id</requestFieldName>
                 <primaryFieldName>entity_type_id</primaryFieldName>
@@ -74,7 +74,7 @@
                 <label translate="true">Code</label>
             </settings>
         </column>
-        <actionsColumn name="actions" class="Ainnomix\EtmAdminUi\Ui\Component\Listing\Column\EntityTypeActions">
+        <actionsColumn name="actions" class="Ainnomix\EtmAdminUi\Ui\Component\Listing\Entity\Type\Column\EntityTypeActions">
             <settings>
                 <indexField>entity_type_id</indexField>
             </settings>
