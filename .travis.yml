@@ -9,5 +9,7 @@ install:
   - composer config -a http-basic.packagist.k8s.ainnomix.com $COMPOSER_AINNOMIX_PUB_KEY $COMPOSER_AINNOMIX_PRIV_KEY
   - composer config repositories.magento composer https://repo.magento.com/
   - composer require --dev ainnomix/magento2-quality-suite
+  - mkdir build
 script:
-  - ls -la
+  - vendor/bin/phpmd src xml vendor/ainnomix/magento2-quality-phpmd/rulesets/rulset.xml --reportfile build/phpmd.xml --ignore-violations-on-exit
+  - vendor/bin/phpcs --report=xml --report-file=build/phpcs.xml src
