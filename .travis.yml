@@ -5,6 +5,8 @@ matrix:
     - php: 7.1
     - php: 7.2
 install:
-  - composer global require ainnomix/magento2-quality-suite
+  - composer config repositories.magento composer https://repo.magento.com/
+  - composer config repositories.ainnomix composer https://packagist.k8s.ainnomix.com/
+  - composer require --dev ainnomix/magento2-quality-suite ainnomix/publisher
 script:
   - ls -la
