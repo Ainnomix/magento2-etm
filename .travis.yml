@@ -4,6 +4,10 @@ matrix:
   include:
     - php: 7.1
     - php: 7.2
+cache:
+  directories:
+    - $HOME/.composer
+
 install:
   - composer config -a http-basic.repo.magento.com $COMPOSER_MAGENTO_PUB_KEY $COMPOSER_MAGENTO_PRIV_KEY
   - composer config -a http-basic.packagist.k8s.ainnomix.com $COMPOSER_AINNOMIX_PUB_KEY $COMPOSER_AINNOMIX_PRIV_KEY
@@ -12,7 +16,6 @@ install:
   - vendor/bin/phpcs --config-set ignore_errors_on_exit 1
   - vendor/bin/phpcs --config-set ignore_warnings_on_exit 1
   - mkdir build
-  - env
 script:
   - vendor/bin/phpmd src xml vendor/ainnomix/magento2-quality-phpmd/rulesets/rulset.xml --reportfile build/phpmd.xml --ignore-violations-on-exit
   - vendor/bin/phpcs --report=xml --report-file=build/phpcs.xml src
