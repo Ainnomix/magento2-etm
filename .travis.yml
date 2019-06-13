@@ -8,7 +8,6 @@ install:
   - composer config -a http-basic.repo.magento.com $COMPOSER_MAGENTO_PUB_KEY $COMPOSER_MAGENTO_PRIV_KEY
   - composer config -a http-basic.packagist.k8s.ainnomix.com $COMPOSER_AINNOMIX_PUB_KEY $COMPOSER_AINNOMIX_PRIV_KEY
   - composer config repositories.magento composer https://repo.magento.com/
-  - composer config repositories.ainnomix composer https://packagist.k8s.ainnomix.com/
   - composer require --dev ainnomix/magento2-quality-suite
 script:
   - ls -la
