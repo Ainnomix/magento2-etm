@@ -22,11 +22,4 @@ install:
 script:
   - vendor/bin/phpmd src xml vendor/ainnomix/magento2-quality-phpmd/rulesets/rulset.xml --reportfile build/phpmd.xml --ignore-violations-on-exit
   - vendor/bin/phpcs --report=xml --report-file=build/phpcs.xml src
-  - vendor/bin/publisher publish \
-      --connection-host=$VIEWER_HOSTNAME \
-      --connection-port=80 \
-      --connection-database=$VIEWER_DATABASE \
-      --connection-username=$VIEWER_USERNAME \
-      --connection-password=$VIEWER_PASSWORD \
-      --project-slug=$TRAVIS_REPO_SLUG \
-      --build-id=$TRAVIS_JOB_NUMBER
+  - vendor/bin/publisher publish --connection-host=$VIEWER_HOSTNAME --connection-port=80 --connection-database=$VIEWER_DATABASE --connection-username=$VIEWER_USERNAME --connection-password=$VIEWER_PASSWORD --project-slug=$TRAVIS_REPO_SLUG --build-id=$TRAVIS_JOB_NUMBER
