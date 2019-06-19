@@ -12,14 +12,15 @@ cache:
 
 install:
   - composer config -a http-basic.repo.magento.com $COMPOSER_MAGENTO_PUB_KEY $COMPOSER_MAGENTO_PRIV_KEY
-  - composer config -a http-basic.packagist.k8s.ainnomix.com $COMPOSER_AINNOMIX_PUB_KEY $COMPOSER_AINNOMIX_PRIV_KEY
+#  - composer config -a http-basic.packagist.k8s.ainnomix.com $COMPOSER_AINNOMIX_PUB_KEY $COMPOSER_AINNOMIX_PRIV_KEY
   - composer config repositories.magento composer https://repo.magento.com/
-  - composer config repositories.ainnomix composer https://packagist.k8s.ainnomix.com/
-  - composer require --dev ainnomix/magento2-quality-suite ainnomix/publisher
+#  - composer config repositories.ainnomix composer https://packagist.k8s.ainnomix.com/
+  - composer require --dev ainnomix/magento2-quality-suite sebastian/phpcpd
   - vendor/bin/phpcs --config-set ignore_errors_on_exit 1
   - vendor/bin/phpcs --config-set ignore_warnings_on_exit 1
-  - mkdir build
+#  - mkdir build
 script:
-  - vendor/bin/phpmd src xml vendor/ainnomix/magento2-quality-phpmd/rulesets/rulset.xml --reportfile build/phpmd.xml --ignore-violations-on-exit
-  - vendor/bin/phpcs --report=xml --report-file=build/phpcs.xml src
-  - vendor/bin/publisher publish --connection-host=$VIEWER_HOSTNAME --connection-port=80 --connection-database=$VIEWER_DATABASE --connection-username=$VIEWER_USERNAME --connection-password=$VIEWER_PASSWORD --project-slug=$TRAVIS_REPO_SLUG --build-id=$TRAVIS_JOB_NUMBER
+  - vendor/bin/phpmd src text vendor/ainnomix/magento2-quality-phpmd/rulesets/rulset.xml --ignore-violations-on-exit
+  - vendor/bin/phpcs src
+  - vendor/bin/phpcpd src
+#  - vendor/bin/publisher publish --connection-host=$VIEWER_HOSTNAME --connection-port=80 --connection-database=$VIEWER_DATABASE --connection-username=$VIEWER_USERNAME --connection-password=$VIEWER_PASSWORD --project-slug=$TRAVIS_REPO_SLUG --build-id=$TRAVIS_JOB_NUMBER
