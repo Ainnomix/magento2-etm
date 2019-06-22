@@ -58,4 +58,6 @@ interface EntityTypeInterface
     public function getEntityTypeName(): ?string;
 
     public function setEntityTypeName(string $name): void;
+
+    public function validateBeforeSave();
 }

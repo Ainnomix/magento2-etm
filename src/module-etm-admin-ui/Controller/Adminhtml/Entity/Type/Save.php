@@ -34,15 +34,16 @@ use Ainnomix\EtmApi\Api\EntityTypeRepositoryInterface;
 class Save extends \Magento\Backend\App\Action implements HttpPostActionInterface
 {
 
-
     /**
      * @var DataObjectHelper
      */
     protected $dataObjectHelper;
+
     /**
      * @var EntityTypeRepositoryInterface
      */
     protected $entityTypeRepository;
+
     /**
      * @var EntityTypeInterfaceFactory
      */

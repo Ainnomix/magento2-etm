@@ -24,4 +24,41 @@ namespace Ainnomix\EtmCore\Model\ResourceModel\Entity;
 class Type extends \Magento\Eav\Model\ResourceModel\Entity\Type
 {
 
+    public function getValidationRulesBeforeSave(): \Zend_Validate
+    {
+        $validator = new \Zend_Validate();
+
+        $codeValidator = new \Zend_Validate_Callback([$this, 'isCodeUnique']);
+        $codeValidator->setMessage(
+            __('Entity type with the same code already exists.'),
+            \Zend_Validate_Callback::INVALID_VALUE
+        );
+        $validator->addValidator($codeValidator, true);
+
+        return $validator;
+    }
+
+    public function isCodeUnique(\Ainnomix\EtmCore\Model\Entity\Type $entityType)
+    {
+        if (!$entityType->getEntityTypeId()) {
+            $connection = $this->getConnection();
+            $select = $connection->select();
+
+            $binds = [
+                'entity_type_code' => $entityType->getEntityTypeCode(),
+            ];
+
+            $select->from(
+                $this->getMainTable()
+            )->where(
+                '(entity_type_code = :entity_type_code)'
+            );
+
+            $row = $connection->fetchRow($select, $binds);
+
+            return empty($row);
+        }
+
+        return true;
+    }
 }
