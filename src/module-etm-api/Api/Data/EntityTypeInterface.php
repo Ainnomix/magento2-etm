@@ -36,7 +36,6 @@ interface EntityTypeInterface
     const VALUE_TABLE_PREFIX = 'value_table_prefix';
     const ENTITY_ID_FIELD = 'entity_id_field';
     const IS_DATA_SHARING = 'is_data_sharing';
-    const IS_CUSTOM = 'is_custom';
     const DATA_SHARING_KEY = 'data_sharing_key';
     const DEFAULT_ATTRIBUTE_SET_ID = 'default_attribute_set_id';
     const INCREMENT_MODEL = 'increment_model';
@@ -49,15 +48,73 @@ interface EntityTypeInterface
 
     public function getEntityTypeId(): ?int;
 
-    public function setEntityTypeId(int $id): void;
+    public function setEntityTypeId(int $typeId): void;
 
     public function getEntityTypeCode(): ?string;
 
     public function setEntityTypeCode(string $code): void;
 
+    public function getEntityModel(): ?string;
+
+    public function setEntityModel(string $name): void;
+
+    public function getAttributeModel(): ?string;
+
+    public function setAttributeModel(string $model): void;
+
+    public function getEntityTable(): ?string;
+
+    public function setEntityTable(string $name): void;
+
+    public function getValueTablePrefix(): ?string;
+
+    public function setValueTablePrefix(string $prefix): void;
+
+    public function getEntityIdField(): ?string;
+
+    public function setEntityIdField(string $name): void;
+
+    public function getIsDataSharing(): ?int;
+
+    public function setIsDataSharing(int $flag): void;
+
+    public function getDataSharingKey(): ?string;
+
+    public function setDataSharingKey(string $key): void;
+
+    public function getDefaultAttributeDetId(): ?int;
+
+    public function setDefaultAttributeDetId(int $attributeSetId): void;
+
+    public function getIncrementModel(): ?string;
+
+    public function setIncrementModel(string $modelName): void;
+
+    public function getIncrementPerStore(): ?int;
+
+    public function setIncrementPerStore(int $flag): void;
+
+    public function getIncrementPadLength(): ?int;
+
+    public function setIncrementPadLength(int $length): void;
+
+    public function getIncrementPadChar(): ?string;
+
+    public function setIncrementPadChar(string $char): void;
+
+    public function getAdditionalAttributeTable(): ?string;
+
+    public function setAdditionalAttributeTable(string $tableName): void;
+
+    public function getEntityAttributeCollection(): ?string;
+
+    public function setEntityAttributeCollection(string $modelName): void;
+
     public function getEntityTypeName(): ?string;
 
     public function setEntityTypeName(string $name): void;
 
-    public function validateBeforeSave();
+    public function getExtensionAttributes(): \Ainnomix\EtmApi\Api\Data\EntityTypeExtensionInterface;
+
+    public function setExtensionAttributes(\Ainnomix\EtmApi\Api\Data\EntityTypeExtensionInterface $extensionAttributes): EntityTypeInterface;
 }

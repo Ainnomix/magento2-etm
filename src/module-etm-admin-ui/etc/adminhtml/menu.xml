@@ -5,6 +5,6 @@
         <add id="Ainnomix_EtmAdminUi::etm" title="Entity Type Manager" translate="title" module="Ainnomix_EtmAdminUi" sortOrder="60" dependsOnModule="Ainnomix_EtmAdminUi" resource="Ainnomix_EtmAdminUi::etm"/>
 
         <add id="Ainnomix_EtmAdminUi::management" title="Management" translate="title" module="Ainnomix_EtmAdminUi" sortOrder="10" parent="Ainnomix_EtmAdminUi::etm" resource="Ainnomix_EtmAdminUi::management"/>
-        <add id="Ainnomix_EtmAdminUi::management_index" title="Manage Entity Types" translate="title" module="Ainnomix_EtmAdminUi" sortOrder="10" parent="Ainnomix_EtmAdminUi::management" action="etm/entity_type/index" resource="Ainnomix_EtmAdminUi::management"/>
+        <add id="Ainnomix_EtmAdminUi::management_index" title="Manage Entity Types" translate="title" module="Ainnomix_EtmAdminUi" sortOrder="10" parent="Ainnomix_EtmAdminUi::management" action="etm/entityType/index" resource="Ainnomix_EtmAdminUi::management"/>
     </menu>
 </config>

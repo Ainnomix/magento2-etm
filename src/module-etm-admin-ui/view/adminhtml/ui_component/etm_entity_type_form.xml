@@ -24,7 +24,7 @@
                 <class>reset</class>
                 <label translate="true">Reset</label>
             </button>
-            <button name="save" class="Ainnomix\EtmAdminUi\Ui\Component\Form\Entity\Type\Control\SaveSplitButton"/>
+            <button name="save" class="Ainnomix\EtmAdminUi\Ui\Component\Form\EntityType\Control\SaveSplitButton"/>
         </buttons>
     </settings>
     <dataSource name="etm_entity_type_form_data_source" component="Magento_Ui/js/form/provider">
@@ -32,7 +32,7 @@
             <submitUrl path="*/*/save"/>
             <validateUrl path="*/*/validate"/>
         </settings>
-        <dataProvider class="Ainnomix\EtmAdminUi\Ui\Component\Form\Entity\Type\DataProvider" name="etm_entity_type_form_data_source">
+        <dataProvider class="Ainnomix\EtmAdminUi\Ui\Component\Form\EntityType\DataProvider" name="etm_entity_type_form_data_source">
             <settings>
                 <requestFieldName>id</requestFieldName>
                 <primaryFieldName>entity_type_id</primaryFieldName>
