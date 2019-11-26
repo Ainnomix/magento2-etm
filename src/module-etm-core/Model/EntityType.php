@@ -90,6 +90,28 @@ class EntityType extends EavEntityType
     protected function _construct(): void
     {
         $this->_init(ResourceEntityType::class);
+
+        $this->_eventPrefix = 'etm_entity_type';
+        $this->_eventObject = 'entity_type';
+    }
+
+    /**
+     * Check is entity type custom
+     *
+     * @param bool|null $flag
+     *
+     * @return bool
+     */
+    public function isCustom(bool $flag = null): bool
+    {
+        $value = (bool) $this->getData('is_custom');
+        if ($flag === null) {
+            return $value;
+        }
+
+        $this->setData('is_custom', $flag);
+
+        return $value;
     }
 
     /**

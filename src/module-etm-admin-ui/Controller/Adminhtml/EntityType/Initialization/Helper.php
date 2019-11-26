@@ -64,14 +64,16 @@ class Helper
      * @param int $entityTypeId Entity type ID
      *
      * @return EntityTypeInterface
+     *
+     * @throws NoSuchEntityException
      */
     public function getById(int $entityTypeId): EntityTypeInterface
     {
-        try {
-            $entityType = $this->entityTypeRepository->getById($entityTypeId);
-        } catch (NoSuchEntityException $exception) {
-            $entityType = $this->entityTypeFactory->create();
+        if ($entityTypeId === 0) {
+            return $this->entityTypeFactory->create();
         }
+
+        $entityType = $this->entityTypeRepository->getById($entityTypeId);
 
         return $entityType;
     }

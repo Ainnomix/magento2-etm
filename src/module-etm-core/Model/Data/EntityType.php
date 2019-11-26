@@ -14,9 +14,8 @@ declare(strict_types=1);
 
 namespace Ainnomix\EtmCore\Model\Data;
 
-use Magento\Framework\Api\AbstractExtensibleObject;
+use Magento\Framework\Api\AbstractSimpleObject;
 use Ainnomix\EtmCore\Api\Data\EntityTypeInterface;
-use Ainnomix\EtmCore\Api\Data\EntityTypeExtensionInterface;
 
 /**
  * Entity Type data model
@@ -25,7 +24,7 @@ use Ainnomix\EtmCore\Api\Data\EntityTypeExtensionInterface;
  * @package  Ainnomix\EtmCore
  * @author   Roman Tomchak <romantomchak@gmail.com>
  */
-class EntityType extends AbstractExtensibleObject implements EntityTypeInterface
+class EntityType extends AbstractSimpleObject implements EntityTypeInterface
 {
 
     /**
@@ -299,22 +298,6 @@ class EntityType extends AbstractExtensibleObject implements EntityTypeInterface
 //    {
 //        $this->setData(self::ENTITY_ATTRIBUTE_COLLECTION, $modelName);
 //    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public function getExtensionAttributes(): EntityTypeExtensionInterface
-    {
-        return $this->_getExtensionAttributes();
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public function setExtensionAttributes(EntityTypeExtensionInterface $extensionAttributes): EntityTypeInterface
-    {
-        return $this->_setExtensionAttributes($extensionAttributes);
-    }
 
     /**
      * Get object data by key with calling getter method

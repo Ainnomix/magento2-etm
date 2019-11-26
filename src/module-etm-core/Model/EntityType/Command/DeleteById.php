@@ -14,7 +14,7 @@ declare(strict_types=1);
 
 namespace Ainnomix\EtmCore\Model\EntityType\Command;
 
-use Ainnomix\EtmCore\Api\Data\EntityTypeInterfaceFactory;
+use Ainnomix\EtmCore\Model\EntityTypeFactory;
 use Ainnomix\EtmCore\Model\ResourceModel\EntityType as Resource;
 use Magento\Framework\Exception\CouldNotDeleteException;
 use Magento\Framework\Exception\NoSuchEntityException;
@@ -30,7 +30,7 @@ class DeleteById implements DeleteByIdInterface
 {
 
     /**
-     * @var EntityTypeInterfaceFactory
+     * @var EntityTypeFactory
      */
     protected $entityTypeFactory;
 
@@ -47,12 +47,12 @@ class DeleteById implements DeleteByIdInterface
     /**
      * DeleteById Command constructor
      *
-     * @param EntityTypeInterfaceFactory $entityTypeFactory
+     * @param EntityTypeFactory $entityTypeFactory
      * @param Resource $entityTypeResource
      * @param LoggerInterface $logger
      */
     public function __construct(
-        EntityTypeInterfaceFactory $entityTypeFactory,
+        EntityTypeFactory $entityTypeFactory,
         Resource $entityTypeResource,
         LoggerInterface $logger
     ) {
@@ -69,7 +69,7 @@ class DeleteById implements DeleteByIdInterface
         $entityType = $this->entityTypeFactory->create();
         $this->entityTypeResource->load($entityType, $entityTypeId, 'entity_type_id');
 
-        if (null === $entityType->getId()) {
+        if (null === $entityType->getId() || !$entityType->isCustom()) {
             throw new NoSuchEntityException(
                 __(
                     'There is no entity type with "%fieldValue" for "%fieldName". Verify and try again.',

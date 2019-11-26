@@ -15,8 +15,11 @@ declare(strict_types=1);
 namespace Ainnomix\EtmCore\Model\EntityType;
 
 use Zend_Validate_Interface;
+use Magento\Framework\Api\DataObjectHelper;
 use Magento\Framework\Validation\ValidationResult;
+use Ainnomix\EtmCore\Model\EntityType;
 use Ainnomix\EtmCore\Api\Data\EntityTypeInterface;
+use Ainnomix\EtmCore\Api\Data\EntityTypeInterfaceFactory;
 use Ainnomix\EtmCore\Model\EntityTypeValidatorInterface;
 
 class ValidationAdapter implements Zend_Validate_Interface
@@ -28,25 +31,47 @@ class ValidationAdapter implements Zend_Validate_Interface
     private $validator;
 
     /**
+     * @var DataObjectHelper
+     */
+    private $dataObjectHelper;
+
+    /**
+     * @var EntityTypeInterfaceFactory
+     */
+    private $entityTypeFactory;
+
+    /**
      * @var ValidationResult
      */
     private $validationResult;
 
-    public function __construct(EntityTypeValidatorInterface $validator)
-    {
+    public function __construct(
+        EntityTypeValidatorInterface $validator,
+        DataObjectHelper $dataObjectHelper,
+        EntityTypeInterfaceFactory $entityTypeFactory
+    ) {
         $this->validator = $validator;
+        $this->dataObjectHelper = $dataObjectHelper;
+        $this->entityTypeFactory = $entityTypeFactory;
     }
 
     /**
      * Validate entity type object
      *
-     * @param EntityTypeInterface $value
+     * @param EntityType $value
      *
      * @return bool
      */
     public function isValid($value): bool
     {
-        $this->validationResult = $this->validator->validate($value);
+        $object = $this->entityTypeFactory->create();
+        $this->dataObjectHelper->populateWithArray(
+            $object,
+            $value->getData(),
+            EntityTypeInterface::class
+        );
+
+        $this->validationResult = $this->validator->validate($object);
 
         return  $this->validationResult->isValid();
     }

@@ -3,7 +3,7 @@
 <schema xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:noNamespaceSchemaLocation="urn:magento:framework:Setup/Declaration/Schema/etc/schema.xsd">
     <table name="eav_entity_type">
-        <column xsi:type="varchar" name="entity_type_name" nullable="false" length="255" comment="Entity Type Name"/>
+        <column xsi:type="varchar" name="entity_type_name" nullable="false" default="" length="255" comment="Entity Type Name"/>
         <column xsi:type="smallint" name="is_custom" padding="5" unsigned="true" nullable="false" identity="false" default="0" comment="Is entity type custom"/>
         <index referenceId="EAV_ENTITY_TYPE_ENTITY_TYPE_IS_CUSTOM" indexType="btree">
             <column name="is_custom"/>

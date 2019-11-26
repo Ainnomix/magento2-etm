@@ -14,6 +14,7 @@ declare(strict_types=1);
 
 namespace Ainnomix\EtmCore\Model\ResourceModel;
 
+use Ainnomix\EtmCore\Api\Data\EntityTypeInterface;
 use Magento\Eav\Model\ResourceModel\Entity\Type as EavEntityType;
 
 /**
@@ -25,29 +26,21 @@ use Magento\Eav\Model\ResourceModel\Entity\Type as EavEntityType;
 class EntityType extends EavEntityType
 {
 
-    public function getValidationRulesBeforeSave(): \Zend_Validate
-    {
-        $validator = new \Zend_Validate();
-
-        $codeValidator = new \Zend_Validate_Callback([$this, 'isCodeUnique']);
-        $codeValidator->setMessage(
-            __('Entity type with the same code already exists.'),
-            \Zend_Validate_Callback::INVALID_VALUE
-        );
-        $validator->addValidator($codeValidator, true);
-
-        return $validator;
-    }
-
-    public function validateCodeExistence(string $code)
+    public function validateCodeExistence(EntityTypeInterface $entityType)
     {
         $connection = $this->getConnection();
         $select = $connection->select();
 
-        $binds = ['entity_type_code' => $code];
+        $binds = ['entity_type_code' => $entityType->getEntityTypeCode()];
 
         $select->from($this->getMainTable())
-            ->where('(entity_type_code = :entity_type_code)');
+            ->where('entity_type_code = :entity_type_code');
+
+        if ($entityType->getEntityTypeId()) {
+            $binds['entity_type_id'] = $entityType->getEntityTypeId();
+
+            $select->where('entity_type_id != :entity_type_id');
+        }
 
         $row = $connection->fetchRow($select, $binds);
 

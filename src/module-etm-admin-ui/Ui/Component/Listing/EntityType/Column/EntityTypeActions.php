@@ -14,10 +14,10 @@ declare(strict_types=1);
 
 namespace Ainnomix\EtmAdminUi\Ui\Component\Listing\EntityType\Column;
 
-use Magento\Framework\View\Element\UiComponent\ContextInterface;
-use Magento\Framework\View\Element\UiComponentFactory;
-use Magento\Ui\Component\Listing\Columns\Column;
 use Magento\Framework\UrlInterface;
+use Magento\Framework\View\Element\UiComponentFactory;
+use Magento\Framework\View\Element\UiComponent\ContextInterface;
+use Magento\Ui\Component\Listing\Columns\Column;
 
 /**
  * Grid action provider for entity types grid
@@ -29,6 +29,9 @@ use Magento\Framework\UrlInterface;
 class EntityTypeActions extends Column
 {
 
+    /**
+     * @var UrlInterface
+     */
     private $urlBuilder;
 
     public function __construct(

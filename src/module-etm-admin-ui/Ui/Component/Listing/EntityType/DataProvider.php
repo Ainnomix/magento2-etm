@@ -34,13 +34,13 @@ class DataProvider extends ViewDataProvider
     public function getSearchCriteria()
     {
         if (!$this->searchCriteria) {
-//            $this->searchCriteriaBuilder->addFilter(
-//                $this->filterBuilder
-//                    ->setField('is_custom')
-//                    ->setValue(1)
-//                    ->setConditionType('eq')
-//                    ->create()
-//            );
+            $this->searchCriteriaBuilder->addFilter(
+                $this->filterBuilder
+                    ->setField('is_custom')
+                    ->setValue(1)
+                    ->setConditionType('eq')
+                    ->create()
+            );
             $this->searchCriteria = $this->searchCriteriaBuilder->create();
             $this->searchCriteria->setRequestName($this->name);
         }

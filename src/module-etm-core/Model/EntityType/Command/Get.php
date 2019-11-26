@@ -57,11 +57,10 @@ class Get implements GetInterface
      */
     public function execute(string $entityTypeCode): EntityTypeInterface
     {
-        /** @var \Ainnomix\EtmCore\Model\EntityType $entityType */
         $entityType = $this->entityTypeFactory->create();
         $this->entityTypeResource->load($entityType, $entityTypeCode, 'entity_type_code');
 
-        if (null === $entityType->getId()) {
+        if (null === $entityType->getId() || !$entityType->isCustom()) {
             throw new NoSuchEntityException(
                 __('Entity type with code "%value" does not exist.', ['value' => $entityTypeCode])
             );

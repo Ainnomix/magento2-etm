@@ -12,7 +12,7 @@
 
 declare(strict_types=1);
 
-namespace Ainnomix\EtmAdminUi\Controller\Adminhtml\Entity\Type;
+namespace Ainnomix\EtmAdminUi\Controller\Adminhtml\EntityType;
 
 use Magento\Backend\App\Action;
 use Magento\Framework\Api\DataObjectHelper;
@@ -20,9 +20,9 @@ use Magento\Framework\Controller\Result\Redirect;
 use Magento\Framework\App\Action\HttpPostActionInterface;
 use Magento\Framework\Exception\CouldNotSaveException;
 use Magento\Framework\Exception\NoSuchEntityException;
-use Ainnomix\EtmApi\Api\Data\EntityTypeInterface;
-use Ainnomix\EtmApi\Api\Data\EntityTypeInterfaceFactory;
-use Ainnomix\EtmApi\Api\EntityTypeRepositoryInterface;
+use Ainnomix\EtmCore\Api\Data\EntityTypeInterface;
+use Ainnomix\EtmCore\Api\EntityTypeRepositoryInterface;
+use Ainnomix\EtmAdminUi\Controller\Adminhtml\EntityType\Initialization\Helper;
 
 /**
  * Save Entity type action class
@@ -31,7 +31,7 @@ use Ainnomix\EtmApi\Api\EntityTypeRepositoryInterface;
  * @package  Ainnomix\EtmAdminUi
  * @author   Roman Tomchak <romantomchak@gmail.com>
  */
-class Save extends \Magento\Backend\App\Action implements HttpPostActionInterface
+class Save extends Action implements HttpPostActionInterface
 {
 
     /**
@@ -40,26 +40,26 @@ class Save extends \Magento\Backend\App\Action implements HttpPostActionInterfac
     protected $dataObjectHelper;
 
     /**
+     * @var Helper
+     */
+    protected $initializationHelper;
+
+    /**
      * @var EntityTypeRepositoryInterface
      */
     protected $entityTypeRepository;
 
-    /**
-     * @var EntityTypeInterfaceFactory
-     */
-    protected $entityTypeFactory;
-
     public function __construct(
         Action\Context $context,
         DataObjectHelper $dataObjectHelper,
-        EntityTypeRepositoryInterface $entityTypeRepository,
-        EntityTypeInterfaceFactory $entityTypeFactory
+        Helper $initializationHelper,
+        EntityTypeRepositoryInterface $entityTypeRepository
     ) {
         parent::__construct($context);
 
         $this->dataObjectHelper = $dataObjectHelper;
+        $this->initializationHelper = $initializationHelper;
         $this->entityTypeRepository = $entityTypeRepository;
-        $this->entityTypeFactory = $entityTypeFactory;
     }
 
     public function execute()
@@ -73,21 +73,19 @@ class Save extends \Magento\Backend\App\Action implements HttpPostActionInterfac
             return $resultRedirect;
         }
 
-        $entityTypeId = !empty($requestData['general'][EntityTypeInterface::ENTITY_TYPE_ID])
-            ? (int) $requestData['general'][EntityTypeInterface::ENTITY_TYPE_ID]
-            : null;
+        $entityTypeId = (int) $requestData['general'][EntityTypeInterface::ENTITY_TYPE_ID] ?? 0;
 
         try {
-            $entityType = $this->getEntityInstance($entityTypeId);
+            $entityType = $this->initializationHelper->getById($entityTypeId);
             $this->dataObjectHelper->populateWithArray(
                 $entityType,
                 $this->filterRequestData($requestData['general']),
                 EntityTypeInterface::class
             );
-            $this->entityTypeRepository->save($entityType);
+            $entityTypeId = $this->entityTypeRepository->save($entityType);
             $this->processRedirectAfterSuccessSave($resultRedirect, $entityTypeId);
         } catch (NoSuchEntityException $exception) {
-            $this->messageManager->addErrorMessage(__('The Entity type does not exist.'));
+            $this->messageManager->addErrorMessage(__('Requested entity type does not exist.'));
             $this->processRedirectAfterFailureSave($resultRedirect, $entityTypeId);
         } catch (CouldNotSaveException $exception) {
             $this->messageManager->addErrorMessage($exception->getMessage());
@@ -98,25 +96,6 @@ class Save extends \Magento\Backend\App\Action implements HttpPostActionInterfac
         }
 
         return $resultRedirect;
-    }
-
-    /**
-     * Retrieve entity type model instance by typeId.
-     *
-     * @param int|null $entityTypeId
-     *
-     * @return EntityTypeInterface
-     *
-     * @throws NoSuchEntityException
-     */
-    private function getEntityInstance(?int $entityTypeId): EntityTypeInterface
-    {
-        if (null === $entityTypeId) {
-            $entityType = $this->entityTypeFactory->create();
-        } else {
-            $entityType = $this->entityTypeRepository->getById($entityTypeId);
-        }
-        return $entityType;
     }
 
     private function filterRequestData(array $data): array
@@ -130,7 +109,7 @@ class Save extends \Magento\Backend\App\Action implements HttpPostActionInterfac
     {
         if ($this->getRequest()->getParam('back')) {
             $resultRedirect->setPath('*/*/edit', [
-                EntityTypeInterface::ENTITY_TYPE_ID => $typeId,
+                'id' => $typeId,
                 '_current' => true,
             ]);
         } elseif ($this->getRequest()->getParam('redirect_to_new')) {

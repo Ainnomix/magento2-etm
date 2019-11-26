@@ -57,11 +57,10 @@ class GetById implements GetByIdInterface
      */
     public function execute(int $entityTypeId): EntityTypeInterface
     {
-        /** @var \Ainnomix\EtmCore\Model\EntityType $entityType */
         $entityType = $this->entityTypeFactory->create();
         $this->entityTypeResource->load($entityType, $entityTypeId, 'entity_type_id');
 
-        if (null === $entityType->getId()) {
+        if (null === $entityType->getId() || !$entityType->isCustom()) {
             throw new NoSuchEntityException(
                 __('Entity type with id "%value" does not exist.', ['value' => $entityTypeId])
             );

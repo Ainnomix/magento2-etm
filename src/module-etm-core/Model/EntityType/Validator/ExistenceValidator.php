@@ -45,7 +45,7 @@ class ExistenceValidator implements EntityTypeValidatorInterface
     public function validate(EntityTypeInterface $entityType): ValidationResult
     {
         $callback = function (EntityTypeInterface $entityType) {
-            return $this->resource->validateCodeExistence($entityType->getEntityTypeCode());
+            return $this->resource->validateCodeExistence($entityType);
         };
 
         $validator = new Zend_Validate_Callback($callback);

@@ -14,7 +14,10 @@ declare(strict_types=1);
 
 namespace Ainnomix\EtmAdminUi\Controller\Adminhtml\EntityType;
 
+use Exception;
 use Magento\Backend\App\Action;
+use Magento\Framework\Controller\ResultInterface;
+use Magento\Framework\Exception\NoSuchEntityException;
 use Magento\Framework\View\Result\Page;
 use Magento\Framework\Controller\ResultFactory;
 use Magento\Framework\App\Action\HttpGetActionInterface;
@@ -53,14 +56,38 @@ class Edit extends Action implements HttpGetActionInterface
     /**
      * Execute controller action
      *
-     * @return Page
+     * @return ResultInterface
      */
-    public function execute(): Page
+    public function execute(): ResultInterface
+    {
+        try {
+            $resultPage = $this->renderResult();
+        } catch (NoSuchEntityException $exception) {
+            $this->messageManager->addErrorMessage(__('Requested entity type does not exist.'));
+
+            $resultPage = $this->resultRedirectFactory->create();
+            $resultPage->setPath('*/*/');
+        } catch (Exception $exception) {
+            $this->messageManager->addErrorMessage($exception->getMessage());
+
+            $resultPage = $this->resultRedirectFactory->create();
+            $resultPage->setPath('*/*/');
+        }
+
+        return $resultPage;
+    }
+
+    /**
+     * @return ResultInterface
+     *
+     * @throws NoSuchEntityException
+     */
+    private function renderResult()
     {
         $entityTypeId = (int) $this->getRequest()->getParam('id');
-        $entityType = $this->initializationHelper->getById($entityTypeId);
 
         $resultPage = $this->resultFactory->create(ResultFactory::TYPE_PAGE);
+        $entityType = $this->initializationHelper->getById($entityTypeId);
 
         $resultPage->setActiveMenu('Ainnomix_EtmAdminhtml::management_index');
         $resultPage->getConfig()->getTitle()->prepend(__('Entity Type Manager'));
@@ -68,9 +95,9 @@ class Edit extends Action implements HttpGetActionInterface
         if ($entityType->getEntityTypeId()) {
             $resultPage->getConfig()->getTitle()->prepend(__('Edit "%1" type', $entityType->getEntityTypeCode()));
         } else {
-            $resultPage->getConfig()->getTitle()->prepend(__('Create Entity type'));
+            $resultPage->getConfig()->getTitle()->prepend(__('Create Entity Type'));
         }
 
-        return $this->resultFactory->create(ResultFactory::TYPE_PAGE);
+        return $resultPage;
     }
 }
