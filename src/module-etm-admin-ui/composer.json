@@ -24,7 +24,6 @@
         "magento/module-eav": "~102.0.0",
         "magento/module-backend": "~101.0.0",
         "magento/module-ui": "~101.1.0",
-        "ainnomix/etm-api": "^1.0",
         "ainnomix/etm-core": "^1.0"
     },
     "autoload": {

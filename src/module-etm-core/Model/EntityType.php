@@ -26,6 +26,7 @@ use Magento\Eav\Model\Entity\Attribute\SetFactory;
 use Magento\Eav\Model\Entity\Type as EavEntityType;
 use Ainnomix\EtmCore\Api\Data\EntityTypeInterface;
 use Ainnomix\EtmCore\Api\Data\EntityTypeInterfaceFactory;
+use Ainnomix\EtmCore\Model\EntityType\ValidationAdapter;
 use Ainnomix\EtmCore\Model\ResourceModel\EntityType as ResourceEntityType;
 
 /**
@@ -47,6 +48,11 @@ class EntityType extends EavEntityType
      */
     protected $entityTypeFactory;
 
+    /**
+     * @var ValidationAdapter
+     */
+    protected $validator;
+
     public function __construct(
         Context $context,
         Registry $registry,
@@ -56,6 +62,7 @@ class EntityType extends EavEntityType
         UniversalFactory $universalFactory,
         DataObjectHelper $dataObjectHelper,
         EntityTypeInterfaceFactory $entityTypeFactory,
+        ValidationAdapter $validator,
         AbstractResource $resource = null,
         AbstractDb $resourceCollection = null,
         array $data = []
@@ -74,6 +81,7 @@ class EntityType extends EavEntityType
 
         $this->dataObjectHelper = $dataObjectHelper;
         $this->entityTypeFactory = $entityTypeFactory;
+        $this->validator = $validator;
     }
 
     /**
@@ -101,5 +109,13 @@ class EntityType extends EavEntityType
         );
 
         return $entityDataObject;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    protected function _getValidationRulesBeforeSave()
+    {
+        return $this->validator;
     }
 }

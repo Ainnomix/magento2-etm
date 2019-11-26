@@ -4,7 +4,6 @@
     <module name="Ainnomix_EtmCore" setup_version="1.0.0">
         <sequence>
             <module name="Magento_Eav"/>
-            <module name="Ainnomix_EtmApi"/>
         </sequence>
     </module>
 </config>

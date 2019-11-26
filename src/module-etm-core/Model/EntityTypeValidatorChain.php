@@ -47,9 +47,9 @@ class EntityTypeValidatorChain implements EntityTypeValidatorInterface
         $this->validationResultFactory = $validationResultFactory;
 
         foreach ($validators as $validator) {
-            if (!$validator instanceof EntityTypeInterface) {
+            if (!$validator instanceof EntityTypeValidatorInterface) {
                 throw new LocalizedException(
-                    __('Source item Validator must implement SourceItemValidatorInterface.')
+                    __('Entity type Validator must implement EntityTypeValidatorInterface.')
                 );
             }
         }

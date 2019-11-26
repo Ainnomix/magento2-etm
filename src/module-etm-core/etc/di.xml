@@ -11,6 +11,15 @@
     <preference for="Ainnomix\EtmCore\Model\EntityType\Command\SaveInterface" type="Ainnomix\EtmCore\Model\EntityType\Command\Save"/>
     <preference for="Ainnomix\EtmCore\Model\EntityType\Command\DeleteByIdInterface" type="Ainnomix\EtmCore\Model\EntityType\Command\DeleteById"/>
 
+    <preference for="Ainnomix\EtmCore\Model\EntityTypeValidatorInterface" type="Ainnomix\EtmCore\Model\EntityTypeValidatorChain"/>
+
+    <type name="Ainnomix\EtmCore\Model\EntityType">
+        <arguments>
+            <argument name="dataObjectHelper" xsi:type="object">Magento\Framework\Api\DataObjectHelper\Proxy</argument>
+            <argument name="validator" xsi:type="object">Ainnomix\EtmCore\Model\EntityType\ValidationAdapter\Proxy</argument>
+        </arguments>
+    </type>
+
     <type name="Ainnomix\EtmCore\Model\EntityTypeRepository">
         <arguments>
             <argument name="commandGet" xsi:type="object">Ainnomix\EtmCore\Model\EntityType\Command\GetInterface\Proxy</argument>
@@ -18,6 +27,16 @@
             <argument name="commandGetList" xsi:type="object">Ainnomix\EtmCore\Model\EntityType\Command\GetListInterface\Proxy</argument>
             <argument name="commandSave" xsi:type="object">Ainnomix\EtmCore\Model\EntityType\Command\SaveInterface\Proxy</argument>
             <argument name="commandDeleteById" xsi:type="object">Ainnomix\EtmCore\Model\EntityType\Command\DeleteByIdInterface\Proxy</argument>
+        </arguments>
+    </type>
+    
+    <type name="Ainnomix\EtmCore\Model\EntityTypeValidatorChain">
+        <arguments>
+            <argument name="validators" xsi:type="array">
+                <item name="code" xsi:type="object">Ainnomix\EtmCore\Model\EntityType\Validator\CodeValidator</item>
+                <item name="name" xsi:type="object">Ainnomix\EtmCore\Model\EntityType\Validator\NameValidator</item>
+                <item name="existence" xsi:type="object">Ainnomix\EtmCore\Model\EntityType\Validator\ExistenceValidator</item>
+            </argument>
         </arguments>
     </type>
 </config>

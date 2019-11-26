@@ -12,18 +12,18 @@
 
 declare(strict_types=1);
 
-namespace Ainnomix\EtmAdminUi\Controller\Adminhtml\Entity\Type;
+namespace Ainnomix\EtmAdminUi\Controller\Adminhtml\EntityType;
 
+use Exception;
 use Magento\Backend\App\Action;
-use Magento\Framework\View\LayoutFactory;
+use Magento\Framework\DataObject;
 use Magento\Framework\Api\DataObjectHelper;
 use Magento\Framework\Controller\ResultFactory;
 use Magento\Framework\Controller\Result\Json;
 use Magento\Framework\App\Action\HttpPostActionInterface;
-use Ainnomix\EtmApi\Api\Data\EntityTypeInterface;
-use Ainnomix\EtmAdminUi\Model\Model\Entity\Type\Validator;
-use Ainnomix\EtmApi\Api\Data\EntityTypeInterfaceFactory;
-use Ainnomix\EtmApi\Api\EntityTypeRepositoryInterface;
+use Ainnomix\EtmCore\Api\Data\EntityTypeInterface;
+use Ainnomix\EtmCore\Api\Data\EntityTypeInterfaceFactory;
+use Ainnomix\EtmCore\Model\EntityTypeValidatorInterface;
 
 /**
  * Entity type validation action class
@@ -32,18 +32,8 @@ use Ainnomix\EtmApi\Api\EntityTypeRepositoryInterface;
  * @package  Ainnomix\EtmAdminhtml
  * @author   Roman Tomchak <romantomchak@gmail.com>
  */
-class Validate extends \Magento\Backend\App\Action implements HttpPostActionInterface
+class Validate extends Action implements HttpPostActionInterface
 {
-
-    /**
-     * @var Validator
-     */
-    private $validator;
-
-    /**
-     * @var LayoutFactory
-     */
-    private $layoutFactory;
 
     /**
      * @var DataObjectHelper
@@ -56,25 +46,21 @@ class Validate extends \Magento\Backend\App\Action implements HttpPostActionInte
     private $entityTypeFactory;
 
     /**
-     * @var EntityTypeRepositoryInterface
+     * @var EntityTypeValidatorInterface
      */
-    private $entityTypeRepository;
+    private $validator;
 
     public function __construct(
         Action\Context $context,
-        Validator $validator,
+        DataObjectHelper $dataObjectHelper,
         EntityTypeInterfaceFactory $entityTypeFactory,
-        EntityTypeRepositoryInterface $entityTypeRepository,
-        LayoutFactory $layoutFactory,
-        DataObjectHelper $dataObjectHelper
+        EntityTypeValidatorInterface $validator
     ) {
         parent::__construct($context);
 
-        $this->validator = $validator;
-        $this->layoutFactory = $layoutFactory;
         $this->dataObjectHelper = $dataObjectHelper;
         $this->entityTypeFactory = $entityTypeFactory;
-        $this->entityTypeRepository = $entityTypeRepository;
+        $this->validator = $validator;
     }
 
     /**
@@ -84,54 +70,34 @@ class Validate extends \Magento\Backend\App\Action implements HttpPostActionInte
      */
     public function execute(): Json
     {
-        $response = new \Magento\Framework\DataObject();
+        $response = new DataObject();
         $response->setError(false);
 
         $requestData = $this->getRequest()->getParams();
 
-        if (!$this->getRequest()->isPost() || empty($requestData['general'])) {
-            $this->messageManager->addErrorMessage(__('Wrong request.'));
-            $layout = $this->layoutFactory->create();
-            $layout->initMessages();
-            $response->setError(true);
-            $response->setHtmlMessage($layout->getMessagesBlock()->getGroupedHtml());
-        }
-
-        $entityTypeId = !empty($requestData['general'][EntityTypeInterface::ENTITY_TYPE_ID])
-            ? (int) $requestData['general'][EntityTypeInterface::ENTITY_TYPE_ID]
-            : null;
-
         try {
-            $entityType = $this->getEntityInstance($entityTypeId);
+            if (!$this->getRequest()->isPost() || empty($requestData['general'])) {
+                throw new Exception((string) __('Wrong request.'));
+            }
+
+            $entityType = $this->entityTypeFactory->create();
             $this->dataObjectHelper->populateWithArray(
                 $entityType,
                 $this->filterRequestData($requestData['general']),
                 EntityTypeInterface::class
             );
 
-            if (!$this->validator->isValid($entityType)) {
+            $validationResult = $this->validator->validate($entityType);
+            if (!$validationResult->isValid()) {
                 $response->setError(true);
-                $response->setMessages($this->validator->getMessages());
+                $response->setMessages($validationResult->getErrors());
             }
-        } catch (\Exception $exception) {
-            $this->messageManager->addErrorMessage($exception->getMessage());
-            $layout = $this->layoutFactory->create();
-            $layout->initMessages();
+        } catch (Exception $exception) {
             $response->setError(true);
-            $response->setHtmlMessage($layout->getMessagesBlock()->getGroupedHtml());
+            $response->setMessages([$exception->getMessage()]);
         }
 
         return $this->resultFactory->create(ResultFactory::TYPE_JSON)->setData($response);
-    }
-
-    private function getEntityInstance(?int $entityTypeId): EntityTypeInterface
-    {
-        if (null === $entityTypeId) {
-            $entityType = $this->entityTypeFactory->create();
-        } else {
-            $entityType = $this->entityTypeRepository->getById($entityTypeId);
-        }
-        return $entityType;
     }
 
     private function filterRequestData(array $data): array

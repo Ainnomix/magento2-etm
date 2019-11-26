@@ -22,8 +22,7 @@
     },
     "require": {
         "magento/framework": "~102.0.0",
-        "magento/module-eav": "~102.0.0",
-        "ainnomix/module-etm-api": "^1.0"
+        "magento/module-eav": "~102.0.0"
     },
     "autoload": {
         "files": [

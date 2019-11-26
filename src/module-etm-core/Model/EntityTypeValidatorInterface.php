@@ -25,5 +25,5 @@ interface EntityTypeValidatorInterface
      *
      * @return ValidationResult
      */
-    public function validate(EntityTypeInterface $entityType);
+    public function validate(EntityTypeInterface $entityType): ValidationResult;
 }

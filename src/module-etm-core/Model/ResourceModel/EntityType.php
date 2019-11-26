@@ -39,27 +39,18 @@ class EntityType extends EavEntityType
         return $validator;
     }
 
-    public function isCodeUnique(\Ainnomix\EtmCore\Model\EntityType\Type $entityType)
+    public function validateCodeExistence(string $code)
     {
-        if (!$entityType->getEntityTypeId()) {
-            $connection = $this->getConnection();
-            $select = $connection->select();
+        $connection = $this->getConnection();
+        $select = $connection->select();
 
-            $binds = [
-                'entity_type_code' => $entityType->getEntityTypeCode(),
-            ];
+        $binds = ['entity_type_code' => $code];
 
-            $select->from(
-                $this->getMainTable()
-            )->where(
-                '(entity_type_code = :entity_type_code)'
-            );
+        $select->from($this->getMainTable())
+            ->where('(entity_type_code = :entity_type_code)');
 
-            $row = $connection->fetchRow($select, $binds);
+        $row = $connection->fetchRow($select, $binds);
 
-            return empty($row);
-        }
-
-        return true;
+        return empty($row);
     }
 }
