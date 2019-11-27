@@ -47,7 +47,7 @@
                         <message translate="true">Are you sure you want to delete selected items?</message>
                         <title translate="true">Delete items</title>
                     </confirm>
-                    <url path="etm/entity_type/massDelete"/>
+                    <url path="etm/entityType/massDelete"/>
                     <type>delete</type>
                     <label translate="true">Delete</label>
                 </settings>

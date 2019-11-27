@@ -32,9 +32,8 @@ class Collection extends EavCollection
      */
     protected function _construct(): void
     {
-        $this->_init(
-            EntityType::class,
-            ResourceEntityType::class
-        );
+        $this->_init(EntityType::class, ResourceEntityType::class);
+
+        $this->_idFieldName = 'entity_type_id';
     }
 }

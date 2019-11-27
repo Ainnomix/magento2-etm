@@ -26,7 +26,7 @@ use Magento\Eav\Model\ResourceModel\Entity\Type as EavEntityType;
 class EntityType extends EavEntityType
 {
 
-    public function validateCodeExistence(EntityTypeInterface $entityType)
+    public function validateCodeExistence(EntityTypeInterface $entityType): bool
     {
         $connection = $this->getConnection();
         $select = $connection->select();

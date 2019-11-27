@@ -16,30 +16,21 @@ namespace Ainnomix\EtmAdminUi\Controller\Adminhtml\EntityType;
 
 use Exception;
 use Magento\Backend\App\Action;
-use Magento\Ui\Component\MassAction\Filter;
 use Magento\Framework\Controller\Result\Redirect;
+use Magento\Framework\Exception\CouldNotDeleteException;
+use Magento\Framework\Exception\NoSuchEntityException;
+use Magento\Framework\App\Action\HttpGetActionInterface;
 use Ainnomix\EtmCore\Api\EntityTypeRepositoryInterface;
-use Ainnomix\EtmCore\Model\ResourceModel\EntityType\CollectionFactory;
 
 /**
- * Delete multiple entity types action class
+ * Delete entity type action class
  *
  * @category Ainnomix_EtmAdminhtml
  * @package  Ainnomix\EtmAdminhtml
  * @author   Roman Tomchak <romantomchak@gmail.com>
  */
-class MassDelete extends Action
+class Delete extends Action implements HttpGetActionInterface
 {
-
-    /**
-     * @var Filter
-     */
-    protected $filter;
-
-    /**
-     * @var CollectionFactory
-     */
-    protected $collectionFactory;
 
     /**
      * @var EntityTypeRepositoryInterface
@@ -48,31 +39,24 @@ class MassDelete extends Action
 
     public function __construct(
         Action\Context $context,
-        Filter $filter,
-        CollectionFactory $collectionFactory,
         EntityTypeRepositoryInterface $entityTypeRepository
     ) {
         parent::__construct($context);
 
-        $this->filter = $filter;
-        $this->collectionFactory = $collectionFactory;
         $this->entityTypeRepository = $entityTypeRepository;
     }
 
     public function execute(): Redirect
     {
+        $entityTypeId = (int) $this->getRequest()->getParam('id');
+
         try {
-            $entitiesDeleted = 0;
-
-            $collection = $this->filter->getCollection($this->collectionFactory->create());
-            foreach ($collection->getAllIds() as $entityId) {
-                $this->entityTypeRepository->deleteById((int) $entityId);
-                $entitiesDeleted++;
-            }
-
-            if ($entitiesDeleted) {
-                $this->messageManager->addSuccessMessage(__('A total of %1 record(s) were deleted.', $entitiesDeleted));
-            }
+            $this->entityTypeRepository->deleteById($entityTypeId);
+            $this->messageManager->addSuccessMessage(__('The entity type has been successfully deleted'));
+        } catch (NoSuchEntityException $exception) {
+            $this->messageManager->addErrorMessage(__('Requested entity type does not exist.'));
+        } catch (CouldNotDeleteException $exception) {
+            $this->messageManager->addErrorMessage(__('Could not delete entity type does not exist.'));
         } catch (Exception $exception) {
             $this->messageManager->addErrorMessage($exception->getMessage());
         }
