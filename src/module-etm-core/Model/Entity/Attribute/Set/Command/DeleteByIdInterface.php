@@ -1,0 +1,32 @@
+<?php
+/**
+ * Do not edit or add to this file if you wish to upgrade Entity Type Manager to newer
+ * versions in the future.
+ *
+ * @category  Ainnomix
+ * @package   Ainnomix\EtmCore
+ * @author    Roman Tomchak <romantomchak@gmail.com>
+ * @copyright 2019 Ainnomix
+ * @license   Open Software License ("OSL") v. 3.0
+ */
+
+declare(strict_types=1);
+
+namespace Ainnomix\EtmCore\Model\Entity\Attribute\Set\Command;
+
+use Magento\Framework\Exception\CouldNotDeleteException;
+use Magento\Framework\Exception\NoSuchEntityException;
+
+interface DeleteByIdInterface
+{
+
+    /**
+     * Delete attribute set by ID. If entity does not exist do nothing
+     *
+     * @param int $setId Attribute set ID
+     *
+     * @throws CouldNotDeleteException
+     * @throws NoSuchEntityException
+     */
+    public function execute(int $setId): void;
+}

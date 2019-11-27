@@ -14,11 +14,14 @@ declare(strict_types=1);
 
 namespace Ainnomix\EtmCore\Model\EntityType\Command;
 
+use Exception;
 use Ainnomix\EtmCore\Model\EntityType;
 use Ainnomix\EtmCore\Model\EntityTypeFactory;
 use Ainnomix\EtmCore\Api\Data\EntityTypeInterface;
 use Ainnomix\EtmCore\Model\ResourceModel\EntityType as Resource;
-use Exception;
+use Ainnomix\EtmCore\Api\AttributeSetRepositoryInterface;
+use Ainnomix\EtmCore\Api\Data\AttributeSetInterface;
+use Ainnomix\EtmCore\Api\Data\AttributeSetInterfaceFactory;
 use Magento\Framework\Reflection\DataObjectProcessor;
 use Magento\Framework\Exception\CouldNotSaveException;
 
@@ -46,14 +49,28 @@ class Save implements SaveInterface
      */
     private $entityTypeResource;
 
+    /**
+     * @var AttributeSetRepositoryInterface
+     */
+    private $attributeSetRepository;
+
+    /**
+     * @var AttributeSetInterfaceFactory
+     */
+    private $attributeSetFactory;
+
     public function __construct(
         EntityTypeFactory $entityTypeFactory,
         DataObjectProcessor $dataObjectProcessor,
-        Resource $entityTypeResource
+        Resource $entityTypeResource,
+        AttributeSetRepositoryInterface $attributeSetRepository,
+        AttributeSetInterfaceFactory $attributeSetFactory
     ) {
         $this->entityTypeFactory = $entityTypeFactory;
         $this->dataObjectProcessor = $dataObjectProcessor;
         $this->entityTypeResource = $entityTypeResource;
+        $this->attributeSetRepository = $attributeSetRepository;
+        $this->attributeSetFactory = $attributeSetFactory;
     }
 
     /**
@@ -70,11 +87,25 @@ class Save implements SaveInterface
 
         try {
             $this->entityTypeResource->save($typeTypeModel);
+            if (!$entityType->getEntityTypeId()) {
+                $this->processNewEntity($typeTypeModel);
+            }
         } catch (Exception $exception) {
             throw new CouldNotSaveException(__('Could not save entity type'), $exception);
         }
 
         return (int) $typeTypeModel->getEntityTypeId();
+    }
+
+    private function processNewEntity(EntityType $entityType): void
+    {
+        /** @var AttributeSetInterface $attributeSet */
+        $attributeSet = $this->attributeSetFactory->create();
+        $attributeSet->setAttributeSetName('Default');
+        $attributeSet->setEntityTypeId($entityType->getEntityTypeId());
+        $attributeSet->setSortOrder(1);
+
+        $this->attributeSetRepository->save($attributeSet);
     }
 
     private function populateDefaultValues(EntityType $entityType)
