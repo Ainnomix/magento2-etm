@@ -12,22 +12,21 @@
 
 declare(strict_types=1);
 
-namespace Ainnomix\EtmCore\Model\Entity\Attribute\Set\Command;
+namespace Ainnomix\EtmCore\Model\Entity\Attribute\Group\Command;
 
-use Ainnomix\EtmCore\Api\Data\AttributeSetInterface;
+use Magento\Framework\Exception\CouldNotDeleteException;
 use Magento\Framework\Exception\NoSuchEntityException;
 
-interface GetInterface
+interface DeleteByIdInterface
 {
 
     /**
-     * Get attribute set by given set ID
+     * Delete attribute group by ID. If entity does not exist do nothing
      *
-     * @param int $attributeSetId
+     * @param int $groupId Attribute group ID
      *
-     * @return AttributeSetInterface
-     *
+     * @throws CouldNotDeleteException
      * @throws NoSuchEntityException
      */
-    public function execute(int $attributeSetId): AttributeSetInterface;
+    public function execute(int $groupId): void;
 }

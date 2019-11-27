@@ -22,6 +22,9 @@ use Ainnomix\EtmCore\Model\ResourceModel\EntityType as Resource;
 use Ainnomix\EtmCore\Api\AttributeSetRepositoryInterface;
 use Ainnomix\EtmCore\Api\Data\AttributeSetInterface;
 use Ainnomix\EtmCore\Api\Data\AttributeSetInterfaceFactory;
+use Ainnomix\EtmCore\Api\AttributeGroupRepositoryInterface;
+use Ainnomix\EtmCore\Api\Data\AttributeGroupInterface;
+use Ainnomix\EtmCore\Api\Data\AttributeGroupInterfaceFactory;
 use Magento\Framework\Reflection\DataObjectProcessor;
 use Magento\Framework\Exception\CouldNotSaveException;
 
@@ -59,18 +62,32 @@ class Save implements SaveInterface
      */
     private $attributeSetFactory;
 
+    /**
+     * @var AttributeGroupRepositoryInterface
+     */
+    private $attributeGroupRepository;
+
+    /**
+     * @var AttributeGroupInterfaceFactory
+     */
+    private $attributeGroupFactory;
+
     public function __construct(
         EntityTypeFactory $entityTypeFactory,
         DataObjectProcessor $dataObjectProcessor,
         Resource $entityTypeResource,
         AttributeSetRepositoryInterface $attributeSetRepository,
-        AttributeSetInterfaceFactory $attributeSetFactory
+        AttributeSetInterfaceFactory $attributeSetFactory,
+        AttributeGroupRepositoryInterface $attributeGroupRepository,
+        AttributeGroupInterfaceFactory $attributeGroupFactory
     ) {
         $this->entityTypeFactory = $entityTypeFactory;
         $this->dataObjectProcessor = $dataObjectProcessor;
         $this->entityTypeResource = $entityTypeResource;
         $this->attributeSetRepository = $attributeSetRepository;
         $this->attributeSetFactory = $attributeSetFactory;
+        $this->attributeGroupRepository = $attributeGroupRepository;
+        $this->attributeGroupFactory = $attributeGroupFactory;
     }
 
     /**
@@ -106,6 +123,13 @@ class Save implements SaveInterface
         $attributeSet->setSortOrder(1);
 
         $this->attributeSetRepository->save($attributeSet);
+
+        /** @var AttributeGroupInterface $attributeGroup */
+        $attributeGroup = $this->attributeGroupFactory->create(['data' => ['sort_order' => 1]]);
+        $attributeGroup->setAttributeSetId($attributeSet->getAttributeSetId());
+        $attributeGroup->setAttributeGroupName('General');
+
+        $this->attributeGroupRepository->save($attributeGroup);
     }
 
     private function populateDefaultValues(EntityType $entityType)

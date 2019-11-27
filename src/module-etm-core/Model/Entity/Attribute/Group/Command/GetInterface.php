@@ -12,22 +12,22 @@
 
 declare(strict_types=1);
 
-namespace Ainnomix\EtmCore\Model\Entity\Attribute\Set\Command;
+namespace Ainnomix\EtmCore\Model\Entity\Attribute\Group\Command;
 
-use Ainnomix\EtmCore\Api\Data\AttributeSetInterface;
+use Ainnomix\EtmCore\Api\Data\AttributeGroupInterface;
 use Magento\Framework\Exception\NoSuchEntityException;
 
 interface GetInterface
 {
 
     /**
-     * Get attribute set by given set ID
+     * Get attribute group by given group ID
      *
-     * @param int $attributeSetId
+     * @param int $groupId
      *
-     * @return AttributeSetInterface
+     * @return AttributeGroupInterface
      *
      * @throws NoSuchEntityException
      */
-    public function execute(int $attributeSetId): AttributeSetInterface;
+    public function execute(int $groupId): AttributeGroupInterface;
 }

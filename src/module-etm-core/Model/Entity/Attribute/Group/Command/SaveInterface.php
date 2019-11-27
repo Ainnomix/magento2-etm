@@ -12,22 +12,26 @@
 
 declare(strict_types=1);
 
-namespace Ainnomix\EtmCore\Model\Entity\Attribute\Set\Command;
+namespace Ainnomix\EtmCore\Model\Entity\Attribute\Group\Command;
 
-use Ainnomix\EtmCore\Api\Data\AttributeSetInterface;
+use Ainnomix\EtmCore\Api\Data\AttributeGroupInterface;
 use Magento\Framework\Exception\CouldNotSaveException;
+use Magento\Framework\Exception\NoSuchEntityException;
+use Magento\Framework\Exception\StateException;
 
 interface SaveInterface
 {
 
     /**
-     * Save attribute set data
+     * Save attribute group data
      *
-     * @param AttributeSetInterface $attributeSet
+     * @param AttributeGroupInterface $attributeGroup
      *
      * @return int
      *
      * @throws CouldNotSaveException
+     * @throws NoSuchEntityException
+     * @throws StateException
      */
-    public function execute(AttributeSetInterface $attributeSet): int;
+    public function execute(AttributeGroupInterface $attributeGroup): int;
 }

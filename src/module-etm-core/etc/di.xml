@@ -20,6 +20,15 @@
     <preference for="Ainnomix\EtmCore\Model\Entity\Attribute\Set\Command\SaveInterface" type="Ainnomix\EtmCore\Model\Entity\Attribute\Set\Command\Save"/>
     <preference for="Ainnomix\EtmCore\Model\Entity\Attribute\Set\Command\GetListInterface" type="Ainnomix\EtmCore\Model\Entity\Attribute\Set\Command\GetList"/>
 
+    <preference for="Ainnomix\EtmCore\Api\Data\AttributeGroupInterface" type="Ainnomix\EtmCore\Model\Entity\Attribute\Group" />
+    <preference for="Ainnomix\EtmCore\Api\AttributeGroupRepositoryInterface" type="Ainnomix\EtmCore\Model\Entity\Attribute\GroupRepository" />
+    <preference for="Ainnomix\EtmCore\Api\Data\AttributeGroupSearchResultsInterface" type="Ainnomix\EtmCore\Model\Data\AttributeGroupSearchResults" />
+
+    <preference for="Ainnomix\EtmCore\Model\Entity\Attribute\Group\Command\GetInterface" type="Ainnomix\EtmCore\Model\Entity\Attribute\Group\Command\Get"/>
+    <preference for="Ainnomix\EtmCore\Model\Entity\Attribute\Group\Command\DeleteByIdInterface" type="Ainnomix\EtmCore\Model\Entity\Attribute\Group\Command\DeleteById"/>
+    <preference for="Ainnomix\EtmCore\Model\Entity\Attribute\Group\Command\SaveInterface" type="Ainnomix\EtmCore\Model\Entity\Attribute\Group\Command\Save"/>
+    <preference for="Ainnomix\EtmCore\Model\Entity\Attribute\Group\Command\GetListInterface" type="Ainnomix\EtmCore\Model\Entity\Attribute\Group\Command\GetList"/>
+
     <preference for="Ainnomix\EtmCore\Model\EntityTypeValidatorInterface" type="Ainnomix\EtmCore\Model\EntityTypeValidatorChain"/>
 
     <type name="Ainnomix\EtmCore\Model\EntityType">
@@ -45,6 +54,15 @@
             <argument name="commandDeleteById" xsi:type="object">Ainnomix\EtmCore\Model\Entity\Attribute\Set\Command\DeleteByIdInterface\Proxy</argument>
             <argument name="commandSave" xsi:type="object">Ainnomix\EtmCore\Model\Entity\Attribute\Set\Command\SaveInterface\Proxy</argument>
             <argument name="commandGetList" xsi:type="object">Ainnomix\EtmCore\Model\Entity\Attribute\Set\Command\GetListInterface\Proxy</argument>
+        </arguments>
+    </type>
+
+    <type name="Ainnomix\EtmCore\Model\Entity\Attribute\GroupRepository">
+        <arguments>
+            <argument name="commandGet" xsi:type="object">Ainnomix\EtmCore\Model\Entity\Attribute\Group\Command\GetInterface\Proxy</argument>
+            <argument name="commandSave" xsi:type="object">Ainnomix\EtmCore\Model\Entity\Attribute\Group\Command\SaveInterface\Proxy</argument>
+            <argument name="commandDeleteById" xsi:type="object">Ainnomix\EtmCore\Model\Entity\Attribute\Group\Command\DeleteByIdInterface\Proxy</argument>
+            <argument name="commandGetList" xsi:type="object">Ainnomix\EtmCore\Model\Entity\Attribute\Group\Command\GetListInterface\Proxy</argument>
         </arguments>
     </type>
     
