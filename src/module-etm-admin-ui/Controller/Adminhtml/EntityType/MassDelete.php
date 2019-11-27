@@ -15,7 +15,7 @@ declare(strict_types=1);
 namespace Ainnomix\EtmAdminUi\Controller\Adminhtml\EntityType;
 
 use Exception;
-use Magento\Backend\App\Action;
+use Magento\Backend\App\Action\Context;
 use Magento\Ui\Component\MassAction\Filter;
 use Magento\Framework\Controller\Result\Redirect;
 use Ainnomix\EtmCore\Api\EntityTypeRepositoryInterface;
@@ -28,7 +28,7 @@ use Ainnomix\EtmCore\Model\ResourceModel\EntityType\CollectionFactory;
  * @package  Ainnomix\EtmAdminhtml
  * @author   Roman Tomchak <romantomchak@gmail.com>
  */
-class MassDelete extends Action
+class MassDelete extends AbstractAction
 {
 
     /**
@@ -47,7 +47,7 @@ class MassDelete extends Action
     protected $entityTypeRepository;
 
     public function __construct(
-        Action\Context $context,
+        Context $context,
         Filter $filter,
         CollectionFactory $collectionFactory,
         EntityTypeRepositoryInterface $entityTypeRepository

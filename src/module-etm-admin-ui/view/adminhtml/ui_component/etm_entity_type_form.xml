@@ -24,6 +24,7 @@
                 <class>reset</class>
                 <label translate="true">Reset</label>
             </button>
+            <button name="delete" class="Ainnomix\EtmAdminUi\Ui\Component\Form\EntityType\Control\DeleteButton"/>
             <button name="save" class="Ainnomix\EtmAdminUi\Ui\Component\Form\EntityType\Control\SaveSplitButton"/>
         </buttons>
     </settings>

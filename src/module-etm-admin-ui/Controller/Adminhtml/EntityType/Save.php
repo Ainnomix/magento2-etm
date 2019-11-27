@@ -14,7 +14,7 @@ declare(strict_types=1);
 
 namespace Ainnomix\EtmAdminUi\Controller\Adminhtml\EntityType;
 
-use Magento\Backend\App\Action;
+use Magento\Backend\App\Action\Context;
 use Magento\Framework\Api\DataObjectHelper;
 use Magento\Framework\Controller\Result\Redirect;
 use Magento\Framework\App\Action\HttpPostActionInterface;
@@ -31,7 +31,7 @@ use Ainnomix\EtmAdminUi\Controller\Adminhtml\EntityType\Initialization\Helper;
  * @package  Ainnomix\EtmAdminUi
  * @author   Roman Tomchak <romantomchak@gmail.com>
  */
-class Save extends Action implements HttpPostActionInterface
+class Save extends AbstractAction implements HttpPostActionInterface
 {
 
     /**
@@ -50,7 +50,7 @@ class Save extends Action implements HttpPostActionInterface
     protected $entityTypeRepository;
 
     public function __construct(
-        Action\Context $context,
+        Context $context,
         DataObjectHelper $dataObjectHelper,
         Helper $initializationHelper,
         EntityTypeRepositoryInterface $entityTypeRepository

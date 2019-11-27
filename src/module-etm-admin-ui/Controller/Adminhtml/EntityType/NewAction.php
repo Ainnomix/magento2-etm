@@ -14,7 +14,6 @@ declare(strict_types=1);
 
 namespace Ainnomix\EtmAdminUi\Controller\Adminhtml\EntityType;
 
-use Magento\Backend\App\Action;
 use Magento\Framework\Controller\ResultFactory;
 use Magento\Framework\Controller\Result\Forward;
 use Magento\Framework\App\Action\HttpGetActionInterface as HttpGetActionInterface;
@@ -26,7 +25,7 @@ use Magento\Framework\App\Action\HttpGetActionInterface as HttpGetActionInterfac
  * @package  Ainnomix\EtmAdminUi
  * @author   Roman Tomchak <romantomchak@gmail.com>
  */
-class NewAction extends Action implements HttpGetActionInterface
+class NewAction extends AbstractAction implements HttpGetActionInterface
 {
 
     /**

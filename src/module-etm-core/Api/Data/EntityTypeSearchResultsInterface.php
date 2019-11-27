@@ -31,7 +31,7 @@ interface EntityTypeSearchResultsInterface extends SearchResultsInterface
      *
      * @return \Ainnomix\EtmCore\Api\Data\EntityTypeInterface[]
      */
-    public function getItems(): array;
+    public function getItems();
 
     /**
      * Set entity type list
@@ -40,5 +40,5 @@ interface EntityTypeSearchResultsInterface extends SearchResultsInterface
      *
      * @return \Ainnomix\EtmCore\Api\Data\EntityTypeSearchResultsInterface
      */
-    public function setItems(array $items): EntityTypeSearchResultsInterface;
+    public function setItems(array $items);
 }

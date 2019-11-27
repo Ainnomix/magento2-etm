@@ -3,7 +3,7 @@
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
     <preference for="Ainnomix\EtmCore\Api\Data\EntityTypeInterface" type="Ainnomix\EtmCore\Model\Data\EntityType" />
     <preference for="Ainnomix\EtmCore\Api\EntityTypeRepositoryInterface" type="Ainnomix\EtmCore\Model\EntityTypeRepository" />
-    <preference for="Ainnomix\EtmCore\Api\Data\EntityTypeSearchResultsInterface" type="Magento\Framework\Api\SearchResults" />
+    <preference for="Ainnomix\EtmCore\Api\Data\EntityTypeSearchResultsInterface" type="Ainnomix\EtmCore\Model\Data\EntityTypeSearchResults" />
 
     <preference for="Ainnomix\EtmCore\Model\EntityType\Command\GetInterface" type="Ainnomix\EtmCore\Model\EntityType\Command\Get"/>
     <preference for="Ainnomix\EtmCore\Model\EntityType\Command\GetByIdInterface" type="Ainnomix\EtmCore\Model\EntityType\Command\GetById"/>

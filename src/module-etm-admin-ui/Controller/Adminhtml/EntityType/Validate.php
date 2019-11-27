@@ -15,7 +15,7 @@ declare(strict_types=1);
 namespace Ainnomix\EtmAdminUi\Controller\Adminhtml\EntityType;
 
 use Exception;
-use Magento\Backend\App\Action;
+use Magento\Backend\App\Action\Context;
 use Magento\Framework\DataObject;
 use Magento\Framework\Api\DataObjectHelper;
 use Magento\Framework\Controller\ResultFactory;
@@ -32,7 +32,7 @@ use Ainnomix\EtmCore\Model\EntityTypeValidatorInterface;
  * @package  Ainnomix\EtmAdminhtml
  * @author   Roman Tomchak <romantomchak@gmail.com>
  */
-class Validate extends Action implements HttpPostActionInterface
+class Validate extends AbstractAction implements HttpPostActionInterface
 {
 
     /**
@@ -51,7 +51,7 @@ class Validate extends Action implements HttpPostActionInterface
     private $validator;
 
     public function __construct(
-        Action\Context $context,
+        Context $context,
         DataObjectHelper $dataObjectHelper,
         EntityTypeInterfaceFactory $entityTypeFactory,
         EntityTypeValidatorInterface $validator

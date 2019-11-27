@@ -15,7 +15,7 @@ declare(strict_types=1);
 namespace Ainnomix\EtmAdminUi\Controller\Adminhtml\EntityType;
 
 use Exception;
-use Magento\Backend\App\Action;
+use Magento\Backend\App\Action\Context;
 use Magento\Framework\Controller\Result\Redirect;
 use Magento\Framework\Exception\CouldNotDeleteException;
 use Magento\Framework\Exception\NoSuchEntityException;
@@ -29,7 +29,7 @@ use Ainnomix\EtmCore\Api\EntityTypeRepositoryInterface;
  * @package  Ainnomix\EtmAdminhtml
  * @author   Roman Tomchak <romantomchak@gmail.com>
  */
-class Delete extends Action implements HttpGetActionInterface
+class Delete extends AbstractAction implements HttpGetActionInterface
 {
 
     /**
@@ -38,7 +38,7 @@ class Delete extends Action implements HttpGetActionInterface
     protected $entityTypeRepository;
 
     public function __construct(
-        Action\Context $context,
+        Context $context,
         EntityTypeRepositoryInterface $entityTypeRepository
     ) {
         parent::__construct($context);

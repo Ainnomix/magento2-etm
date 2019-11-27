@@ -15,10 +15,9 @@ declare(strict_types=1);
 namespace Ainnomix\EtmAdminUi\Controller\Adminhtml\EntityType;
 
 use Exception;
-use Magento\Backend\App\Action;
+use Magento\Backend\App\Action\Context;
 use Magento\Framework\Controller\ResultInterface;
 use Magento\Framework\Exception\NoSuchEntityException;
-use Magento\Framework\View\Result\Page;
 use Magento\Framework\Controller\ResultFactory;
 use Magento\Framework\App\Action\HttpGetActionInterface;
 use Ainnomix\EtmAdminUi\Controller\Adminhtml\EntityType\Initialization\Helper;
@@ -30,7 +29,7 @@ use Ainnomix\EtmAdminUi\Controller\Adminhtml\EntityType\Initialization\Helper;
  * @package  Ainnomix\EtmAdminUi
  * @author   Roman Tomchak <romantomchak@gmail.com>
  */
-class Edit extends Action implements HttpGetActionInterface
+class Edit extends AbstractAction implements HttpGetActionInterface
 {
 
     /**
@@ -43,10 +42,10 @@ class Edit extends Action implements HttpGetActionInterface
     /**
      * Edit constructor
      *
-     * @param Action\Context $context
+     * @param Context $context
      * @param Helper $initializationHelper
      */
-    public function __construct(Action\Context $context, Helper $initializationHelper)
+    public function __construct(Context $context, Helper $initializationHelper)
     {
         parent::__construct($context);
 

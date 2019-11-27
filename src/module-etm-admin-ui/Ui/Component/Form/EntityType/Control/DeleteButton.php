@@ -1,30 +1,23 @@
 <?php
-declare(strict_types=1);
-
 /**
  * Do not edit or add to this file if you wish to upgrade Entity Type Manager to newer
  * versions in the future.
  *
- * @category  Ainnomix_EtmAdminhtml
- * @package   Ainnomix\EtmAdminhtml
+ * @category  Ainnomix
+ * @package   Ainnomix\EtmAdminUi
  * @author    Roman Tomchak <romantomchak@gmail.com>
  * @copyright 2019 Ainnomix
  * @license   Open Software License ("OSL") v. 3.0
  */
 
-namespace Ainnomix\EtmAdminhtml\Block\Adminhtml\Entity\Type\Edit;
+declare(strict_types=1);
+
+namespace Ainnomix\EtmAdminUi\Ui\Component\Form\EntityType\Control;
 
 use Magento\Framework\UrlInterface;
 use Magento\Framework\App\RequestInterface;
 use Magento\Framework\View\Element\UiComponent\Control\ButtonProviderInterface;
 
-/**
- * Delete entity type button config provider class
- *
- * @category Ainnomix_EtmAdminhtml
- * @package  Ainnomix\EtmAdminhtml
- * @author   Roman Tomchak <romantomchak@gmail.com>
- */
 class DeleteButton implements ButtonProviderInterface
 {
 
@@ -57,14 +50,13 @@ class DeleteButton implements ButtonProviderInterface
 
         if ($entityTypeId) {
             return [
-                'label' => __('Delete Entity Type'),
+                'label' => __('Delete'),
                 'class' => 'delete',
                 'id' => 'entity-type-edit-delete-button',
-                'data_attribute' => [
-                    'url' => $this->getDeleteUrl($entityTypeId)
-                ],
-                'on_click' => '',
-                'sort_order' => 20,
+                'on_click' => 'deleteConfirm(\'' . __(
+                        'Are you sure you want to do this?'
+                    ) . '\', \'' . $this->getDeleteUrl($entityTypeId) . '\', {"data": {}})',
+                'sort_order' => 35,
             ];
         }
 

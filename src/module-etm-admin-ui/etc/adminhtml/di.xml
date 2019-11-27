@@ -6,4 +6,10 @@
             <argument name="targetName" xsi:type="string">etm_entity_type_form.etm_entity_type_form</argument>
         </arguments>
     </virtualType>
+    <type name="Magento\Backend\Model\Menu\Director\Director">
+        <plugin name="etm_menu" type="Ainnomix\EtmAdminUi\Plugin\Menu\Director\DirectorPlugin" />
+    </type>
+    <type name="Magento\Framework\Acl\AclResource\Config\Reader\Filesystem">
+        <plugin name="etm_menu" type="Ainnomix\EtmAdminUi\Plugin\Acl\AclResource\Config\Reader\FilesystemPlugin" />
+    </type>
 </config>
