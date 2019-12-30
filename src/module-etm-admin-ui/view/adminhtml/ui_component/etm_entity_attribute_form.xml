@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<form xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Ui:etc/ui_configuration.xsd">
+    <argument name="data" xsi:type="array">
+        <item name="js_config" xsi:type="array">
+            <item name="provider" xsi:type="string">etm_entity_attribute_form.etm_entity_attribute_form_data_source</item>
+        </item>
+        <item name="label" xsi:type="string" translate="true">Attribute Information</item>
+    </argument>
+    <settings>
+        <deps>
+            <dep>etm_entity_attribute_form.etm_entity_attribute_form_data_source</dep>
+        </deps>
+        <buttons>
+            <button name="back">
+                <url path="*/*/index"/>
+                <class>back</class>
+                <label translate="true">Back</label>
+            </button>
+            <button name="reset">
+                <class>reset</class>
+                <label translate="true">Reset</label>
+            </button>
+        </buttons>
+        <layout>
+            <navContainerName>left</navContainerName>
+            <type>tabs</type>
+        </layout>
+    </settings>
+    <dataSource name="etm_entity_attribute_form_data_source" component="Magento_Ui/js/form/provider">
+        <settings>
+            <submitUrl path="*/*/save"/>
+        </settings>
+        <dataProvider class="Ainnomix\EtmAdminUi\Ui\Component\Form\EntityAttribute\DataProvider" name="etm_entity_attribute_form_data_source">
+            <settings>
+                <requestFieldName>id</requestFieldName>
+                <primaryFieldName>attribute_id</primaryFieldName>
+            </settings>
+        </dataProvider>
+    </dataSource>
+    <fieldset name="general" sortOrder="10">
+        <settings>
+            <label translate="true">Attribute Properties</label>
+            <dataScope>data.attribute</dataScope>
+        </settings>
+        <field name="attribute_id" formElement="input" sortOrder="10">
+            <settings>
+                <dataType>text</dataType>
+                <visible>false</visible>
+                <dataScope>attribute_id</dataScope>
+            </settings>
+        </field>
+
+        <field name="attribute_code" formElement="input" sortOrder="20">
+            <settings>
+                <validation>
+                    <rule name="required-entry" xsi:type="boolean">true</rule>
+                    <rule name="no-whitespace" xsi:type="boolean">true</rule>
+                </validation>
+                <dataType>text</dataType>
+                <label translate="true">Code</label>
+                <dataScope>attribute_code</dataScope>
+            </settings>
+        </field>
+    </fieldset>
+    <fieldset name="labels" sortOrder="10">
+        <settings>
+            <label translate="true">Manage Labels</label>
+            <dataScope>data.attribute</dataScope>
+        </settings>
+        <field name="frontend_label" formElement="input"  sortOrder="10"
+               component="Ainnomix_EtmAdminUi/js/form/entity/attribute/labels"
+               template="Ainnomix_EtmAdminUi/form/field/labels"
+               class="Ainnomix\EtmAdminUi\Ui\Component\Form\EntityAttribute\Element\Labels"
+        >
+            <settings>
+                <validation>
+                    <rule name="required-entry" xsi:type="boolean">true</rule>
+                    <rule name="no-whitespace" xsi:type="boolean">true</rule>
+                </validation>
+                <dataType>text</dataType>
+                <label translate="true">Code</label>
+                <dataScope>frontend_label</dataScope>
+                <elementTmpl>Ainnomix_EtmAdminUi/form/element/entity/attribute/labels</elementTmpl>
+            </settings>
+        </field>
+    </fieldset>
+</form>

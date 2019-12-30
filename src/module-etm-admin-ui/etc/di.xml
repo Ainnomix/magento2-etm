@@ -6,12 +6,19 @@
             <argument name="collections" xsi:type="array">
                 <item name="etm_entity_type_form_data_source" xsi:type="string">Ainnomix\EtmAdminUi\Model\ResourceModel\EntityType\Grid\Collection</item>
                 <item name="etm_entity_type_listing_data_source" xsi:type="string">Ainnomix\EtmAdminUi\Model\ResourceModel\EntityType\Grid\Collection</item>
+                <item name="etm_entity_attribute_form_data_source" xsi:type="string">Ainnomix\EtmAdminUi\Model\ResourceModel\EntityAttribute\Grid\Collection</item>
+                <item name="etm_entity_attribute_listing_data_source" xsi:type="string">Ainnomix\EtmAdminUi\Model\ResourceModel\EntityAttribute\Grid\Collection</item>
             </argument>
         </arguments>
     </type>
     <type name="Ainnomix\EtmAdminUi\Model\ResourceModel\EntityType\Grid\Collection">
         <arguments>
             <argument name="mainTable" xsi:type="string">eav_entity_type</argument>
+        </arguments>
+    </type>
+    <type name="Ainnomix\EtmAdminUi\Model\ResourceModel\EntityAttribute\Grid\Collection">
+        <arguments>
+            <argument name="mainTable" xsi:type="string">eav_attribute</argument>
         </arguments>
     </type>
 </config>

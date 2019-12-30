@@ -12,19 +12,12 @@
 
 declare(strict_types=1);
 
-namespace Ainnomix\EtmAdminUi\Controller\Adminhtml\EntityType;
+namespace Ainnomix\EtmAdminUi\Controller\Adminhtml\EntityAttribute;
 
 use Magento\Framework\Controller\ResultFactory;
 use Magento\Framework\Controller\Result\Forward;
 use Magento\Framework\App\Action\HttpGetActionInterface;
 
-/**
- * New entity type action class
- *
- * @category Ainnomix
- * @package  Ainnomix\EtmAdminUi
- * @author   Roman Tomchak <romantomchak@gmail.com>
- */
 class NewAction extends AbstractAction implements HttpGetActionInterface
 {
 

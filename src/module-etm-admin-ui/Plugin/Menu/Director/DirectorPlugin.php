@@ -19,6 +19,7 @@ use Magento\Backend\Model\Menu\Builder;
 use Magento\Backend\Model\Menu\Director\Director;
 use Ainnomix\EtmCore\Api\Data\EntityTypeInterface;
 use Ainnomix\EtmCore\Api\EntityTypeRepositoryInterface;
+use Ainnomix\EtmAdminUi\Model\Acl\Resource\NameProvider;
 use Psr\Log\LoggerInterface;
 
 class DirectorPlugin
@@ -29,9 +30,15 @@ class DirectorPlugin
      */
     protected $entityTypeRepository;
 
-    public function __construct(EntityTypeRepositoryInterface $entityTypeRepository)
+    /**
+     * @var NameProvider
+     */
+    protected $nameProvider;
+
+    public function __construct(EntityTypeRepositoryInterface $entityTypeRepository, NameProvider $nameProvider)
     {
         $this->entityTypeRepository = $entityTypeRepository;
+        $this->nameProvider = $nameProvider;
     }
 
     public function aroundDirect(Director $subject, Closure $proceed, array $config, Builder $builder, LoggerInterface $logger)
@@ -47,43 +54,56 @@ class DirectorPlugin
 
     private function createEntry(EntityTypeInterface $item): array
     {
+        $mainNodeId = $this->nameProvider->getMainNodeId($item);
+        $entitiesNodeId = $this->nameProvider->getEntitiesNodeId($item);
+        $attributesNodeId = $this->nameProvider->getAttributesNodeId($item);
+        $attributeSetsNodeId = $this->nameProvider->getAttributeSetsNodeId($item);
+
         return [
             [
                 'type'  => 'add',
-                'id'    => sprintf('Ainnomix_EtmAdminUi::etm_%s', $item->getEntityTypeCode()),
+                'id'    => $mainNodeId,
                 'title' => (string) __('%1 Management', $item->getEntityTypeName()),
                 'module'   => 'Ainnomix_EtmAdminUi',
                 'parent'   => 'Ainnomix_EtmAdminUi::etm',
-                'resource' => sprintf('Ainnomix_EtmAdminUi::etm_%s', $item->getEntityTypeCode()),
+                'resource' => $mainNodeId,
                 'sortOrder' => $item->getEntityTypeId() * 10,
             ],
             [
                 'type'  => 'add',
-                'id'    => sprintf('Ainnomix_EtmAdminUi::etm_entities_%s', $item->getEntityTypeCode()),
+                'id'    => $entitiesNodeId,
                 'title' => (string) __('Manage Entities'),
                 'module'   => 'Ainnomix_EtmAdminUi',
-                'parent'   => sprintf('Ainnomix_EtmAdminUi::etm_%s', $item->getEntityTypeCode()),
-                'resource' => sprintf('Ainnomix_EtmAdminUi::etm_entities_%s', $item->getEntityTypeCode()),
+                'parent'   => $mainNodeId,
+                'resource' => $entitiesNodeId,
+                'action'   => $this->generateMenuAction($item, 'entity'),
                 'sortOrder' => 10,
             ],
             [
                 'type'  => 'add',
-                'id'    => sprintf('Ainnomix_EtmAdminUi::etm_attributes_%s', $item->getEntityTypeCode()),
+                'id'    => $attributesNodeId,
                 'title' => (string) __('Manage Attributes'),
                 'module'   => 'Ainnomix_EtmAdminUi',
-                'parent'   => sprintf('Ainnomix_EtmAdminUi::etm_%s', $item->getEntityTypeCode()),
-                'resource' => sprintf('Ainnomix_EtmAdminUi::etm_attributes_%s', $item->getEntityTypeCode()),
+                'parent'   => $mainNodeId,
+                'resource' => $attributesNodeId,
+                'action'   => $this->generateMenuAction($item, 'entityAttribute'),
                 'sortOrder' => 20,
             ],
             [
                 'type'  => 'add',
-                'id'    => sprintf('Ainnomix_EtmAdminUi::etm_attribute_sets_%s', $item->getEntityTypeCode()),
+                'id'    => $attributeSetsNodeId,
                 'title' => (string) __('Manage Attribute Sets'),
                 'module'   => 'Ainnomix_EtmAdminUi',
-                'parent'   => sprintf('Ainnomix_EtmAdminUi::etm_%s', $item->getEntityTypeCode()),
-                'resource' => sprintf('Ainnomix_EtmAdminUi::etm_attribute_sets_%s', $item->getEntityTypeCode()),
+                'parent'   => $mainNodeId,
+                'resource' => $attributeSetsNodeId,
+                'action'   => $this->generateMenuAction($item, 'entityAttributeSet'),
                 'sortOrder' => 30,
             ]
         ];
+    }
+
+    private function generateMenuAction(EntityTypeInterface $entityType, string $action): string
+    {
+        return sprintf('etm/%s/index/entity_type_id/%s', $action, $entityType->getEntityTypeId());
     }
 }

@@ -16,6 +16,7 @@ namespace Ainnomix\EtmAdminUi\Plugin\Acl\AclResource\Config\Reader;
 
 use Ainnomix\EtmCore\Api\Data\EntityTypeInterface;
 use Ainnomix\EtmCore\Api\EntityTypeRepositoryInterface;
+use Ainnomix\EtmAdminUi\Model\Acl\Resource\NameProvider;
 use Magento\Framework\Acl\AclResource\Config\Reader\Filesystem;
 
 class FilesystemPlugin
@@ -26,9 +27,15 @@ class FilesystemPlugin
      */
     protected $entityTypeRepository;
 
-    public function __construct(EntityTypeRepositoryInterface $entityTypeRepository)
+    /**
+     * @var NameProvider
+     */
+    protected $nameProvider;
+
+    public function __construct(EntityTypeRepositoryInterface $entityTypeRepository, NameProvider $nameProvider)
     {
         $this->entityTypeRepository = $entityTypeRepository;
+        $this->nameProvider = $nameProvider;
     }
 
     public function afterRead(Filesystem $subject, array $output, string $scope = null)
@@ -59,27 +66,27 @@ class FilesystemPlugin
     private function generateEntry(EntityTypeInterface $entityType): array
     {
         return [
-            'id'        => sprintf('Ainnomix_EtmAdminUi::etm_%s', $entityType->getEntityTypeCode()),
+            'id'        => $this->nameProvider->getMainNodeId($entityType),
             'title'     => (string) __('%1 Management', $entityType->getEntityTypeName()),
             'disabled'  => false,
             'sortOrder' => $entityType->getEntityTypeId() * 10,
             'children'  => [
                 [
-                    'id'        => sprintf('Ainnomix_EtmAdminUi::etm_entities_%s', $entityType->getEntityTypeCode()),
+                    'id'        => $this->nameProvider->getEntitiesNodeId($entityType),
                     'title'     => (string) __('Manage Entities'),
                     'disabled'  => false,
                     'sortOrder' => 10,
                     'children'  => [],
                 ],
                 [
-                    'id'        => sprintf('Ainnomix_EtmAdminUi::etm_attributes_%s', $entityType->getEntityTypeCode()),
+                    'id'        => $this->nameProvider->getAttributesNodeId($entityType),
                     'title'     => (string) __('Manage Attributes'),
                     'disabled'  => false,
                     'sortOrder' => 20,
                     'children'  => [],
                 ],
                 [
-                    'id'        => sprintf('Ainnomix_EtmAdminUi::etm_attribute_sets_%s', $entityType->getEntityTypeCode()),
+                    'id'        => $this->nameProvider->getAttributeSetsNodeId($entityType),
                     'title'     => (string) __('Manage Attribute Sets'),
                     'disabled'  => false,
                     'sortOrder' => 30,
