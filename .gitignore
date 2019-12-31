@@ -1,4 +1,5 @@
 /scripts
 /vendor
+/dev/tests/unit/tmp
 auth.json
 composer.lock
