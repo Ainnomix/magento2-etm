@@ -26,18 +26,15 @@
         "magento/module-ui": "~101.1.0"
     },
     "replace": {
-        "ainnomix/module-etm-api": "self.version",
         "ainnomix/module-etm-core": "self.version",
         "ainnomix/module-etm-admin-ui": "self.version"
     },
     "autoload": {
         "files": [
-            "src/module-etm-api/registration.php",
             "src/module-etm-core/registration.php",
             "src/module-etm-admin-ui/registration.php"
         ],
         "psr-4": {
-            "Ainnomix\\EtmApi\\": "src/module-etm-api",
             "Ainnomix\\EtmCore\\": "src/module-etm-core",
             "Ainnomix\\EtmAdminUi\\": "src/module-etm-admin-ui"
         }

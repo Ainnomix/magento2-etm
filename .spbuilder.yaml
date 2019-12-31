@@ -1,8 +1,0 @@
-publisher:
-  reports:
-    phpcs:
-      path: build/phpcs.xml
-    phpmd:
-      path: build/phpmd.xml
-    phpcpd:
-      path: build/phpcpd.xml
