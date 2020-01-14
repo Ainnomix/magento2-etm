@@ -1,0 +1,53 @@
+<?xml version="1.0"?>
+
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <body>
+        <referenceContainer name="content">
+            <container name="adminhtml.etm.entity.set.edit.wrapper" htmlTag="div" htmlClass="admin__scope-old">
+                <block class="Ainnomix\EtmAdminUi\Block\Adminhtml\EntityAttributeSet\Edit\Main"
+                       name="adminhtml.etm.entity.set.edit"
+                       template="Ainnomix_EtmAdminUi::attribute/set/edit/main.phtml">
+                    <block name="edit_set_form" class="Ainnomix\EtmAdminUi\Block\Adminhtml\EntityAttributeSet\Edit\Main\Formset"/>
+
+                    <block name="add_group_button" class="Magento\Backend\Block\Widget\Button">
+                        <arguments>
+                            <argument name="label" xsi:type="string" translate="true">Add New</argument>
+                            <argument name="onclick" xsi:type="string">editSet.addGroup();</argument>
+                            <argument name="class" xsi:type="string">add</argument>
+                        </arguments>
+                    </block>
+                    <block name="delete_group_button" class="Magento\Backend\Block\Widget\Button">
+                        <arguments>
+                            <argument name="label" xsi:type="string" translate="true">Delete Selected Group</argument>
+                            <argument name="onclick" xsi:type="string">editSet.submit();</argument>
+                            <argument name="class" xsi:type="string">delete</argument>
+                        </arguments>
+                    </block>
+                </block>
+            </container>
+            <referenceBlock name="page.actions.toolbar">
+                <block name="adminhtml.etm.entity.set.edit.back_button" class="Ainnomix\EtmAdminUi\Block\Adminhtml\EntityAttributeSet\Edit\Toolbar\BackButton" />
+                <block name="adminhtml.etm.entity.set.edit.reset_button" class="Magento\Backend\Block\Widget\Button">
+                    <arguments>
+                        <argument name="label" xsi:type="string" translate="true">Reset</argument>
+                        <argument name="onclick" xsi:type="string">window.location.reload()</argument>
+                        <argument name="class" xsi:type="string">reset</argument>
+                    </arguments>
+                </block>
+                <block name="adminhtml.etm.entity.set.edit.delete_button" class="Ainnomix\EtmAdminUi\Block\Adminhtml\EntityAttributeSet\Edit\Toolbar\DeleteButton">
+                    <arguments>
+                        <argument name="label" xsi:type="string" translate="true">Delete</argument>
+                        <argument name="class" xsi:type="string">delete</argument>
+                    </arguments>
+                </block>
+                <block name="adminhtml.etm.entity.set.edit.save_button" class="Magento\Backend\Block\Widget\Button">
+                    <arguments>
+                        <argument name="label" xsi:type="string" translate="true">Save</argument>
+                        <argument name="onclick" xsi:type="string">editSet.save();</argument>
+                        <argument name="class" xsi:type="string">save primary save-attribute-set</argument>
+                    </arguments>
+                </block>
+            </referenceBlock>
+        </referenceContainer>
+    </body>
+</page>

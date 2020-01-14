@@ -6,13 +6,13 @@
  * @category  Ainnomix
  * @package   Ainnomix\EtmAdminUi
  * @author    Roman Tomchak <romantomchak@gmail.com>
- * @copyright 2019 Ainnomix
+ * @copyright 2020 Ainnomix
  * @license   Open Software License ("OSL") v. 3.0
  */
 
 declare(strict_types=1);
 
-namespace Ainnomix\EtmAdminUi\Ui\Component\Listing\EntityAttribute\Control;
+namespace Ainnomix\EtmAdminUi\Ui\Component\Listing\EntityAttributeSet\Control;
 
 use Magento\Framework\UrlInterface;
 use Magento\Framework\App\RequestInterface;
@@ -51,7 +51,7 @@ class NewButton implements ButtonProviderInterface
         $typeId = (int) $this->request->getParam('entity_type_id');
 
         return [
-            'label' => __('Add New Attribute'),
+            'label' => __('Add New Attribute Set'),
             'class' => 'primary',
             'url' => $this->urlBuilder->getUrl('*/*/new', ['entity_type_id' => $typeId]),
             'sort_order' => 35,

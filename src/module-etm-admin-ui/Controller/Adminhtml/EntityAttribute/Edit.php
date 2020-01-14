@@ -21,6 +21,11 @@ use Magento\Framework\App\Action\HttpGetActionInterface;
 class Edit extends AbstractAction implements HttpGetActionInterface
 {
 
+    /**
+     * Execute controller action
+     *
+     * @return ResultInterface
+     */
     public function execute(): ResultInterface
     {
         $resultPage = $this->resultFactory->create(ResultFactory::TYPE_PAGE);

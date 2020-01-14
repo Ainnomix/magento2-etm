@@ -6,13 +6,13 @@
  * @category  Ainnomix
  * @package   Ainnomix\EtmAdminUi
  * @author    Roman Tomchak <romantomchak@gmail.com>
- * @copyright 2019 Ainnomix
+ * @copyright 2020 Ainnomix
  * @license   Open Software License ("OSL") v. 3.0
  */
 
 declare(strict_types=1);
 
-namespace Ainnomix\EtmAdminUi\Ui\Component\Listing\EntityAttribute;
+namespace Ainnomix\EtmAdminUi\Ui\Component\Listing\EntityAttributeSet;
 
 use Magento\Framework\View\Element\UiComponent\DataProvider\DataProvider as ViewDataProvider;
 
