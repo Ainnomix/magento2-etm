@@ -30,6 +30,7 @@ interface EntityTypeInterface
     const ENTITY_TYPE_ID = 'entity_type_id';
     const ENTITY_TYPE_CODE = 'entity_type_code';
     const ENTITY_TYPE_NAME = 'entity_type_name';
+    const DEFAULT_ATTRIBUTE_SET_ID = 'default_attribute_set_id';
 
     /**
      * Retrieve entity type ID
@@ -78,4 +79,20 @@ interface EntityTypeInterface
      * @return void
      */
     public function setEntityTypeName(string $name): void;
+
+    /**
+     * Retrieve default attribute set ID value
+     *
+     * @return int|null
+     */
+    public function getDefaultAttributeSetId(): ?int;
+
+    /**
+     * Set default attribute set ID value
+     *
+     * @param int $attributeSetId
+     *
+     * @return void
+     */
+    public function setDefaultAttributeSetId(int $attributeSetId): void;
 }

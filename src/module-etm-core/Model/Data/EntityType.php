@@ -190,18 +190,18 @@ class EntityType extends AbstractSimpleObject implements EntityTypeInterface
     /**
      * {@inheritDoc}
      */
-//    public function getDefaultAttributeDetId(): ?int
-//    {
-//        return $this->_get(self::DEFAULT_ATTRIBUTE_SET_ID);
-//    }
+    public function getDefaultAttributeSetId(): ?int
+    {
+        return $this->_get(self::DEFAULT_ATTRIBUTE_SET_ID);
+    }
 
     /**
      * {@inheritDoc}
      */
-//    public function setDefaultAttributeDetId(int $attributeSetId): void
-//    {
-//        $this->setData(self::DEFAULT_ATTRIBUTE_SET_ID, $attributeSetId);
-//    }
+    public function setDefaultAttributeSetId(int $attributeSetId): void
+    {
+        $this->setData(self::DEFAULT_ATTRIBUTE_SET_ID, $attributeSetId);
+    }
 
     /**
      * {@inheritDoc}

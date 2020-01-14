@@ -124,6 +124,9 @@ class Save implements SaveInterface
 
         $this->attributeSetRepository->save($attributeSet);
 
+        $entityType->setDefaultAttributeSetId((int) $attributeSet->getAttributeSetId());
+        $this->entityTypeResource->save($entityType);
+
         /** @var AttributeGroupInterface $attributeGroup */
         $attributeGroup = $this->attributeGroupFactory->create(['data' => ['sort_order' => 1]]);
         $attributeGroup->setAttributeSetId($attributeSet->getAttributeSetId());

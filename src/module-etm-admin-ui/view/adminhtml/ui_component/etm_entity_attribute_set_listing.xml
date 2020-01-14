@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<listing xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Ui:etc/ui_configuration.xsd">
+    <argument name="data" xsi:type="array">
+        <item name="js_config" xsi:type="array">
+            <item name="provider" xsi:type="string">etm_entity_attribute_set_listing.etm_entity_attribute_set_listing_data_source</item>
+        </item>
+    </argument>
+    <settings>
+        <buttons>
+            <button name="add" class="Ainnomix\EtmAdminUi\Ui\Component\Listing\EntityAttributeSet\Control\NewButton" />
+        </buttons>
+        <spinner>etm_entity_attribute_set_columns</spinner>
+        <deps>
+            <dep>etm_entity_attribute_set_listing.etm_entity_attribute_set_listing_data_source</dep>
+        </deps>
+    </settings>
+    <dataSource name="etm_entity_attribute_set_listing_data_source" component="Magento_Ui/js/grid/provider">
+        <settings>
+            <filterUrlParams>
+                <param name="entity_type_id">*</param>
+            </filterUrlParams>
+            <storageConfig>
+                <param name="indexField" xsi:type="string">entity_type_id</param>
+            </storageConfig>
+            <updateUrl path="mui/index/render"/>
+        </settings>
+        <dataProvider class="Ainnomix\EtmAdminUi\Ui\Component\Listing\EntityAttributeSet\DataProvider" name="etm_entity_attribute_set_listing_data_source">
+            <settings>
+                <requestFieldName>entity_type_id</requestFieldName>
+                <primaryFieldName>attribute_set_id</primaryFieldName>
+            </settings>
+        </dataProvider>
+    </dataSource>
+    <listingToolbar name="listing_top">
+        <settings>
+            <sticky>true</sticky>
+        </settings>
+        <bookmark name="bookmarks"/>
+        <columnsControls name="columns_controls"/>
+        <filters name="listing_filters" />
+        <paging name="listing_paging"/>
+    </listingToolbar>
+    <columns name="etm_entity_attribute_set_columns">
+        <column name="attribute_set_id">
+            <settings>
+                <filter>textRange</filter>
+                <label translate="true">ID</label>
+                <sorting>asc</sorting>
+            </settings>
+        </column>
+        <column name="attribute_set_name">
+            <settings>
+                <filter>text</filter>
+                <label translate="true">Name</label>
+            </settings>
+        </column>
+        <actionsColumn name="actions" class="Ainnomix\EtmAdminUi\Ui\Component\Listing\EntityAttributeSet\Column\AttributeSetActions">
+            <settings>
+                <indexField>attribute_set_id</indexField>
+            </settings>
+        </actionsColumn>
+    </columns>
+</listing>
