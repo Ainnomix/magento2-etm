@@ -14,6 +14,7 @@ declare(strict_types=1);
 
 namespace Ainnomix\EtmAdminUi\Controller\Adminhtml\EntityAttributeSet;
 
+use Ainnomix\EtmAdminUi\Controller\Adminhtml\Context;
 use Exception;
 use Magento\Backend\App\Action;
 use Magento\Framework\App\Action\HttpPostActionInterface;
@@ -60,9 +61,8 @@ class Save extends AbstractAction implements HttpPostActionInterface
 
     public function __construct(
         Action\Context $context,
-        EntityTypeProvider $entityTypeProvider,
+        Context $typeContext,
         AttributeSetProvider $attributeSetProvider,
-        NameProvider $nameProvider,
         AttributeSetInterfaceFactory $attributeSetFactory,
         AttributeSetRepositoryInterface $attributeSetRepository,
         FilterManager $filterManager,
@@ -71,9 +71,8 @@ class Save extends AbstractAction implements HttpPostActionInterface
     ) {
         parent::__construct(
             $context,
-            $entityTypeProvider,
-            $attributeSetProvider,
-            $nameProvider
+            $typeContext,
+            $attributeSetProvider
         );
 
         $this->attributeSetFactory = $attributeSetFactory;
@@ -92,8 +91,7 @@ class Save extends AbstractAction implements HttpPostActionInterface
     {
         $entityType = $this->getEntityType();
 
-        $attributeSetId = (int) $this->getRequest()->getParam('id', false);
-        $isNewSet = (bool) $this->getRequest()->getParam('gotoEdit', false) == '1';
+        $attributeSetId = $this->getRequest()->getParam('id', false);
 
         $hasError = false;
 
@@ -101,15 +99,15 @@ class Save extends AbstractAction implements HttpPostActionInterface
         $attributeSet->setEntityTypeId($entityType->getEntityTypeId());
 
         try {
-            if ($isNewSet) {
+            if (false === $attributeSetId) {
                 $attributeSetName = $this->filterManager->stripTags(
                     $this->getRequest()->getParam('attribute_set_name')
                 );
                 $attributeSet->setAttributeSetName(trim($attributeSetName));
             }
 
-            if (!$isNewSet) {
-                $attributeSet = $this->attributeSetRepository->get($attributeSetId);
+            if (false !== $attributeSetId) {
+                $attributeSet = $this->attributeSetRepository->get((int) $attributeSetId);
 
                 $data = $this->jsonHelper->unserialize($this->getRequest()->getPost('data'));
                 $data['attribute_set_name'] = $this->filterManager->stripTags($data['attribute_set_name']);
@@ -118,7 +116,7 @@ class Save extends AbstractAction implements HttpPostActionInterface
             }
 
             $attributeSet->validate();
-            if ($isNewSet) {
+            if (false === $attributeSetId) {
                 $this->attributeSetRepository->save($attributeSet);
                 $attributeSet->initFromSkeleton($this->getRequest()->getParam('skeleton_set'));
             }
@@ -130,7 +128,7 @@ class Save extends AbstractAction implements HttpPostActionInterface
             $hasError = true;
         }
 
-        return $this->createResponse($attributeSet, $hasError, $isNewSet);
+        return $this->createResponse($attributeSet, $hasError, false === $attributeSetId);
     }
 
     private function createResponse(AttributeSetInterface $attributeSet, bool $hasError, bool $isNewSet)
@@ -144,29 +142,20 @@ class Save extends AbstractAction implements HttpPostActionInterface
 
     private function createNewSetResponse(AttributeSetInterface $attributeSet, bool $hasError)
     {
-        if ($this->getRequest()->getPost('return_session_messages_only')) {
-            $block = $this->layoutFactory->create()->getMessagesBlock();
-            $block->setMessages($this->messageManager->getMessages(true));
-            $body = [
-                'messages' => $block->getGroupedHtml(),
-                'error' => $hasError,
-                'id' => $attributeSet->getAttributeSetId(),
-            ];
+        $resultRedirect = $this->resultRedirectFactory->create();
+        $resultRedirect->setPath('etm/*/index', ['_current' => true]);
 
-            return $this->resultFactory
-                ->create(ResultFactory::TYPE_JSON)
-                ->setData($body);
+        if ($this->getRequest()->getParam('back') == 'edit' && !$hasError) {
+            $resultRedirect->setPath(
+                'etm/*/edit',
+                ['id' => $attributeSet->getAttributeSetId(), '_current' => true]
+            );
         }
 
-        $resultRedirect = $this->resultRedirectFactory->create();
-        $resultRedirect->setPath(
-            'etm/*/edit',
-            ['id' => $attributeSet->getAttributeSetId(), 'entity_type_id' => $attributeSet->getEntityTypeId()]
-        );
-        if ($hasError) {
+        if ($this->getRequest()->getParam('redirect_to_new') && !$hasError) {
             $resultRedirect->setPath(
-                'etm/*/index',
-                ['entity_type_id' => $attributeSet->getEntityTypeId()]
+                'etm/*/new',
+                ['_current' => true]
             );
         }
 

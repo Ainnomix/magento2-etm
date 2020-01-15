@@ -16,8 +16,7 @@ namespace Ainnomix\EtmAdminUi\Controller\Adminhtml\EntityAttributeSet;
 
 use Magento\Framework\Controller\ResultFactory;
 use Magento\Framework\App\Action\HttpGetActionInterface;
-use Magento\Framework\Exception\NotFoundException;
-use Magento\Framework\View\Result\Page;
+use Magento\Framework\Controller\ResultInterface;
 
 class Index extends AbstractAction implements HttpGetActionInterface
 {
@@ -25,19 +24,15 @@ class Index extends AbstractAction implements HttpGetActionInterface
     /**
      * Execute controller action
      *
-     * @return Page
-     *
-     * @throws NoSuchEntityException
-     * @throws NotFoundException
+     * @return ResultInterface
      */
-    public function execute(): Page
+    public function execute(): ResultInterface
     {
+        $entityType = $this->getEntityType();
         $resultPage = $this->resultFactory->create(ResultFactory::TYPE_PAGE);
 
-        $currentMenu = $this->nameProvider->getAttributeSetsNodeId($this->getEntityType());
+        $currentMenu = $this->aclIdProvider->get($entityType);
         $resultPage->setActiveMenu($currentMenu);
-
-        $entityType = $this->getEntityType();
 
         $resultPage->getConfig()->getTitle()->prepend(__('Entity Type Manager'));
         $resultPage->getConfig()->getTitle()->prepend(

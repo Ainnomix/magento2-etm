@@ -31,11 +31,21 @@ class Edit extends AbstractAction implements HttpGetActionInterface
      */
     public function execute(): ResultInterface
     {
+        try {
+            $attributeSet = $this->getAttributeSet();
+        } catch (NoSuchEntityException $exception) {
+            $this->getMessageManager()->addErrorMessage('No such attribute set entity');
+
+            return $this->resultRedirectFactory->create()->setPath(
+                'etm/*/index',
+                ['entity_type_id' => $this->getEntityType()->getEntityTypeId()]
+            );
+        }
+
         $resultPage = $this->resultFactory->create(ResultFactory::TYPE_PAGE);
         $entityType = $this->getEntityType();
-        $attributeSet = $this->getAttributeSet();
 
-        $currentMenu = $this->nameProvider->getAttributeSetsNodeId($entityType);
+        $currentMenu = $this->aclIdProvider->get($entityType);
         $resultPage->setActiveMenu($currentMenu);
 
         $resultPage->getConfig()->getTitle()->prepend(

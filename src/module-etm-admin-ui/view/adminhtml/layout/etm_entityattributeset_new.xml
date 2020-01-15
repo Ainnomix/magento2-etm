@@ -3,15 +3,7 @@
 <page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
     <body>
         <referenceContainer name="content">
-            <block class="Magento\Backend\Block\Template"
-                   name="adminhtml.etm.entity.set.new"
-                   template="Ainnomix_EtmAdminUi::attribute/set/add/main.phtml">
-                <block name="edit_set_form" class="Ainnomix\EtmAdminUi\Block\Adminhtml\EntityAttributeSet\Edit\Main\Formset"/>
-            </block>
-            <referenceBlock name="page.actions.toolbar">
-                <block name="adminhtml.etm.entity.set.new.save_button" class="Ainnomix\EtmAdminUi\Block\Adminhtml\EntityAttributeSet\Add\Toolbar\SaveButton" />
-                <block name="adminhtml.etm.entity.set.new.back_button" class="Ainnomix\EtmAdminUi\Block\Adminhtml\EntityAttributeSet\Edit\Toolbar\BackButton" />
-            </referenceBlock>
+            <uiComponent name="etm_entity_attribute_set_form"/>
         </referenceContainer>
     </body>
 </page>
