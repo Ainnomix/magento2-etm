@@ -66,10 +66,6 @@ class EntityTypeProvider
             return $this->entityTypeCache[$entityTypeId];
         }
 
-        if (0 === $entityTypeId) {
-            return $this->entityTypeCache[$entityTypeId] = $this->entityTypeFactory->create();
-        }
-
         $entityType = $this->entityTypeRepository->getById($entityTypeId);
 
         return $this->entityTypeCache[$entityTypeId] = $entityType;

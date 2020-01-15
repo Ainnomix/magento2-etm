@@ -16,15 +16,14 @@ namespace Ainnomix\EtmAdminUi\Controller\Adminhtml\EntityAttributeSet;
 
 use Exception;
 use Magento\Backend\App\Action;
-use Magento\Framework\App\Action\HttpGetActionInterface;
+use Magento\Framework\App\Action\HttpPostActionInterface;
 use Magento\Framework\Controller\Result\Redirect;
-use Magento\Framework\Exception\LocalizedException;
-use Ainnomix\EtmAdminUi\Model\Acl\Resource\NameProvider;
+use Magento\Framework\Exception\NoSuchEntityException;
 use Ainnomix\EtmAdminUi\Model\Ui\AttributeSetProvider;
-use Ainnomix\EtmAdminUi\Model\Ui\EntityTypeProvider;
 use Ainnomix\EtmCore\Api\AttributeSetRepositoryInterface;
+use Ainnomix\EtmAdminUi\Controller\Adminhtml\Context;
 
-class Delete extends AbstractAction implements HttpGetActionInterface
+class Delete extends AbstractAction implements HttpPostActionInterface
 {
 
     /**
@@ -36,23 +35,20 @@ class Delete extends AbstractAction implements HttpGetActionInterface
      * Delete constructor
      *
      * @param Action\Context                  $context
-     * @param EntityTypeProvider              $entityTypeProvider
+     * @param Context                         $typeContext
      * @param AttributeSetProvider            $attributeSetProvider
-     * @param NameProvider                    $nameProvider
      * @param AttributeSetRepositoryInterface $attributeSetRepository
      */
     public function __construct(
         Action\Context $context,
-        EntityTypeProvider $entityTypeProvider,
+        Context $typeContext,
         AttributeSetProvider $attributeSetProvider,
-        NameProvider $nameProvider,
         AttributeSetRepositoryInterface $attributeSetRepository
     ) {
         parent::__construct(
             $context,
-            $entityTypeProvider,
-            $attributeSetProvider,
-            $nameProvider
+            $typeContext,
+            $attributeSetProvider
         );
 
         $this->attributeSetRepository = $attributeSetRepository;
@@ -63,8 +59,7 @@ class Delete extends AbstractAction implements HttpGetActionInterface
      *
      * @return Redirect
      *
-     * @throws \Magento\Framework\Exception\NoSuchEntityException
-     * @throws \Magento\Framework\Exception\NotFoundException
+     * @throws NoSuchEntityException
      */
     public function execute(): Redirect
     {
@@ -73,12 +68,11 @@ class Delete extends AbstractAction implements HttpGetActionInterface
 
         try {
             $attributeSet = $this->getAttributeSet();
-            if (!$attributeSet->getAttributeSetId()) {
-                throw new LocalizedException(__("There is no such attribute set"));
-            }
 
-            $this->attributeSetRepository->deleteById((int) $attributeSet->getAttributeSetId());
+            $this->attributeSetRepository->deleteById((int)$attributeSet->getAttributeSetId());
             $this->getMessageManager()->addSuccessMessage(__('Attribute set has been deleted'));
+        } catch (NoSuchEntityException $exception) {
+            $this->getMessageManager()->addErrorMessage(__('No such attribute set entity'));
         } catch (Exception $exception) {
             $this->getMessageManager()->addErrorMessage($exception->getMessage());
         }

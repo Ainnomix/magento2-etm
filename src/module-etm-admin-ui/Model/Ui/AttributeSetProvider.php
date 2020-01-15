@@ -61,10 +61,6 @@ class AttributeSetProvider
             return $this->attributeSetCache[$attributeSetId];
         }
 
-        if (0 === $attributeSetId) {
-            return $this->attributeSetCache[$attributeSetId] = $this->attributeSetFactory->create();
-        }
-
         $attributeSet = $this->attributeSetRepository->get($attributeSetId);
 
         return $this->attributeSetCache[$attributeSetId] = $attributeSet;
