@@ -1,9 +1,0 @@
-<?php
-$formBlock = $block->getChildBlock('edit_set_form');
-?>
-<?= $formBlock->toHtml() ?>
-<script>
-    require(['jquery', "mage/mage"], function(jQuery){
-        jQuery('#<?= /* @noEscape */ $formBlock->getForm()->getId() ?>').mage('form').mage('validation');
-    });
-</script>

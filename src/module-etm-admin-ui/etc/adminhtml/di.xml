@@ -6,10 +6,26 @@
             <argument name="targetName" xsi:type="string">etm_entity_type_form.etm_entity_type_form</argument>
         </arguments>
     </virtualType>
+    <virtualType name="Ainnomix\EtmAdminUi\Ui\Component\Form\EntityAttributeSet\Control\SaveSplitButton" type="Magento\Backend\Ui\Component\Control\SaveSplitButton">
+        <arguments>
+            <argument name="targetName" xsi:type="string">etm_entity_attribute_set_form.etm_entity_attribute_set_form</argument>
+        </arguments>
+    </virtualType>
     <type name="Magento\Backend\Model\Menu\Director\Director">
         <plugin name="etm_menu" type="Ainnomix\EtmAdminUi\Plugin\Menu\Director\DirectorPlugin" />
     </type>
     <type name="Magento\Framework\Acl\AclResource\Config\Reader\Filesystem">
         <plugin name="etm_menu" type="Ainnomix\EtmAdminUi\Plugin\Acl\AclResource\Config\Reader\FilesystemPlugin" />
+    </type>
+    
+    <virtualType name="Ainnomix\EtmAdminUi\Controller\Adminhtml\EntityAttributeSet\Context" type="Ainnomix\EtmAdminUi\Controller\Adminhtml\Context">
+        <arguments>
+            <argument name="aclIdProvider" xsi:type="object">Ainnomix\EtmAdminUi\Model\Acl\TypeResource\AttributeSetIdProvider</argument>
+        </arguments>
+    </virtualType>
+    <type name="Ainnomix\EtmAdminUi\Controller\Adminhtml\EntityAttributeSet\AbstractAction">
+        <arguments>
+            <argument name="typeContext" xsi:type="object">Ainnomix\EtmAdminUi\Controller\Adminhtml\EntityAttributeSet\Context</argument>
+        </arguments>
     </type>
 </config>

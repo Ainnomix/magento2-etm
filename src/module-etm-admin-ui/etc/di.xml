@@ -8,6 +8,7 @@
                 <item name="etm_entity_type_listing_data_source" xsi:type="string">Ainnomix\EtmAdminUi\Model\ResourceModel\EntityType\Grid\Collection</item>
                 <item name="etm_entity_attribute_form_data_source" xsi:type="string">Ainnomix\EtmAdminUi\Model\ResourceModel\EntityAttribute\Grid\Collection</item>
                 <item name="etm_entity_attribute_listing_data_source" xsi:type="string">Ainnomix\EtmAdminUi\Model\ResourceModel\EntityAttribute\Grid\Collection</item>
+                <item name="etm_entity_attribute_set_form_data_source" xsi:type="string">Ainnomix\EtmAdminUi\Model\ResourceModel\EntityAttributeSet\Grid\Collection</item>
                 <item name="etm_entity_attribute_set_listing_data_source" xsi:type="string">Ainnomix\EtmAdminUi\Model\ResourceModel\EntityAttributeSet\Grid\Collection</item>
             </argument>
         </arguments>

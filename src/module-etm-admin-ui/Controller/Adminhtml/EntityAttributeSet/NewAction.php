@@ -28,11 +28,10 @@ class NewAction extends AbstractAction implements HttpGetActionInterface
      */
     public function execute(): ResultInterface
     {
+        $entityType = $this->getEntityType();
         $resultPage = $this->resultFactory->create(ResultFactory::TYPE_PAGE);
 
-        $entityType = $this->getEntityType();
-
-        $currentMenu = $this->nameProvider->getAttributeSetsNodeId($entityType);
+        $currentMenu = $this->aclIdProvider->get($entityType);
         $resultPage->setActiveMenu($currentMenu);
 
         $resultPage->getConfig()->getTitle()->prepend(

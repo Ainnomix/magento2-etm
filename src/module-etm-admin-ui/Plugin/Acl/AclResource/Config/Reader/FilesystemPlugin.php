@@ -16,11 +16,16 @@ namespace Ainnomix\EtmAdminUi\Plugin\Acl\AclResource\Config\Reader;
 
 use Ainnomix\EtmCore\Api\Data\EntityTypeInterface;
 use Ainnomix\EtmCore\Api\EntityTypeRepositoryInterface;
-use Ainnomix\EtmAdminUi\Model\Acl\Resource\NameProvider;
+use Ainnomix\EtmAdminUi\Model\Acl\TypeResource\Context;
 use Magento\Framework\Acl\AclResource\Config\Reader\Filesystem;
 
 class FilesystemPlugin
 {
+
+    /**
+     * @var Context
+     */
+    private $context;
 
     /**
      * @var EntityTypeRepositoryInterface
@@ -28,16 +33,28 @@ class FilesystemPlugin
     protected $entityTypeRepository;
 
     /**
-     * @var NameProvider
+     * FilesystemPlugin constructor
+     *
+     * @param Context                       $context
+     * @param EntityTypeRepositoryInterface $entityTypeRepository
      */
-    protected $nameProvider;
-
-    public function __construct(EntityTypeRepositoryInterface $entityTypeRepository, NameProvider $nameProvider)
-    {
+    public function __construct(
+        Context $context,
+        EntityTypeRepositoryInterface $entityTypeRepository
+    ) {
+        $this->context = $context;
         $this->entityTypeRepository = $entityTypeRepository;
-        $this->nameProvider = $nameProvider;
     }
 
+    /**
+     * Call plugin
+     *
+     * @param Filesystem  $subject
+     * @param array       $output
+     * @param string|null $scope
+     *
+     * @return array
+     */
     public function afterRead(Filesystem $subject, array $output, string $scope = null)
     {
         foreach ($output['config']['acl']['resources'] as &$resource) {
@@ -55,6 +72,11 @@ class FilesystemPlugin
         return $output;
     }
 
+    /**
+     * Generate acl config
+     *
+     * @param array $parent
+     */
     private function generateAclConfig(array &$parent): void
     {
         $searchResult = $this->entityTypeRepository->getList();
@@ -63,30 +85,37 @@ class FilesystemPlugin
         }
     }
 
+    /**
+     * Generate acl entry
+     *
+     * @param EntityTypeInterface $entityType
+     *
+     * @return array
+     */
     private function generateEntry(EntityTypeInterface $entityType): array
     {
         return [
-            'id'        => $this->nameProvider->getMainNodeId($entityType),
+            'id'        => $this->context->getMainIdProvider()->get($entityType),
             'title'     => (string) __('%1 Management', $entityType->getEntityTypeName()),
             'disabled'  => false,
             'sortOrder' => $entityType->getEntityTypeId() * 10,
             'children'  => [
                 [
-                    'id'        => $this->nameProvider->getEntitiesNodeId($entityType),
+                    'id'        => $this->context->getEntityIdProvider()->get($entityType),
                     'title'     => (string) __('Manage Entities'),
                     'disabled'  => false,
                     'sortOrder' => 10,
                     'children'  => [],
                 ],
                 [
-                    'id'        => $this->nameProvider->getAttributesNodeId($entityType),
+                    'id'        => $this->context->getAttributeIdProvider()->get($entityType),
                     'title'     => (string) __('Manage Attributes'),
                     'disabled'  => false,
                     'sortOrder' => 20,
                     'children'  => [],
                 ],
                 [
-                    'id'        => $this->nameProvider->getAttributeSetsNodeId($entityType),
+                    'id'        => $this->context->getAttributeSetIdProvider()->get($entityType),
                     'title'     => (string) __('Manage Attribute Sets'),
                     'disabled'  => false,
                     'sortOrder' => 30,

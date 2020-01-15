@@ -19,7 +19,7 @@ use Magento\Backend\Model\Menu\Builder;
 use Magento\Backend\Model\Menu\Director\Director;
 use Ainnomix\EtmCore\Api\Data\EntityTypeInterface;
 use Ainnomix\EtmCore\Api\EntityTypeRepositoryInterface;
-use Ainnomix\EtmAdminUi\Model\Acl\Resource\NameProvider;
+use Ainnomix\EtmAdminUi\Model\Acl\TypeResource\Context;
 use Psr\Log\LoggerInterface;
 
 class DirectorPlugin
@@ -31,18 +31,42 @@ class DirectorPlugin
     protected $entityTypeRepository;
 
     /**
-     * @var NameProvider
+     * @var Context
      */
-    protected $nameProvider;
+    protected $context;
 
-    public function __construct(EntityTypeRepositoryInterface $entityTypeRepository, NameProvider $nameProvider)
-    {
+    /**
+     * DirectorPlugin constructor
+     *
+     * @param Context                       $context
+     * @param EntityTypeRepositoryInterface $entityTypeRepository
+     */
+    public function __construct(
+        Context $context,
+        EntityTypeRepositoryInterface $entityTypeRepository
+    ) {
+        $this->context = $context;
         $this->entityTypeRepository = $entityTypeRepository;
-        $this->nameProvider = $nameProvider;
     }
 
-    public function aroundDirect(Director $subject, Closure $proceed, array $config, Builder $builder, LoggerInterface $logger)
-    {
+    /**
+     * Call plugin
+     *
+     * @param Director        $subject
+     * @param Closure         $proceed
+     * @param array           $config
+     * @param Builder         $builder
+     * @param LoggerInterface $logger
+     *
+     * @return void
+     */
+    public function aroundDirect(
+        Director $subject,
+        Closure $proceed,
+        array $config,
+        Builder $builder,
+        LoggerInterface $logger
+    ) {
         $searchResult = $this->entityTypeRepository->getList();
 
         foreach ($searchResult->getItems() as $item) {
@@ -52,12 +76,19 @@ class DirectorPlugin
         return $proceed($config, $builder, $logger);
     }
 
+    /**
+     * Create menu entry
+     *
+     * @param EntityTypeInterface $item Entity type instance
+     *
+     * @return array
+     */
     private function createEntry(EntityTypeInterface $item): array
     {
-        $mainNodeId = $this->nameProvider->getMainNodeId($item);
-        $entitiesNodeId = $this->nameProvider->getEntitiesNodeId($item);
-        $attributesNodeId = $this->nameProvider->getAttributesNodeId($item);
-        $attributeSetsNodeId = $this->nameProvider->getAttributeSetsNodeId($item);
+        $mainNodeId = $this->context->getMainIdProvider()->get($item);
+        $entitiesNodeId = $this->context->getEntityIdProvider()->get($item);
+        $attributesNodeId = $this->context->getAttributeIdProvider()->get($item);
+        $attributeSetsNodeId = $this->context->getAttributeSetIdProvider()->get($item);
 
         return [
             [
@@ -102,6 +133,14 @@ class DirectorPlugin
         ];
     }
 
+    /**
+     * Generate menu item action
+     *
+     * @param EntityTypeInterface $entityType
+     * @param string              $action
+     *
+     * @return string
+     */
     private function generateMenuAction(EntityTypeInterface $entityType, string $action): string
     {
         return sprintf('etm/%s/index/entity_type_id/%s', $action, $entityType->getEntityTypeId());

@@ -20,7 +20,6 @@ use Ainnomix\EtmCore\Api\Data\AttributeSetInterface;
 use Magento\Backend\Block\Template\Context;
 use Magento\Backend\Block\Widget\Form\Generic;
 use Magento\Framework\Data\FormFactory;
-use Magento\Eav\Model\ResourceModel\Entity\Attribute\Set\CollectionFactory;
 use Magento\Framework\Registry;
 
 class Formset extends Generic
@@ -36,18 +35,12 @@ class Formset extends Generic
      */
     private $attributeSetProvider;
 
-    /**
-     * @var CollectionFactory
-     */
-    private $collectionFactory;
-
     public function __construct(
         Context $context,
         Registry $registry,
         FormFactory $formFactory,
         EntityTypeProvider $entityTypeProvider,
         AttributeSetProvider $attributeSetProvider,
-        CollectionFactory $collectionFactory,
         array $data = []
     ) {
         parent::__construct(
@@ -59,7 +52,6 @@ class Formset extends Generic
 
         $this->entityTypeProvider = $entityTypeProvider;
         $this->attributeSetProvider = $attributeSetProvider;
-        $this->collectionFactory = $collectionFactory;
     }
 
     protected function _prepareForm()
@@ -82,26 +74,6 @@ class Formset extends Generic
                 'value' => $attributeSet->getAttributeSetName()
             ]
         );
-
-        if (!$this->getRequest()->getParam('id', false)) {
-            $fieldset->addField('gotoEdit', 'hidden', ['name' => 'gotoEdit', 'value' => '1']);
-
-            $collection = $this->collectionFactory->create();
-            $sets = $collection->setEntityTypeFilter($entityTypeId)
-                ->toOptionArray();
-
-            $fieldset->addField(
-                'skeleton_set',
-                'select',
-                [
-                    'label' => __('Based On'),
-                    'name' => 'skeleton_set',
-                    'required' => true,
-                    'class' => 'required-entry',
-                    'values' => $sets
-                ]
-            );
-        }
 
         $form->setMethod('post');
         $form->setUseContainer(true);
