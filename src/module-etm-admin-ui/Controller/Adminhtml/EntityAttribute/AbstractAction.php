@@ -14,70 +14,72 @@ declare(strict_types=1);
 
 namespace Ainnomix\EtmAdminUi\Controller\Adminhtml\EntityAttribute;
 
-use Magento\Backend\App\Action;
-use Ainnomix\EtmAdminUi\Model\Acl\Resource\NameProvider;
-use Ainnomix\EtmCore\Api\Data\EntityTypeInterface;
-use Ainnomix\EtmCore\Api\EntityTypeRepositoryInterface;
-use Magento\Framework\Exception\NotFoundException;
+use Ainnomix\EtmCore\Api\AttributeRepositoryInterface;
+use Ainnomix\EtmCore\Api\Data\AttributeInterface;
+use Ainnomix\EtmCore\Api\Data\AttributeInterfaceFactory;
+use Ainnomix\EtmAdminUi\Controller\Adminhtml\EntityAttribute\Context as AttributeContext;
+use Ainnomix\EtmAdminUi\Controller\Adminhtml\EntityType;
+use Ainnomix\EtmAdminUi\Ui\Resolver\Attribute as AttributeResolver;
+use Magento\Backend\App\Action\Context;
 use Magento\Framework\Exception\NoSuchEntityException;
 
-abstract class AbstractAction extends Action
+abstract class AbstractAction extends EntityType
 {
 
     /**
-     * @var EntityTypeRepositoryInterface
+     * @var AttributeResolver
      */
-    protected $entityTypeRepository;
+    protected $attributeResolver;
 
     /**
-     * @var NameProvider
+     * @var AttributeInterfaceFactory
      */
-    protected $nameProvider;
+    protected $attributeFactory;
 
     /**
-     * @var EntityTypeInterface
+     * @var AttributeRepositoryInterface
      */
-    private $entityType;
+    protected $attributeRepository;
 
+    /**
+     * AbstractAction constructor
+     *
+     * @param Context          $context
+     * @param AttributeContext $attributeContext
+     */
     public function __construct(
-        Action\Context $context,
-        EntityTypeRepositoryInterface $entityTypeRepository,
-        NameProvider $nameProvider
+        Context $context,
+        AttributeContext $attributeContext
     ) {
-        parent::__construct($context);
+        parent::__construct($context, $attributeContext);
 
-        $this->entityTypeRepository = $entityTypeRepository;
-        $this->nameProvider = $nameProvider;
+        $this->attributeResolver = $attributeContext->getAttributeResolver();
+        $this->attributeFactory = $attributeContext->getAttributeFactory();
+        $this->attributeRepository = $attributeContext->getAttributeRepository();
     }
 
     /**
-     * @return EntityTypeInterface
+     * Retrieve current attribute instance
+     * If attribute ID parameter is missing a new empty attribute instance will be created
      *
-     * @throws NotFoundException
+     * @return AttributeInterface
+     *
+     * @throws NoSuchEntityException
      */
-    protected function getEntityType(): EntityTypeInterface
+    protected function getAttribute(): AttributeInterface
     {
-        if (!$this->entityType) {
-            try {
-                $entityTypeId = (int) $this->getRequest()->getParam('entity_type_id');
-                $this->entityType = $this->entityTypeRepository->getById($entityTypeId);
-            } catch (NoSuchEntityException $exception) {
-                throw new NotFoundException(__($exception->getMessage()), $exception);
-            }
+        $attributeId = $this->getRequest()->getParam('id', false);
+        if (false === $attributeId) {
+            $attribute = $this->attributeFactory->create();
+            $attribute->setEntityTypeId($this->getEntityType()->getEntityTypeId());
+
+            $this->attributeResolver->set($attribute);
         }
 
-        return $this->entityType;
-    }
+        if (false !== $attributeId) {
+            $attribute = $this->attributeResolver->get();
+        }
 
-    /**
-     * @return bool
-     *
-     * @throws NotFoundException
-     */
-    protected function _isAllowed()
-    {
-        $aclResource = $this->nameProvider->getAttributesNodeId($this->getEntityType());
-
-        return $this->_authorization->isAllowed($aclResource);
+        return $attribute;
     }
 }

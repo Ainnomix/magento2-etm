@@ -17,7 +17,7 @@
     <type name="Magento\Framework\Acl\AclResource\Config\Reader\Filesystem">
         <plugin name="etm_menu" type="Ainnomix\EtmAdminUi\Plugin\Acl\AclResource\Config\Reader\FilesystemPlugin" />
     </type>
-    
+
     <virtualType name="Ainnomix\EtmAdminUi\Controller\Adminhtml\EntityAttributeSet\Context" type="Ainnomix\EtmAdminUi\Controller\Adminhtml\Context">
         <arguments>
             <argument name="aclIdProvider" xsi:type="object">Ainnomix\EtmAdminUi\Model\Acl\TypeResource\AttributeSetIdProvider</argument>
@@ -26,6 +26,23 @@
     <type name="Ainnomix\EtmAdminUi\Controller\Adminhtml\EntityAttributeSet\AbstractAction">
         <arguments>
             <argument name="typeContext" xsi:type="object">Ainnomix\EtmAdminUi\Controller\Adminhtml\EntityAttributeSet\Context</argument>
+        </arguments>
+    </type>
+
+    <!-- Attribute controller configuration -->
+    <type name="Ainnomix\EtmAdminUi\Controller\Adminhtml\EntityAttribute\Context">
+        <arguments>
+            <argument name="aclIdProvider" xsi:type="object">Ainnomix\EtmAdminUi\Model\Acl\TypeResource\AttributeIdProvider</argument>
+        </arguments>
+    </type>
+    <type name="Ainnomix\EtmAdminUi\Controller\Adminhtml\EntityAttribute\AbstractAction">
+        <arguments>
+            <argument name="typeContext" xsi:type="object">Ainnomix\EtmAdminUi\Controller\Adminhtml\EntityAttribute\Context</argument>
+        </arguments>
+    </type>
+    <type name="Ainnomix\EtmAdminUi\Controller\Adminhtml\EntityAttribute\Save">
+        <arguments>
+            <argument name="attributeLabelCache" xsi:type="object">Magento\Framework\App\Cache\Type\Translate</argument>
         </arguments>
     </type>
 </config>

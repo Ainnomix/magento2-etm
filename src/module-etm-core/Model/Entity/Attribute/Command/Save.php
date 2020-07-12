@@ -21,6 +21,6 @@ class Save implements SaveInterface
 {
     public function execute(AttributeInterface $attribute): int
     {
-        // TODO: Implement execute() method.
+        return 0;
     }
 }

@@ -52,9 +52,7 @@ class Edit extends AbstractAction implements HttpGetActionInterface
             __('Manage "%1" Attribute Sets', $entityType->getEntityTypeName())
         );
         $resultPage->getConfig()->getTitle()->prepend(
-            $attributeSet->getAttributeSetId() ?
-            __('Edit "%1" Attribute Set', $attributeSet->getAttributeSetName()) :
-            __('New Attribute Set')
+            __('Edit "%1" Attribute Set', $attributeSet->getAttributeSetName())
         );
 
         return $resultPage;

@@ -21,14 +21,18 @@ use Magento\Framework\App\Action\HttpGetActionInterface;
 class Index extends AbstractAction implements HttpGetActionInterface
 {
 
+    /**
+     * Execute controller action
+     *
+     * @return Page
+     */
     public function execute(): Page
     {
+        $entityType = $this->getEntityType();
         $resultPage = $this->resultFactory->create(ResultFactory::TYPE_PAGE);
 
-        $currentMenu = $this->nameProvider->getAttributesNodeId($this->getEntityType());
+        $currentMenu = $this->aclIdProvider->get($entityType);
         $resultPage->setActiveMenu($currentMenu);
-
-        $entityType = $this->getEntityType();
 
         $resultPage->getConfig()->getTitle()->prepend(__('Entity Type Manager'));
         $resultPage->getConfig()->getTitle()->prepend(

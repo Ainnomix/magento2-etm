@@ -3,9 +3,21 @@
 <page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" layout="admin-2columns-left"
       xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
     <body>
-<!--        <referenceContainer name="admin.scope.col.wrap" htmlClass="admin__old" />-->
+        <referenceContainer name="left">
+            <block class="Ainnomix\EtmAdminUi\Block\Adminhtml\EntityAttribute\Edit\Tabs" name="attribute_edit_tabs">
+                <container label="Main" name="main">
+                    <block class="Ainnomix\EtmAdminUi\Block\Adminhtml\EntityAttribute\Edit\Tab\Main" name="main.base" as="base"/>
+                    <block class="Ainnomix\EtmAdminUi\Block\Adminhtml\EntityAttribute\Edit\Tab\Options" name="main.advanced" as="advanced"/>
+                    <block class="Ainnomix\EtmAdminUi\Block\Adminhtml\EntityAttribute\Edit\Tab\Advanced" name="main.options" as="options"/>
+                </container>
+                <block class="Ainnomix\EtmAdminUi\Block\Adminhtml\EntityAttribute\Edit\Tab\Labels" name="attribute_edit_tabs.labels" as="labels"/>
+            </block>
+        </referenceContainer>
         <referenceContainer name="content">
-            <uiComponent name="etm_entity_attribute_form"/>
+            <block class="Ainnomix\EtmAdminUi\Block\Adminhtml\EntityAttribute\Edit" name="attribute_edit_content"/>
+        </referenceContainer>
+        <referenceContainer name="js">
+            <block class="Magento\Backend\Block\Template" name="attribute_edit_js" template="Ainnomix_EtmAdminUi::attribute/edit/js.phtml"/>
         </referenceContainer>
     </body>
 </page>

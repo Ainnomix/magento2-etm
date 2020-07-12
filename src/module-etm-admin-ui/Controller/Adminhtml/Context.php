@@ -17,18 +17,18 @@ namespace Ainnomix\EtmAdminUi\Controller\Adminhtml;
 use Ainnomix\EtmAdminUi\Model\Acl\TypeResource\ProviderInterface;
 use Ainnomix\EtmAdminUi\Model\Ui\EntityTypeProvider;
 
-class Context
+abstract class Context
 {
 
     /**
      * @var EntityTypeProvider
      */
-    private $entityTypeProvider;
+    protected $entityTypeProvider;
 
     /**
      * @var ProviderInterface
      */
-    private $aclIdProvider;
+    protected $aclIdProvider;
 
     /**
      * Context constructor

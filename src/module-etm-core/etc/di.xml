@@ -36,8 +36,8 @@
     <preference for="Ainnomix\EtmCore\Model\Entity\Attribute\Command\GetInterface" type="Ainnomix\EtmCore\Model\Entity\Attribute\Command\Get"/>
     <preference for="Ainnomix\EtmCore\Model\Entity\Attribute\Command\GetByIdInterface" type="Ainnomix\EtmCore\Model\Entity\Attribute\Command\GetById"/>
     <preference for="Ainnomix\EtmCore\Model\Entity\Attribute\Command\DeleteByIdInterface" type="Ainnomix\EtmCore\Model\Entity\Attribute\Command\DeleteById"/>
-    <preference for="Ainnomix\EtmCore\Model\Entity\Attribute\Command\SaveInterface" type="Ainnomix\EtmCore\Model\Entity\Attribute\Group\Save"/>
-    <preference for="Ainnomix\EtmCore\Model\Entity\Attribute\Command\GetListInterface" type="Ainnomix\EtmCore\Model\Entity\Attribute\Group\GetList"/>
+    <preference for="Ainnomix\EtmCore\Model\Entity\Attribute\Command\SaveInterface" type="Ainnomix\EtmCore\Model\Entity\Attribute\Command\Save"/>
+    <preference for="Ainnomix\EtmCore\Model\Entity\Attribute\Command\GetListInterface" type="Ainnomix\EtmCore\Model\Entity\Attribute\Command\GetList"/>
 
     <preference for="Ainnomix\EtmCore\Model\EntityTypeValidatorInterface" type="Ainnomix\EtmCore\Model\EntityTypeValidatorChain"/>
 
