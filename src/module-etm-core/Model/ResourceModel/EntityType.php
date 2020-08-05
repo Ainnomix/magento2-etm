@@ -14,8 +14,8 @@ declare(strict_types=1);
 
 namespace Ainnomix\EtmCore\Model\ResourceModel;
 
-use Ainnomix\EtmCore\Api\Data\EntityTypeInterface;
 use Magento\Eav\Model\ResourceModel\Entity\Type as EavEntityType;
+use Zend_Validate_Callback;
 
 /**
  * Entity type resource model class
@@ -26,18 +26,34 @@ use Magento\Eav\Model\ResourceModel\Entity\Type as EavEntityType;
 class EntityType extends EavEntityType
 {
 
-    public function validateCodeExistence(EntityTypeInterface $entityType): bool
+    /**
+     * Add validation rules to be applied before saving an entity
+     *
+     * @return Zend_Validate_Callback $validator
+     */
+    public function getValidationRulesBeforeSave()
+    {
+        $entityTypeIdentity = new Zend_Validate_Callback([$this, 'isEntityTypeUnique']);
+        $entityTypeIdentity->setMessage(
+            __('Entity type with the same code already exists.'),
+            Zend_Validate_Callback::INVALID_VALUE
+        );
+
+        return $entityTypeIdentity;
+    }
+
+    public function isEntityTypeUnique(\Magento\Framework\Model\AbstractModel $model): bool
     {
         $connection = $this->getConnection();
         $select = $connection->select();
 
-        $binds = ['entity_type_code' => $entityType->getEntityTypeCode()];
+        $binds = ['entity_type_code' => $model->getEntityTypeCode()];
 
         $select->from($this->getMainTable())
             ->where('entity_type_code = :entity_type_code');
 
-        if ($entityType->getEntityTypeId()) {
-            $binds['entity_type_id'] = $entityType->getEntityTypeId();
+        if ($model->getEntityTypeId()) {
+            $binds['entity_type_id'] = $model->getEntityTypeId();
 
             $select->where('entity_type_id != :entity_type_id');
         }
@@ -45,5 +61,13 @@ class EntityType extends EavEntityType
         $row = $connection->fetchRow($select, $binds);
 
         return empty($row);
+    }
+
+    protected function _getLoadSelect($field, $value, $object)
+    {
+        $select = parent::_getLoadSelect($field, $value, $object);
+        $select->where('is_custom = ?', 1);
+
+        return $select;
     }
 }

@@ -5,8 +5,8 @@
  *
  * @category  Ainnomix
  * @package   Ainnomix\EtmCore
- * @author    Roman Tomchak <romantomchak@gmail.com>
- * @copyright 2019 Ainnomix
+ * @author    Roman Tomchak <roman@ainnomix.com>
+ * @copyright 2020 Ainnomix
  * @license   Open Software License ("OSL") v. 3.0
  */
 

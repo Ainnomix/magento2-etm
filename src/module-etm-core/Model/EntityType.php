@@ -5,8 +5,8 @@
  *
  * @category  Ainnomix
  * @package   Ainnomix\EtmCore
- * @author    Roman Tomchak <romantomchak@gmail.com>
- * @copyright 2019 Ainnomix
+ * @author    Roman Tomchak <roman@ainnomix.com>
+ * @copyright 2020 Ainnomix
  * @license   Open Software License ("OSL") v. 3.0
  */
 
@@ -18,6 +18,7 @@ use Magento\Framework\Registry;
 use Magento\Framework\Model\Context;
 use Magento\Framework\Api\DataObjectHelper;
 use Magento\Framework\Data\Collection\AbstractDb;
+use Magento\Framework\Validator\DataObject as EntityTypeValidator;
 use Magento\Framework\Validator\UniversalFactory;
 use Magento\Framework\Model\ResourceModel\AbstractResource;
 use Magento\Eav\Model\Entity\StoreFactory;
@@ -26,7 +27,7 @@ use Magento\Eav\Model\Entity\Attribute\SetFactory;
 use Magento\Eav\Model\Entity\Type as EavEntityType;
 use Ainnomix\EtmCore\Api\Data\EntityTypeInterface;
 use Ainnomix\EtmCore\Api\Data\EntityTypeInterfaceFactory;
-use Ainnomix\EtmCore\Model\EntityType\ValidationAdapter;
+use Ainnomix\EtmCore\Model\EntityType\ValidatorFactory;
 use Ainnomix\EtmCore\Model\ResourceModel\EntityType as ResourceEntityType;
 
 /**
@@ -49,9 +50,9 @@ class EntityType extends EavEntityType
     protected $entityTypeFactory;
 
     /**
-     * @var ValidationAdapter
+     * @var ValidatorFactory
      */
-    protected $validator;
+    protected $validatorFactory;
 
     public function __construct(
         Context $context,
@@ -62,7 +63,7 @@ class EntityType extends EavEntityType
         UniversalFactory $universalFactory,
         DataObjectHelper $dataObjectHelper,
         EntityTypeInterfaceFactory $entityTypeFactory,
-        ValidationAdapter $validator,
+        ValidatorFactory $validatorFactory,
         AbstractResource $resource = null,
         AbstractDb $resourceCollection = null,
         array $data = []
@@ -81,7 +82,7 @@ class EntityType extends EavEntityType
 
         $this->dataObjectHelper = $dataObjectHelper;
         $this->entityTypeFactory = $entityTypeFactory;
-        $this->validator = $validator;
+        $this->validatorFactory = $validatorFactory;
     }
 
     /**
@@ -136,8 +137,11 @@ class EntityType extends EavEntityType
     /**
      * {@inheritDoc}
      */
-    protected function _getValidationRulesBeforeSave()
+    protected function _getValidationRulesBeforeSave(): EntityTypeValidator
     {
-        return $this->validator;
+        /** @var EntityTypeValidator $validator */
+        $validator = $this->validatorFactory->create();
+
+        return $validator;
     }
 }

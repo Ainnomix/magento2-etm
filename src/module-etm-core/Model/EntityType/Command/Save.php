@@ -25,6 +25,7 @@ use Ainnomix\EtmCore\Api\Data\AttributeSetInterfaceFactory;
 use Ainnomix\EtmCore\Api\AttributeGroupRepositoryInterface;
 use Ainnomix\EtmCore\Api\Data\AttributeGroupInterface;
 use Ainnomix\EtmCore\Api\Data\AttributeGroupInterfaceFactory;
+use Magento\Eav\Model\Entity;
 use Magento\Framework\Reflection\DataObjectProcessor;
 use Magento\Framework\Exception\CouldNotSaveException;
 
@@ -108,7 +109,7 @@ class Save implements SaveInterface
                 $this->processNewEntity($typeTypeModel);
             }
         } catch (Exception $exception) {
-            throw new CouldNotSaveException(__('Could not save entity type'), $exception);
+            throw new CouldNotSaveException(__('Could not save entity type. %1', $exception->getMessage()), $exception);
         }
 
         return (int) $typeTypeModel->getEntityTypeId();
@@ -138,6 +139,6 @@ class Save implements SaveInterface
     private function populateDefaultValues(EntityType $entityType)
     {
         $entityType->isCustom(true);
-        $entityType->setEntityModel(\Magento\Eav\Model\Entity::class);
+        $entityType->setEntityModel(Entity::class);
     }
 }
