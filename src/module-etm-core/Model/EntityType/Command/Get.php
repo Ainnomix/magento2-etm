@@ -60,7 +60,7 @@ class Get implements GetInterface
         $entityType = $this->entityTypeFactory->create();
         $this->entityTypeResource->load($entityType, $entityTypeCode, 'entity_type_code');
 
-        if (null === $entityType->getId() || !$entityType->isCustom()) {
+        if (null === $entityType->getId()) {
             throw new NoSuchEntityException(
                 __('Entity type with code "%value" does not exist.', ['value' => $entityTypeCode])
             );

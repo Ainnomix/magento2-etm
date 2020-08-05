@@ -44,7 +44,6 @@
     <type name="Ainnomix\EtmCore\Model\EntityType">
         <arguments>
             <argument name="dataObjectHelper" xsi:type="object">Magento\Framework\Api\DataObjectHelper\Proxy</argument>
-            <argument name="validator" xsi:type="object">Ainnomix\EtmCore\Model\EntityType\ValidationAdapter\Proxy</argument>
         </arguments>
     </type>
 
@@ -83,16 +82,6 @@
             <argument name="commandGetById" xsi:type="object">Ainnomix\EtmCore\Model\Entity\Attribute\Command\GetByIdInterface\Proxy</argument>
             <argument name="commandDeleteById" xsi:type="object">Ainnomix\EtmCore\Model\Entity\Attribute\Command\DeleteByIdInterface\Proxy</argument>
             <argument name="commandGetList" xsi:type="object">Ainnomix\EtmCore\Model\Entity\Attribute\Command\GetListInterface\Proxy</argument>
-        </arguments>
-    </type>
-    
-    <type name="Ainnomix\EtmCore\Model\EntityTypeValidatorChain">
-        <arguments>
-            <argument name="validators" xsi:type="array">
-                <item name="code" xsi:type="object">Ainnomix\EtmCore\Model\EntityType\Validator\CodeValidator</item>
-                <item name="name" xsi:type="object">Ainnomix\EtmCore\Model\EntityType\Validator\NameValidator</item>
-                <item name="existence" xsi:type="object">Ainnomix\EtmCore\Model\EntityType\Validator\ExistenceValidator</item>
-            </argument>
         </arguments>
     </type>
 </config>

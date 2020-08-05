@@ -1,12 +1,12 @@
 <?php
-/**
+/*
  * Do not edit or add to this file if you wish to upgrade Entity Type Manager to newer
  * versions in the future.
  *
  * @category  Ainnomix
  * @package   Ainnomix\EtmCore
- * @author    Roman Tomchak <romantomchak@gmail.com>
- * @copyright 2019 Ainnomix
+ * @author    Roman Tomchak <roman@ainnomix.com>
+ * @copyright 2020 Ainnomix
  * @license   Open Software License ("OSL") v. 3.0
  */
 
@@ -60,7 +60,7 @@ class GetById implements GetByIdInterface
         $entityType = $this->entityTypeFactory->create();
         $this->entityTypeResource->load($entityType, $entityTypeId, 'entity_type_id');
 
-        if (null === $entityType->getId() || !$entityType->isCustom()) {
+        if (null === $entityType->getId()) {
             throw new NoSuchEntityException(
                 __('Entity type with id "%value" does not exist.', ['value' => $entityTypeId])
             );
