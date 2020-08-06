@@ -17,7 +17,7 @@ namespace Ainnomix\EtmCore\Model\Entity\Attribute\Set\Command;
 use Magento\Framework\Api\SearchCriteriaInterface;
 use Magento\Framework\Api\SearchCriteriaBuilder;
 use Magento\Framework\Api\SearchCriteria\CollectionProcessorInterface;
-use Magento\Eav\Model\ResourceModel\Entity\Attribute\Set\CollectionFactory;
+use Ainnomix\EtmCore\Model\ResourceModel\Entity\Attribute\Set\CollectionFactory;
 use Ainnomix\EtmCore\Api\Data\AttributeSetSearchResultsInterface;
 use Ainnomix\EtmCore\Api\Data\AttributeSetSearchResultsInterfaceFactory;
 
