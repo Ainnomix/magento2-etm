@@ -109,7 +109,7 @@ class Save implements SaveInterface
                 $this->processNewEntity($typeTypeModel);
             }
         } catch (Exception $exception) {
-            throw new CouldNotSaveException(__('Could not save entity type. %1', $exception->getMessage()), $exception);
+            throw new CouldNotSaveException(__('Could not save entity type.'), $exception);
         }
 
         return (int) $typeTypeModel->getEntityTypeId();

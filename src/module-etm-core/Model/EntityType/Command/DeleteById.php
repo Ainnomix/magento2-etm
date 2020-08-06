@@ -86,7 +86,7 @@ class DeleteById implements DeleteByIdInterface
             $this->entityTypeResource->delete($entityType);
         } catch (Exception $exception) {
             $this->logger->error($exception->getMessage());
-            throw new CouldNotDeleteException(__('Could not delete Entity type'), $exception);
+            throw new CouldNotDeleteException(__('Could not delete entity type'), $exception);
         }
     }
 }

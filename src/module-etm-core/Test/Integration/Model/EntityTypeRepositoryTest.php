@@ -1,5 +1,5 @@
 <?php
-/**
+/*
  * Do not edit or add to this file if you wish to upgrade Entity Type Manager to newer
  * versions in the future.
  *
