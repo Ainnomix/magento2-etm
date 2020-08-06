@@ -26,6 +26,7 @@ use PHPUnit\Framework\TestCase;
 /**
  * Class EntityTypeRepositoryTest
  *
+ * @magentoDbIsolation enabled
  * @magentoDataFixture entityTypeFixture
  */
 class EntityTypeRepositoryTest extends TestCase
