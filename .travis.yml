@@ -13,8 +13,6 @@ install:
   - composer config -a http-basic.repo.magento.com $COMPOSER_MAGENTO_PUB_KEY $COMPOSER_MAGENTO_PRIV_KEY
   - composer config repositories.magento composer https://repo.magento.com/
   - composer install
-  - vendor/bin/phpcs --config-set ignore_errors_on_exit 1
-  - vendor/bin/phpcs --config-set ignore_warnings_on_exit 1
 script:
   - vendor/bin/phpmd src text vendor/ainnomix/magento2-quality-phpmd/rulesets/rulset.xml --ignore-violations-on-exit
   - vendor/bin/phpcs src

@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<ruleset name="EtmMagento2">
+    <description>ETM Magento2 coding standard</description>
+
+    <!-- display progress -->
+    <arg name="colors"/>
+
+    <!-- configuration options -->
+    <config name="ignore_errors_on_exit" value="1"/>
+    <config name="ignore_warnings_on_exit" value="1"/>
+
+    <!-- inherit rules from: -->
+    <rule ref="Magento2"/>
+
+    <!-- Paths to check -->
+    <file>src</file>
+</ruleset>
