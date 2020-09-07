@@ -25,6 +25,9 @@
         "magento/module-backend": "~101.0.0",
         "magento/module-ui": "~101.1.0"
     },
+    "require-dev": {
+        "ainnomix/magento2-quality-suite": "~2.3"
+    },
     "replace": {
         "ainnomix/module-etm-core": "self.version",
         "ainnomix/module-etm-admin-ui": "self.version"
@@ -43,9 +46,5 @@
         "branch-alias": {
             "dev-master": "1.0-dev"
         }
-    },
-    "require-dev": {
-        "ainnomix/magento2-quality-suite": "^1.1",
-        "sebastian/phpcpd": "~3.0.0"
     }
 }
