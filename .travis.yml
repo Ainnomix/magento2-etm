@@ -15,5 +15,5 @@ install:
   - composer install
 script:
   - vendor/bin/phpmd src text vendor/ainnomix/magento2-quality-phpmd/rulesets/rulset.xml --ignore-violations-on-exit
-  - vendor/bin/phpcs src
+  - vendor/bin/phpcs
   - vendor/bin/phpcpd src
