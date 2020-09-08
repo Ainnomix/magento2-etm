@@ -14,6 +14,8 @@ install:
   - composer config repositories.magento composer https://repo.magento.com/
   - composer install
 script:
+  - vendor/bin/phpunit
+  - bash <(curl -s https://codecov.io/bash)
   - vendor/bin/phpmd src text vendor/ainnomix/magento2-quality-phpmd/rulesets/rulset.xml --ignore-violations-on-exit
   - vendor/bin/phpcs
   - vendor/bin/phpcpd src
