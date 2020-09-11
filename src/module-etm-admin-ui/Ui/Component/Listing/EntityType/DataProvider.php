@@ -5,8 +5,8 @@
  *
  * @category  Ainnomix
  * @package   Ainnomix\EtmAdminUi
- * @author    Roman Tomchak <romantomchak@gmail.com>
- * @copyright 2019 Ainnomix
+ * @author    Roman Tomchak <roman@ainnomix.com>
+ * @copyright 2020 Ainnomix
  * @license   Open Software License ("OSL") v. 3.0
  */
 
@@ -19,9 +19,6 @@ use Magento\Framework\View\Element\UiComponent\DataProvider\DataProvider as View
 
 /**
  * Entity type listing data provider
- *
- * @category Ainnomix
- * @package  Ainnomix\EtmAdminUi
  */
 class DataProvider extends ViewDataProvider
 {

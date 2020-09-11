@@ -5,7 +5,7 @@
  *
  * @category  Ainnomix
  * @package   Ainnomix\EtmAdminUi
- * @author    Roman Tomchak <romantomchak@gmail.com>
+ * @author    Roman Tomchak <roman@ainnomix.com>
  * @copyright 2020 Ainnomix
  * @license   Open Software License ("OSL") v. 3.0
  */
