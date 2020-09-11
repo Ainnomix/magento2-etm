@@ -5,8 +5,8 @@
  *
  * @category  Ainnomix
  * @package   Ainnomix\EtmAdminUi
- * @author    Roman Tomchak <romantomchak@gmail.com>
- * @copyright 2019 Ainnomix
+ * @author    Roman Tomchak <roman@ainnomix.com>
+ * @copyright 2020 Ainnomix
  * @license   Open Software License ("OSL") v. 3.0
  */
 
@@ -20,11 +20,7 @@ use Magento\Framework\App\Action\HttpGetActionInterface;
 
 /**
  * Entity type list action class
- *
- * @category Ainnomix
- * @package  Ainnomix\EtmAdminUi
- * @author   Roman Tomchak <romantomchak@gmail.com>
- */
+ **/
 class Index extends AbstractAction implements HttpGetActionInterface
 {
 

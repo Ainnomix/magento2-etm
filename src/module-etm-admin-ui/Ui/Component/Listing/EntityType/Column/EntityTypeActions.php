@@ -5,8 +5,8 @@
  *
  * @category  Ainnomix_Etm
  * @package   Ainnomix\EtmAdminUi
- * @author    Roman Tomchak <romantomchak@gmail.com>
- * @copyright 2019 Ainnomix
+ * @author    Roman Tomchak <roman@ainnomix.com>
+ * @copyright 2020 Ainnomix
  * @license   Open Software License ("OSL") v. 3.0
  */
 
@@ -21,10 +21,6 @@ use Magento\Ui\Component\Listing\Columns\Column;
 
 /**
  * Grid action provider for entity types grid
- *
- * @category Ainnomix_Etm
- * @package  Ainnomix\EtmAdminUi
- * @author   Roman Tomchak <romantomchak@gmail.com>
  */
 class EntityTypeActions extends Column
 {
