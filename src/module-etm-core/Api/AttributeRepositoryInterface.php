@@ -15,7 +15,7 @@ declare(strict_types=1);
 namespace Ainnomix\EtmCore\Api;
 
 use Ainnomix\EtmCore\Api\Data\AttributeInterface;
-use Ainnomix\EtmCore\Api\Data\AttributeSearchResultInterface;
+use Ainnomix\EtmCore\Api\Data\AttributeSearchResultsInterface;
 use Magento\Framework\Api\SearchCriteriaInterface;
 use Magento\Framework\Exception\CouldNotDeleteException;
 use Magento\Framework\Exception\CouldNotSaveException;
@@ -75,7 +75,7 @@ interface AttributeRepositoryInterface
      *
      * @param SearchCriteriaInterface|null $criteria
      *
-     * @return AttributeSearchResultInterface
+     * @return AttributeSearchResultsInterface
      */
-    public function getList(SearchCriteriaInterface $criteria = null): AttributeSearchResultInterface;
+    public function getList(SearchCriteriaInterface $criteria = null): AttributeSearchResultsInterface;
 }

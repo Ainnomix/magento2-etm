@@ -14,13 +14,14 @@ declare(strict_types=1);
 
 namespace Ainnomix\EtmCore\Test\Unit\Model;
 
+use Ainnomix\EtmCore\Model\EntityType;
 use Magento\Framework\TestFramework\Unit\Helper\ObjectManager as ObjectManagerHelper;
 
-class TypeTest extends \PHPUnit\Framework\TestCase
+class EntityTypeTest extends \PHPUnit\Framework\TestCase
 {
 
     /**
-     * @var \Ainnomix\EtmCore\Model\EntityType
+     * @var EntityType
      */
     protected $model;
 
@@ -29,7 +30,7 @@ class TypeTest extends \PHPUnit\Framework\TestCase
      */
     protected $objectManagerHelper;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $contextMock = $this->createPartialMock(
             \Magento\Framework\Model\Context::class,
@@ -39,7 +40,7 @@ class TypeTest extends \PHPUnit\Framework\TestCase
         $this->objectManagerHelper = new ObjectManagerHelper($this);
 
         $this->model = $this->objectManagerHelper->getObject(
-            \Ainnomix\EtmCore\Model\EntityType::class,
+            EntityType::class,
             [
                 'context' => $contextMock
             ]
@@ -73,6 +74,27 @@ class TypeTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals($expectedId, $entityTypeId);
     }
 
+    public function testGetEntityTypeName(): void
+    {
+        $expected = 'Custom Entity Type';
+
+        $this->model->setEntityTypeName($expected);
+        $entityTypeName = $this->model->getEntityTypeName();
+
+        $this->assertEquals($expected, $entityTypeName);
+    }
+
+    public function testSetEntityTypeName(): void
+    {
+        $expected = 'Custom Entity Type';
+
+        $this->model->setEntityTypeName($expected);
+        $entityTypeName = $this->model->getEntityTypeName();
+
+        $this->assertTrue($this->model->hasDataChanges());
+        $this->assertEquals($expected, $entityTypeName);
+    }
+
     public function testGetEntityTypeCode(): void
     {
         $expectedCode = 'test_code';
@@ -98,5 +120,37 @@ class TypeTest extends \PHPUnit\Framework\TestCase
         $this->assertTrue($this->model->hasDataChanges());
         $this->assertTrue(is_string($entityTypeCode));
         $this->assertEquals($expectedCode, $entityTypeCode);
+    }
+
+    public function testGetDefaultAttributeSetId(): void
+    {
+        $expectedId = 100;
+
+        $this->model->setDefaultAttributeSetId($expectedId);
+        $attributeSetId = $this->model->getDefaultAttributeSetId();
+
+        $this->assertTrue(is_int($attributeSetId));
+        $this->assertEquals($expectedId, $attributeSetId);
+    }
+
+    public function testSetDefaultAttributeSetId(): void
+    {
+        $expectedId = 100;
+
+        $this->model->setDefaultAttributeSetId($expectedId);
+        $attributeSetId = $this->model->getDefaultAttributeSetId();
+
+        $this->assertTrue($this->model->hasDataChanges());
+        $this->assertTrue(is_int($attributeSetId));
+        $this->assertEquals($expectedId, $attributeSetId);
+    }
+
+    public function testIsCustom(): void
+    {
+        $this->model->setData('is_custom', true);
+        $this->assertTrue($this->model->isCustom());
+
+        $this->assertTrue($this->model->isCustom(false));
+        $this->assertFalse($this->model->isCustom());
     }
 }

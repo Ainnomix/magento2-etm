@@ -16,7 +16,6 @@ namespace Ainnomix\EtmCore\Model;
 
 use Magento\Framework\Registry;
 use Magento\Framework\Model\Context;
-use Magento\Framework\Api\DataObjectHelper;
 use Magento\Framework\Data\Collection\AbstractDb;
 use Magento\Framework\Validator\DataObject as EntityTypeValidator;
 use Magento\Framework\Validator\UniversalFactory;
@@ -26,7 +25,6 @@ use Magento\Eav\Model\Entity\AttributeFactory;
 use Magento\Eav\Model\Entity\Attribute\SetFactory;
 use Magento\Eav\Model\Entity\Type as EavEntityType;
 use Ainnomix\EtmCore\Api\Data\EntityTypeInterface;
-use Ainnomix\EtmCore\Api\Data\EntityTypeInterfaceFactory;
 use Ainnomix\EtmCore\Model\EntityType\ValidatorFactory;
 use Ainnomix\EtmCore\Model\ResourceModel\EntityType as ResourceEntityType;
 
@@ -36,18 +34,8 @@ use Ainnomix\EtmCore\Model\ResourceModel\EntityType as ResourceEntityType;
  * @category Ainnomix
  * @author   Roman Tomchak <romantomchak@gmail.com>
  */
-class EntityType extends EavEntityType
+class EntityType extends EavEntityType implements EntityTypeInterface
 {
-
-    /**
-     * @var DataObjectHelper
-     */
-    protected $dataObjectHelper;
-
-    /**
-     * @var EntityTypeInterfaceFactory
-     */
-    protected $entityTypeFactory;
 
     /**
      * @var ValidatorFactory
@@ -61,8 +49,6 @@ class EntityType extends EavEntityType
         SetFactory $attSetFactory,
         StoreFactory $storeFactory,
         UniversalFactory $universalFactory,
-        DataObjectHelper $dataObjectHelper,
-        EntityTypeInterfaceFactory $entityTypeFactory,
         ValidatorFactory $validatorFactory,
         AbstractResource $resource = null,
         AbstractDb $resourceCollection = null,
@@ -80,8 +66,6 @@ class EntityType extends EavEntityType
             $data
         );
 
-        $this->dataObjectHelper = $dataObjectHelper;
-        $this->entityTypeFactory = $entityTypeFactory;
         $this->validatorFactory = $validatorFactory;
     }
 
@@ -94,6 +78,63 @@ class EntityType extends EavEntityType
 
         $this->_eventPrefix = 'etm_entity_type';
         $this->_eventObject = 'entity_type';
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getEntityTypeId(): ?int
+    {
+        $entityTypeId = parent::getEntityTypeId();
+        return !is_null($entityTypeId) ? (int) $entityTypeId : null;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getEntityTypeName(): ?string
+    {
+        return $this->getData(self::ENTITY_TYPE_NAME);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function setEntityTypeName(string $name): void
+    {
+        $this->setData(self::ENTITY_TYPE_NAME, $name);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getEntityTypeCode(): ?string
+    {
+        return parent::getEntityTypeCode();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function setEntityTypeCode(string $code): void
+    {
+        $this->setData(self::ENTITY_TYPE_CODE, $code);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getDefaultAttributeSetId(): ?int
+    {
+        return (int) parent::getDefaultAttributeSetId();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function setDefaultAttributeSetId(int $attributeSetId): void
+    {
+        $this->setData(self::DEFAULT_ATTRIBUTE_SET_ID, $attributeSetId);
     }
 
     /**
@@ -113,25 +154,6 @@ class EntityType extends EavEntityType
         $this->setData('is_custom', $flag);
 
         return $value;
-    }
-
-    /**
-     * Create and populate entity data model
-     *
-     * @return EntityTypeInterface
-     */
-    public function getDataModel(): EntityTypeInterface
-    {
-        $entityTypeData = $this->getData();
-        $entityDataObject = $this->entityTypeFactory->create();
-
-        $this->dataObjectHelper->populateWithArray(
-            $entityDataObject,
-            $entityTypeData,
-            EntityTypeInterface::class
-        );
-
-        return $entityDataObject;
     }
 
     /**

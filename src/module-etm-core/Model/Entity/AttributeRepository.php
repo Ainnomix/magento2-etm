@@ -16,7 +16,7 @@ namespace Ainnomix\EtmCore\Model\Entity;
 
 use Ainnomix\EtmCore\Api\AttributeRepositoryInterface;
 use Ainnomix\EtmCore\Api\Data\AttributeInterface;
-use Ainnomix\EtmCore\Api\Data\AttributeSearchResultInterface;
+use Ainnomix\EtmCore\Api\Data\AttributeSearchResultsInterface;
 use Ainnomix\EtmCore\Model\Entity\Attribute\Command;
 use Magento\Framework\Api\SearchCriteriaInterface;
 
@@ -97,7 +97,7 @@ class AttributeRepository implements AttributeRepositoryInterface
     /**
      * {@inheritDoc}
      */
-    public function getList(SearchCriteriaInterface $criteria = null): AttributeSearchResultInterface
+    public function getList(SearchCriteriaInterface $criteria = null): AttributeSearchResultsInterface
     {
         return $this->commandGetList->execute($criteria);
     }

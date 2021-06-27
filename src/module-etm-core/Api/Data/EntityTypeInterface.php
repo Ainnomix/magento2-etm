@@ -40,15 +40,6 @@ interface EntityTypeInterface
     public function getEntityTypeId(): ?int;
 
     /**
-     * Set entity type ID
-     *
-     * @param int $typeId
-     *
-     * @return void
-     */
-    public function setEntityTypeId(int $typeId): void;
-
-    /**
      * Retrieve entity type code
      *
      * @return string|null

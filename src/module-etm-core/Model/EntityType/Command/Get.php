@@ -66,6 +66,6 @@ class Get implements GetInterface
             );
         }
 
-        return $entityType->getDataModel();
+        return $entityType;
     }
 }

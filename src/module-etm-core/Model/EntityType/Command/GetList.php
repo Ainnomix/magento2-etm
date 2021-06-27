@@ -84,14 +84,9 @@ class GetList implements GetListInterface
         $this->collectionProcessor->process($criteria, $collection);
         $collection->addFieldToFilter('is_custom', 1);
 
-        $items = [];
-        foreach ($collection as $item) {
-            $items[] = $item->getDataModel();
-        }
-
         /** @var EntityTypeSearchResultsInterface $searchResult */
         $searchResult = $this->searchResultsFactory->create();
-        $searchResult->setItems($items);
+        $searchResult->setItems($collection->getItems());
         $searchResult->setTotalCount($collection->getSize());
         $searchResult->setSearchCriteria($criteria);
         return $searchResult;

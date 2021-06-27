@@ -18,7 +18,6 @@ use Ainnomix\EtmAdminUi\Controller\Adminhtml\Context;
 use Exception;
 use Magento\Backend\App\Action;
 use Magento\Framework\App\Action\HttpPostActionInterface;
-use Ainnomix\EtmAdminUi\Model\Ui\EntityTypeProvider;
 use Ainnomix\EtmAdminUi\Model\Ui\AttributeSetProvider;
 use Ainnomix\EtmAdminUi\Model\Acl\Resource\NameProvider;
 use Ainnomix\EtmCore\Api\Data\AttributeSetInterface;

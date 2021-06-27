@@ -66,6 +66,6 @@ class GetById implements GetByIdInterface
             );
         }
 
-        return $entityType->getDataModel();
+        return $entityType;
     }
 }

@@ -15,9 +15,9 @@ declare(strict_types=1);
 namespace Ainnomix\EtmCore\Model\Data;
 
 use Magento\Framework\Api\SearchResults;
-use Ainnomix\EtmCore\Api\Data\AttributeSearchResultInterface;
+use Ainnomix\EtmCore\Api\Data\AttributeSearchResultsInterface;
 
-class AttributeSearchResult extends SearchResults implements AttributeSearchResultInterface
+class AttributeSearchResults extends SearchResults implements AttributeSearchResultsInterface
 {
 
 }

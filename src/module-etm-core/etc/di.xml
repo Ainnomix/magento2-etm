@@ -12,7 +12,7 @@
   -->
 
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
-    <preference for="Ainnomix\EtmCore\Api\Data\EntityTypeInterface" type="Ainnomix\EtmCore\Model\Data\EntityType" />
+    <preference for="Ainnomix\EtmCore\Api\Data\EntityTypeInterface" type="Ainnomix\EtmCore\Model\EntityType" />
     <preference for="Ainnomix\EtmCore\Api\EntityTypeRepositoryInterface" type="Ainnomix\EtmCore\Model\EntityTypeRepository" />
     <preference for="Ainnomix\EtmCore\Api\Data\EntityTypeSearchResultsInterface" type="Ainnomix\EtmCore\Model\Data\EntityTypeSearchResults" />
 
@@ -41,7 +41,7 @@
     <preference for="Ainnomix\EtmCore\Model\Entity\Attribute\Group\Command\GetListInterface" type="Ainnomix\EtmCore\Model\Entity\Attribute\Group\Command\GetList"/>
 
     <preference for="Ainnomix\EtmCore\Api\Data\AttributeInterface" type="Ainnomix\EtmCore\Model\Entity\Attribute" />
-    <preference for="Ainnomix\EtmCore\Api\Data\AttributeSearchResultInterface" type="Ainnomix\EtmCore\Model\Data\AttributeSearchResult" />
+    <preference for="Ainnomix\EtmCore\Api\Data\AttributeSearchResultsInterface" type="Ainnomix\EtmCore\Model\Data\AttributeSearchResults" />
     <preference for="Ainnomix\EtmCore\Api\AttributeRepositoryInterface" type="Ainnomix\EtmCore\Model\Entity\AttributeRepository" />
 
     <preference for="Ainnomix\EtmCore\Model\Entity\Attribute\Command\GetInterface" type="Ainnomix\EtmCore\Model\Entity\Attribute\Command\Get"/>
@@ -50,13 +50,16 @@
     <preference for="Ainnomix\EtmCore\Model\Entity\Attribute\Command\SaveInterface" type="Ainnomix\EtmCore\Model\Entity\Attribute\Command\Save"/>
     <preference for="Ainnomix\EtmCore\Model\Entity\Attribute\Command\GetListInterface" type="Ainnomix\EtmCore\Model\Entity\Attribute\Command\GetList"/>
 
-    <preference for="Ainnomix\EtmCore\Model\EntityTypeValidatorInterface" type="Ainnomix\EtmCore\Model\EntityTypeValidatorChain"/>
+    <preference for="Ainnomix\EtmCore\Api\Data\EntityInterface" type="Ainnomix\EtmCore\Model\Entity" />
+    <preference for="Ainnomix\EtmCore\Api\Data\EntitySearchResultsInterface" type="Ainnomix\EtmCore\Model\Data\EntitySearchResults" />
+    <preference for="Ainnomix\EtmCore\Api\EntityRepositoryInterface" type="Ainnomix\EtmCore\Model\EntityRepository" />
 
-    <type name="Ainnomix\EtmCore\Model\EntityType">
-        <arguments>
-            <argument name="dataObjectHelper" xsi:type="object">Magento\Framework\Api\DataObjectHelper\Proxy</argument>
-        </arguments>
-    </type>
+    <preference for="Ainnomix\EtmCore\Model\Entity\Command\GetByIdInterface" type="Ainnomix\EtmCore\Model\Entity\Command\GetById"/>
+    <preference for="Ainnomix\EtmCore\Model\Entity\Command\DeleteByIdInterface" type="Ainnomix\EtmCore\Model\Entity\Command\DeleteById"/>
+    <preference for="Ainnomix\EtmCore\Model\Entity\Command\SaveInterface" type="Ainnomix\EtmCore\Model\Entity\Command\Save"/>
+    <preference for="Ainnomix\EtmCore\Model\Entity\Command\GetListInterface" type="Ainnomix\EtmCore\Model\Entity\Command\GetList"/>
+
+    <preference for="Ainnomix\EtmCore\Model\EntityTypeValidatorInterface" type="Ainnomix\EtmCore\Model\EntityTypeValidatorChain"/>
 
     <type name="Ainnomix\EtmCore\Model\EntityTypeRepository">
         <arguments>
@@ -65,6 +68,14 @@
             <argument name="commandGetList" xsi:type="object">Ainnomix\EtmCore\Model\EntityType\Command\GetListInterface\Proxy</argument>
             <argument name="commandSave" xsi:type="object">Ainnomix\EtmCore\Model\EntityType\Command\SaveInterface\Proxy</argument>
             <argument name="commandDeleteById" xsi:type="object">Ainnomix\EtmCore\Model\EntityType\Command\DeleteByIdInterface\Proxy</argument>
+        </arguments>
+    </type>
+    <type name="Ainnomix\EtmCore\Model\EntityType\Command\Save\OperationPool">
+        <arguments>
+            <argument name="operations" xsi:type="array">
+                <item name="create" xsi:type="object">Ainnomix\EtmCore\Model\EntityType\Command\Save\Create\Proxy</item>
+                <item name="update" xsi:type="object">Ainnomix\EtmCore\Model\EntityType\Command\Save\Update\Proxy</item>
+            </argument>
         </arguments>
     </type>
 
@@ -93,6 +104,15 @@
             <argument name="commandGetById" xsi:type="object">Ainnomix\EtmCore\Model\Entity\Attribute\Command\GetByIdInterface\Proxy</argument>
             <argument name="commandDeleteById" xsi:type="object">Ainnomix\EtmCore\Model\Entity\Attribute\Command\DeleteByIdInterface\Proxy</argument>
             <argument name="commandGetList" xsi:type="object">Ainnomix\EtmCore\Model\Entity\Attribute\Command\GetListInterface\Proxy</argument>
+        </arguments>
+    </type>
+
+    <type name="Ainnomix\EtmCore\Model\EntityRepository">
+        <arguments>
+            <argument name="commandGetById" xsi:type="object">Ainnomix\EtmCore\Model\Entity\Command\GetByIdInterface\Proxy</argument>
+            <argument name="commandSave" xsi:type="object">Ainnomix\EtmCore\Model\Entity\Command\SaveInterface\Proxy</argument>
+            <argument name="commandDeleteById" xsi:type="object">Ainnomix\EtmCore\Model\Entity\Command\DeleteByIdInterface\Proxy</argument>
+            <argument name="commandGetList" xsi:type="object">Ainnomix\EtmCore\Model\Entity\Command\GetListInterface\Proxy</argument>
         </arguments>
     </type>
 </config>

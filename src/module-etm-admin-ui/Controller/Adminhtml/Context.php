@@ -17,7 +17,7 @@ namespace Ainnomix\EtmAdminUi\Controller\Adminhtml;
 use Ainnomix\EtmAdminUi\Model\Acl\TypeResource\ProviderInterface;
 use Ainnomix\EtmAdminUi\Model\Ui\EntityTypeProvider;
 
-abstract class Context
+class Context
 {
 
     /**

@@ -14,7 +14,7 @@ declare(strict_types=1);
 
 namespace Ainnomix\EtmCore\Model\Entity\Attribute\Command;
 
-use Ainnomix\EtmCore\Api\Data\AttributeSearchResultInterface;
+use Ainnomix\EtmCore\Api\Data\AttributeSearchResultsInterface;
 use Ainnomix\EtmCore\Api\Data\AttributeSearchResultInterfaceFactory;
 use Ainnomix\EtmCore\Model\ResourceModel\Entity\Attribute\CollectionFactory;
 use Magento\Framework\Api\SearchCriteriaInterface;
@@ -59,7 +59,7 @@ class GetList implements GetListInterface
     /**
      * {@inheritDoc}
      */
-    public function execute(SearchCriteriaInterface $criteria = null): AttributeSearchResultInterface
+    public function execute(SearchCriteriaInterface $criteria = null): AttributeSearchResultsInterface
     {
         $collection = $this->collectionFactory->create();
 
@@ -69,7 +69,7 @@ class GetList implements GetListInterface
 
         $this->collectionProcessor->process($criteria, $collection);
 
-        /** @var AttributeSearchResultInterface $searchResult */
+        /** @var AttributeSearchResultsInterface $searchResult */
         $searchResult = $this->searchResultFactory->create();
         $searchResult->setItems($collection->getItems());
         $searchResult->setTotalCount($collection->getSize());

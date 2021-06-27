@@ -16,7 +16,7 @@ namespace Ainnomix\EtmCore\Api\Data;
 
 use Magento\Framework\Api\SearchResultsInterface;
 
-interface AttributeSearchResultInterface extends SearchResultsInterface
+interface AttributeSearchResultsInterface extends SearchResultsInterface
 {
 
     /**
@@ -31,7 +31,7 @@ interface AttributeSearchResultInterface extends SearchResultsInterface
      *
      * @param AttributeInterface[] $items
      *
-     * @return AttributeSearchResultInterface
+     * @return AttributeSearchResultsInterface
      */
     public function setItems(array $items);
 }

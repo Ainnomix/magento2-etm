@@ -14,20 +14,12 @@ declare(strict_types=1);
 
 namespace Ainnomix\EtmCore\Model\EntityType\Command;
 
-use Exception;
-use Ainnomix\EtmCore\Model\EntityType;
-use Ainnomix\EtmCore\Model\EntityTypeFactory;
+use Ainnomix\EtmCore\Model\EntityType\Command\Save\OperationPool;
 use Ainnomix\EtmCore\Api\Data\EntityTypeInterface;
 use Ainnomix\EtmCore\Model\ResourceModel\EntityType as Resource;
-use Ainnomix\EtmCore\Api\AttributeSetRepositoryInterface;
-use Ainnomix\EtmCore\Api\Data\AttributeSetInterface;
-use Ainnomix\EtmCore\Api\Data\AttributeSetInterfaceFactory;
-use Ainnomix\EtmCore\Api\AttributeGroupRepositoryInterface;
-use Ainnomix\EtmCore\Api\Data\AttributeGroupInterface;
-use Ainnomix\EtmCore\Api\Data\AttributeGroupInterfaceFactory;
-use Magento\Eav\Model\Entity;
-use Magento\Framework\Reflection\DataObjectProcessor;
 use Magento\Framework\Exception\CouldNotSaveException;
+use Magento\Framework\Model\ResourceModel\Db\TransactionManagerInterface;
+use Exception;
 
 /**
  * Save Entity Type command
@@ -39,56 +31,28 @@ class Save implements SaveInterface
 {
 
     /**
-     * @var EntityTypeFactory
-     */
-    protected $entityTypeFactory;
-
-    /**
-     * @var DataObjectProcessor
-     */
-    protected $dataObjectProcessor;
-
-    /**
      * @var Resource
      */
     private $entityTypeResource;
 
     /**
-     * @var AttributeSetRepositoryInterface
+     * @var TransactionManagerInterface
      */
-    private $attributeSetRepository;
+    private $transactionManager;
 
     /**
-     * @var AttributeSetInterfaceFactory
+     * @var OperationPool
      */
-    private $attributeSetFactory;
-
-    /**
-     * @var AttributeGroupRepositoryInterface
-     */
-    private $attributeGroupRepository;
-
-    /**
-     * @var AttributeGroupInterfaceFactory
-     */
-    private $attributeGroupFactory;
+    private $operationPool;
 
     public function __construct(
-        EntityTypeFactory $entityTypeFactory,
-        DataObjectProcessor $dataObjectProcessor,
         Resource $entityTypeResource,
-        AttributeSetRepositoryInterface $attributeSetRepository,
-        AttributeSetInterfaceFactory $attributeSetFactory,
-        AttributeGroupRepositoryInterface $attributeGroupRepository,
-        AttributeGroupInterfaceFactory $attributeGroupFactory
+        TransactionManagerInterface $transactionManager,
+        OperationPool $operationPool
     ) {
-        $this->entityTypeFactory = $entityTypeFactory;
-        $this->dataObjectProcessor = $dataObjectProcessor;
         $this->entityTypeResource = $entityTypeResource;
-        $this->attributeSetRepository = $attributeSetRepository;
-        $this->attributeSetFactory = $attributeSetFactory;
-        $this->attributeGroupRepository = $attributeGroupRepository;
-        $this->attributeGroupFactory = $attributeGroupFactory;
+        $this->transactionManager = $transactionManager;
+        $this->operationPool = $operationPool;
     }
 
     /**
@@ -96,49 +60,23 @@ class Save implements SaveInterface
      */
     public function execute(EntityTypeInterface $entityType): int
     {
-        $typeTypeData = $this->dataObjectProcessor->buildOutputDataArray(
-            $entityType,
-            EntityTypeInterface::class
-        );
-        $typeTypeModel = $this->entityTypeFactory->create(['data' => $typeTypeData]);
-        $this->populateDefaultValues($typeTypeModel);
+        $this->transactionManager->start($this->entityTypeResource->getConnection());
 
         try {
-            $this->entityTypeResource->save($typeTypeModel);
-            if (!$entityType->getEntityTypeId()) {
-                $this->processNewEntity($typeTypeModel);
+            $operation = $this->operationPool->getOperation('create');
+            if (!$entityType->isObjectNew()) {
+                $operation = $this->operationPool->getOperation('update');
             }
+
+            $operation->execute($entityType);
+
+            $this->transactionManager->commit();
         } catch (Exception $exception) {
-            throw new CouldNotSaveException(__('Could not save entity type.'), $exception);
+            $this->transactionManager->rollBack();
+
+            throw new CouldNotSaveException(__('Could not save entity type. %1', $exception->getMessage()), $exception);
         }
 
-        return (int) $typeTypeModel->getEntityTypeId();
-    }
-
-    private function processNewEntity(EntityType $entityType): void
-    {
-        /** @var AttributeSetInterface $attributeSet */
-        $attributeSet = $this->attributeSetFactory->create();
-        $attributeSet->setAttributeSetName('Default');
-        $attributeSet->setEntityTypeId($entityType->getEntityTypeId());
-        $attributeSet->setSortOrder(1);
-
-        $this->attributeSetRepository->save($attributeSet);
-
-        $entityType->setDefaultAttributeSetId((int) $attributeSet->getAttributeSetId());
-        $this->entityTypeResource->save($entityType);
-
-        /** @var AttributeGroupInterface $attributeGroup */
-        $attributeGroup = $this->attributeGroupFactory->create(['data' => ['sort_order' => 1]]);
-        $attributeGroup->setAttributeSetId($attributeSet->getAttributeSetId());
-        $attributeGroup->setAttributeGroupName('General');
-
-        $this->attributeGroupRepository->save($attributeGroup);
-    }
-
-    private function populateDefaultValues(EntityType $entityType)
-    {
-        $entityType->isCustom(true);
-        $entityType->setEntityModel(Entity::class);
+        return (int) $entityType->getEntityTypeId();
     }
 }

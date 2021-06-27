@@ -21,9 +21,10 @@ use Magento\Framework\Api\DataObjectHelper;
 use Magento\Framework\Controller\ResultFactory;
 use Magento\Framework\Controller\Result\Json;
 use Magento\Framework\App\Action\HttpPostActionInterface;
+use Magento\Framework\Validator\DataObject as Validator;
 use Ainnomix\EtmCore\Api\Data\EntityTypeInterface;
 use Ainnomix\EtmCore\Api\Data\EntityTypeInterfaceFactory;
-use Ainnomix\EtmCore\Model\EntityTypeValidatorInterface;
+use Ainnomix\EtmCore\Model\EntityType\ValidatorFactory;
 
 /**
  * Entity type validation action class
@@ -46,7 +47,7 @@ class Validate extends AbstractAction implements HttpPostActionInterface
     private $entityTypeFactory;
 
     /**
-     * @var EntityTypeValidatorInterface
+     * @var Validator
      */
     private $validator;
 
@@ -54,13 +55,13 @@ class Validate extends AbstractAction implements HttpPostActionInterface
         Context $context,
         DataObjectHelper $dataObjectHelper,
         EntityTypeInterfaceFactory $entityTypeFactory,
-        EntityTypeValidatorInterface $validator
+        ValidatorFactory $validatorFactory
     ) {
         parent::__construct($context);
 
         $this->dataObjectHelper = $dataObjectHelper;
         $this->entityTypeFactory = $entityTypeFactory;
-        $this->validator = $validator;
+        $this->validator = $validatorFactory->create();
     }
 
     /**

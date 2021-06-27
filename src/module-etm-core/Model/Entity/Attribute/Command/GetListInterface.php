@@ -14,7 +14,7 @@ declare(strict_types=1);
 
 namespace Ainnomix\EtmCore\Model\Entity\Attribute\Command;
 
-use Ainnomix\EtmCore\Api\Data\AttributeSearchResultInterface;
+use Ainnomix\EtmCore\Api\Data\AttributeSearchResultsInterface;
 use Magento\Framework\Api\SearchCriteriaInterface;
 
 interface GetListInterface
@@ -25,7 +25,7 @@ interface GetListInterface
      *
      * @param SearchCriteriaInterface|null $criteria
      *
-     * @return AttributeSearchResultInterface
+     * @return AttributeSearchResultsInterface
      */
-    public function execute(SearchCriteriaInterface $criteria = null): AttributeSearchResultInterface;
+    public function execute(SearchCriteriaInterface $criteria = null): AttributeSearchResultsInterface;
 }

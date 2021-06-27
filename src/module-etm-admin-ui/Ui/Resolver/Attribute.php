@@ -58,7 +58,7 @@ class Attribute
     {
         if (!$this->attribute) {
             $attributeId = (int) $this->request->getParam($this->requestParamName);
-            $this->attribute = $this->attributeRepository->get($attributeId);
+            $this->attribute = $this->attributeRepository->getById($attributeId);
         }
 
         return $this->attribute;

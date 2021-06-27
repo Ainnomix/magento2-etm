@@ -19,7 +19,6 @@ use Ainnomix\EtmCore\Model\ResourceModel\EntityType as Resource;
 use Exception;
 use Magento\Framework\Exception\CouldNotDeleteException;
 use Magento\Framework\Exception\NoSuchEntityException;
-use Psr\Log\LoggerInterface;
 
 /**
  * Delete Entity Type by typeId command
@@ -41,25 +40,17 @@ class DeleteById implements DeleteByIdInterface
     protected $entityTypeResource;
 
     /**
-     * @var LoggerInterface
-     */
-    protected $logger;
-
-    /**
      * DeleteById Command constructor
      *
      * @param EntityTypeFactory $entityTypeFactory
      * @param Resource $entityTypeResource
-     * @param LoggerInterface $logger
      */
     public function __construct(
         EntityTypeFactory $entityTypeFactory,
-        Resource $entityTypeResource,
-        LoggerInterface $logger
+        Resource $entityTypeResource
     ) {
         $this->entityTypeFactory = $entityTypeFactory;
         $this->entityTypeResource = $entityTypeResource;
-        $this->logger = $logger;
     }
 
     /**
@@ -85,8 +76,7 @@ class DeleteById implements DeleteByIdInterface
         try {
             $this->entityTypeResource->delete($entityType);
         } catch (Exception $exception) {
-            $this->logger->error($exception->getMessage());
-            throw new CouldNotDeleteException(__('Could not delete entity type'), $exception);
+            throw new CouldNotDeleteException(__('Could not delete entity type. %1', $exception->getMessage()), $exception);
         }
     }
 }

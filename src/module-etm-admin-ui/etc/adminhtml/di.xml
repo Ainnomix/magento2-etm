@@ -45,4 +45,16 @@
             <argument name="attributeLabelCache" xsi:type="object">Magento\Framework\App\Cache\Type\Translate</argument>
         </arguments>
     </type>
+
+    <!-- Entities controller configuration -->
+    <virtualType name="Ainnomix\EtmAdminUi\Controller\Adminhtml\Entity\Context" type="Ainnomix\EtmAdminUi\Controller\Adminhtml\Context">
+        <arguments>
+            <argument name="aclIdProvider" xsi:type="object">Ainnomix\EtmAdminUi\Model\Acl\TypeResource\EntityIdProvider</argument>
+        </arguments>
+    </virtualType>
+    <type name="Ainnomix\EtmAdminUi\Controller\Adminhtml\Entity\AbstractAction">
+        <arguments>
+            <argument name="typeContext" xsi:type="object">Ainnomix\EtmAdminUi\Controller\Adminhtml\Entity\Context</argument>
+        </arguments>
+    </type>
 </config>
