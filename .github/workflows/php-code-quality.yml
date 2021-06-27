@@ -19,9 +19,7 @@ jobs:
         with:
           php-version: '7.4'
           coverage: none
-          tools:
-            - composer:v1
-            - phpcs:3.4
+          tools: composer:v1, phpcs:3.4
 
       - name: Run phpcs
         run: .tools/phpcs
