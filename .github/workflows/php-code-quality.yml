@@ -21,4 +21,4 @@ jobs:
           tools: composer:v1
 
       - name: Run phpcs
-        run: vendor/bin/phpcs
+        run: .tools/phpcs
