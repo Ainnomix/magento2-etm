@@ -1,0 +1,52 @@
+name: Code Quality
+
+on:
+  push:
+    branches: [ '**' ]
+  pull_request:
+    branches: [ 'master' ]
+
+jobs:
+  static-analysis:
+    name: Static Code Analysis
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Setup source code
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '7.4'
+          coverage: none
+          tools: composer:v1, cs2pr
+
+      - name: Cache Composer packages
+        id: composer-cache
+        uses: actions/cache@v2
+        with:
+          path: vendor
+          key: ${{ runner.os }}-php-${{ hashFiles('**/composer.json') }}
+          restore-keys: |
+            ${{ runner.os }}-php-
+
+      - name: Install Magento Composer repository auth
+        run: composer config -a http-basic.repo.magento.com $COMPOSER_MAGENTO_PUB_KEY $COMPOSER_MAGENTO_PRIV_KEY
+        env:
+          COMPOSER_MAGENTO_PUB_KEY: ${{ secrets.COMPOSER_MAGENTO_PUB_KEY }}
+          COMPOSER_MAGENTO_PRIV_KEY: ${{ secrets.COMPOSER_MAGENTO_PRIV_KEY }}
+
+      - name: Add Magento Composer repository
+        run: composer config repositories.magento composer https://repo.magento.com/
+
+      - name: Install Composer dependencies
+        run: composer install --no-interaction --no-ansi
+
+      - name: Run phpcs
+        run: ./vendor/bin/phpcs
+
+      - name: Run phpcpd
+        run: ./vendor/bin/phpcpd src
+
+      - name: Run phpmd
+        run: ./vendor/bin/phpmd src text vendor/ainnomix/magento2-quality-phpmd/rulesets/rulset.xml --ignore-violations-on-exit

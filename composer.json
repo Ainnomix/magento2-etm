@@ -2,6 +2,7 @@
     "name": "ainnomix/etm",
     "description": "Magento 2 Entity type manager",
     "type": "magento2-module",
+    "license": "OSL-3.0",
     "keywords": [
         "magento",
         "magento2",
