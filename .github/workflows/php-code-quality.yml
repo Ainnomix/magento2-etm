@@ -7,14 +7,18 @@ on:
     branches: [ 'master' ]
 
 jobs:
-  build:
+  static-analysis:
+    name: Static Code Analysis
     runs-on: ubuntu-latest
 
     steps:
       - uses: actions/checkout@v2
 
-      - name: Validate composer.json and composer.lock
-        run: composer validate --strict
+      - name: Setup source code
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '7.4'
+          tools: composer:v1
 
-      - name: Check php version
-        run: php -v
+      - name: Run phpcs
+        run: vendor/bin/phpcs
