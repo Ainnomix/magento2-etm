@@ -21,7 +21,8 @@ jobs:
           coverage: none
           tools: composer:v1, cs2pr
 
-      id: composer-cache
+      - name: Cache Composer packages
+        id: composer-cache
         uses: actions/cache@v2
         with:
           path: vendor
@@ -29,16 +30,16 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-php-
 
-      - name: Install Magento composer repository auth
+      - name: Install Magento Composer repository auth
         run: composer config -a http-basic.repo.magento.com $COMPOSER_MAGENTO_PUB_KEY $COMPOSER_MAGENTO_PRIV_KEY
         env:
           COMPOSER_MAGENTO_PUB_KEY: ${{ secrets.COMPOSER_MAGENTO_PUB_KEY }}
           COMPOSER_MAGENTO_PRIV_KEY: ${{ secrets.COMPOSER_MAGENTO_PRIV_KEY }}
 
-      - name: Add Magento composer repository
+      - name: Add Magento Composer repository
         run: composer config repositories.magento composer https://repo.magento.com/
 
-      - name: Install composer dependencies
+      - name: Install Composer dependencies
         run: composer install --no-interaction --no-ansi
 
       - name: Run phpcs
