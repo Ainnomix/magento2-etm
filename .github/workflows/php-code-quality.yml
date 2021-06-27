@@ -19,19 +19,19 @@ jobs:
         with:
           php-version: '7.4'
           coverage: none
-          tools: composer:v1, phpcs:3.4
+          tools: composer:v1
 
       - name: Install Magento composer repository auth
-        run: ./tools/composer config -a http-basic.repo.magento.com $COMPOSER_MAGENTO_PUB_KEY $COMPOSER_MAGENTO_PRIV_KEY
+        run: composer config -a http-basic.repo.magento.com $COMPOSER_MAGENTO_PUB_KEY $COMPOSER_MAGENTO_PRIV_KEY
         env:
           COMPOSER_MAGENTO_PUB_KEY: ${{ secrets.COMPOSER_MAGENTO_PUB_KEY }}
           COMPOSER_MAGENTO_PRIV_KEY: ${{ secrets.COMPOSER_MAGENTO_PRIV_KEY }}
 
       - name: Add Magento composer repository
-        run: ./tools/composer repositories.magento composer https://repo.magento.com/
+        run: composer repositories.magento composer https://repo.magento.com/
 
       - name: Install composer dependencies
-        run: ./tools/composer install --no-interaction --no-ansi
+        run: composer install --no-interaction --no-ansi
 
       - name: Run phpcs
-        run: ./tools/phpcs
+        run: ./vendor/bin/phpcs
