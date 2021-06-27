@@ -19,7 +19,15 @@ jobs:
         with:
           php-version: '7.4'
           coverage: none
-          tools: composer:v1
+          tools: composer:v1, cs2pr
+
+      id: composer-cache
+        uses: actions/cache@v2
+        with:
+          path: vendor
+          key: ${{ runner.os }}-php-${{ hashFiles('**/composer.json') }}
+          restore-keys: |
+            ${{ runner.os }}-php-
 
       - name: Install Magento composer repository auth
         run: composer config -a http-basic.repo.magento.com $COMPOSER_MAGENTO_PUB_KEY $COMPOSER_MAGENTO_PRIV_KEY
@@ -34,4 +42,4 @@ jobs:
         run: composer install --no-interaction --no-ansi
 
       - name: Run phpcs
-        run: ./vendor/bin/phpcs
+        run: ./vendor/bin/phpcs -q --report=checkstyle | cs2pr
