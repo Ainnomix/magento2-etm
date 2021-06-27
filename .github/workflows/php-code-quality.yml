@@ -28,7 +28,7 @@ jobs:
           COMPOSER_MAGENTO_PRIV_KEY: ${{ secrets.COMPOSER_MAGENTO_PRIV_KEY }}
 
       - name: Add Magento composer repository
-        run: composer repositories.magento composer https://repo.magento.com/
+        run: composer config repositories.magento composer https://repo.magento.com/
 
       - name: Install composer dependencies
         run: composer install --no-interaction --no-ansi
