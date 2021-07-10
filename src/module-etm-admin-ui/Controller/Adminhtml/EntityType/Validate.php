@@ -6,7 +6,7 @@
  * @category  Ainnomix_EtmAdminhtml
  * @package   Ainnomix\EtmAdminhtml
  * @author    Roman Tomchak <romantomchak@gmail.com>
- * @copyright 2019 Ainnomix
+ * @copyright 2021 Ainnomix
  * @license   Open Software License ("OSL") v. 3.0
  */
 
@@ -29,9 +29,7 @@ use Ainnomix\EtmCore\Model\EntityType\ValidatorFactory;
 /**
  * Entity type validation action class
  *
- * @category Ainnomix
- * @package  Ainnomix\EtmAdminhtml
- * @author   Roman Tomchak <romantomchak@gmail.com>
+ * @author Roman Tomchak <romantomchak@gmail.com>
  */
 class Validate extends AbstractAction implements HttpPostActionInterface
 {
@@ -88,10 +86,9 @@ class Validate extends AbstractAction implements HttpPostActionInterface
                 EntityTypeInterface::class
             );
 
-            $validationResult = $this->validator->validate($entityType);
-            if (!$validationResult->isValid()) {
+            if (!$this->validator->isValid($entityType)) {
                 $response->setError(true);
-                $response->setMessages($validationResult->getErrors());
+                $response->setMessages($this->validator->getMessages());
             }
         } catch (Exception $exception) {
             $response->setError(true);

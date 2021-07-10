@@ -16,6 +16,7 @@ namespace Ainnomix\EtmCore\Model\EntityType\Command;
 
 use Ainnomix\EtmCore\Model\EntityTypeFactory;
 use Ainnomix\EtmCore\Model\ResourceModel\EntityType as Resource;
+use Ainnomix\EtmCore\Model\ResourceModel\EntityTypeSetup;
 use Exception;
 use Magento\Framework\Exception\CouldNotDeleteException;
 use Magento\Framework\Exception\NoSuchEntityException;
@@ -40,17 +41,25 @@ class DeleteById implements DeleteByIdInterface
     protected $entityTypeResource;
 
     /**
+     * @var EntityTypeSetup
+     */
+    private $entityTypeSetup;
+
+    /**
      * DeleteById Command constructor
      *
      * @param EntityTypeFactory $entityTypeFactory
      * @param Resource $entityTypeResource
+     * @param EntityTypeSetup $entityTypeSetup
      */
     public function __construct(
         EntityTypeFactory $entityTypeFactory,
-        Resource $entityTypeResource
+        Resource $entityTypeResource,
+        EntityTypeSetup $entityTypeSetup
     ) {
         $this->entityTypeFactory = $entityTypeFactory;
         $this->entityTypeResource = $entityTypeResource;
+        $this->entityTypeSetup = $entityTypeSetup;
     }
 
     /**
@@ -74,9 +83,13 @@ class DeleteById implements DeleteByIdInterface
         }
 
         try {
+            $this->entityTypeSetup->dropEntityTypeTables($entityType);
             $this->entityTypeResource->delete($entityType);
         } catch (Exception $exception) {
-            throw new CouldNotDeleteException(__('Could not delete entity type. %1', $exception->getMessage()), $exception);
+            throw new CouldNotDeleteException(
+                __('Could not delete entity type. %1', $exception->getMessage()),
+                $exception
+            );
         }
     }
 }

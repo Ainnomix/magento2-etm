@@ -60,6 +60,7 @@
     <preference for="Ainnomix\EtmCore\Model\Entity\Command\GetListInterface" type="Ainnomix\EtmCore\Model\Entity\Command\GetList"/>
 
     <preference for="Ainnomix\EtmCore\Model\EntityTypeValidatorInterface" type="Ainnomix\EtmCore\Model\EntityTypeValidatorChain"/>
+    <preference for="Ainnomix\EtmCore\Model\ResourceModel\EntityTableNameResolverInterface" type="Ainnomix\EtmCore\Model\ResourceModel\Entity\TableNameResolver"/>
 
     <type name="Ainnomix\EtmCore\Model\EntityTypeRepository">
         <arguments>

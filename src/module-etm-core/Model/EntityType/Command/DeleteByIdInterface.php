@@ -6,7 +6,7 @@
  * @category  Ainnomix
  * @package   Ainnomix\EtmCore
  * @author    Roman Tomchak <roman@ainnomix.com>
- * @copyright 2020 Ainnomix
+ * @copyright 2021 Ainnomix
  * @license   Open Software License ("OSL") v. 3.0
  */
 
@@ -20,8 +20,7 @@ use Magento\Framework\Exception\NoSuchEntityException;
 /**
  * Delete Entity Type by typeId command (Service Provider Interface - SPI)
  *
- * @category Ainnomix
- * @package  Ainnomix\EtmCore
+ * @author Roman Tomchak <roman@ainnomix.com>
  */
 interface DeleteByIdInterface
 {

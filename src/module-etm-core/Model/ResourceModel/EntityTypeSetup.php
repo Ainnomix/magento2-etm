@@ -4,11 +4,17 @@ declare(strict_types=1);
 
 namespace Ainnomix\EtmCore\Model\ResourceModel;
 
+use Ainnomix\EtmCore\Api\Data\EntityTypeInterface;
 use Magento\Framework\App\ResourceConnection;
 use Magento\Framework\DB\Adapter\AdapterInterface;
 use Magento\Framework\DB\Ddl\Table;
 use Magento\Framework\Stdlib\StringUtils;
 
+/**
+ * Entity type tables setup model
+ *
+ * @author Roman Tomchak <roman@ainnomix.com>
+ */
 class EntityTypeSetup
 {
 
@@ -16,6 +22,11 @@ class EntityTypeSetup
      * @var ResourceConnection
      */
     private $resources;
+
+    /**
+     * @var EntityTableNameResolverInterface
+     */
+    private $tableNameResolver;
 
     /**
      * @var StringUtils
@@ -55,8 +66,8 @@ class EntityTypeSetup
             'type' => Table::TYPE_DECIMAL,
             'length' => null,
             'options' => [
-                'scale' => 12,
-                'precision' => 4,
+                'scale' => 4,
+                'precision' => 12,
                 'nullable' => false,
                 'default' => 0.0
             ]
@@ -66,15 +77,50 @@ class EntityTypeSetup
             'length' => null,
             'options' => [
                 'nullable' => true
+            ],
+            'addIndexes' => [
+                'attributeValue' => [
+                    'columns' => [
+                        'attribute_id' => ['name' => 'attribute_id'],
+                        'value' => ['name' => 'value', 'size' => 255]
+                    ]
+                ]
             ]
         ]
     ];
 
-    public function __construct(ResourceConnection $resources, StringUtils $string, string $connectionName = null)
-    {
+    private $defaultIndexes = [
+        'entityAttributeStore' => [
+            'columns' => [
+                'entity_id' => ['name' => 'entity_id'],
+                'attribute_id' => ['name' => 'attribute_id'],
+                'store_id' => ['name' => 'store_id']
+            ],
+            'type' => AdapterInterface::INDEX_TYPE_UNIQUE
+        ],
+        'storeId' => [
+            'columns' => [
+                'store_id' => ['name' => 'store_id']
+            ]
+        ],
+        'attributeValue' => [
+            'columns' => [
+                'attribute_id' => ['name' => 'attribute_id'],
+                'value' => ['name' => 'value']
+            ]
+        ]
+    ];
+
+    public function __construct(
+        ResourceConnection $resources,
+        EntityTableNameResolverInterface $tableNameResolver,
+        StringUtils $string,
+        string $connectionName = null
+    ) {
         $this->resources = $resources;
+        $this->tableNameResolver = $tableNameResolver;
         $this->string = $string;
-        if (!is_null($connectionName)) {
+        if (null !== $connectionName) {
             $this->connectionName = $connectionName;
         }
     }
@@ -84,12 +130,13 @@ class EntityTypeSetup
      */
     public function getConnection()
     {
-        $fullResourceName = ($this->connectionName ? $this->connectionName : ResourceConnection::DEFAULT_CONNECTION);
-        return $this->resources->getConnection($fullResourceName);
+        return $this->resources->getConnection($this->connectionName);
     }
 
-    public function setupEntityTypeTables(string $tableName): void
+    public function setupEntityTypeTables(EntityTypeInterface $entityType): void
     {
+        $tableName = $this->tableNameResolver->resolve($entityType);
+
         $table = $this->getConnection()->newTable($tableName)
             ->setComment($this->string->upperCaseWords($tableName, '_', ' '));
 
@@ -142,6 +189,23 @@ class EntityTypeSetup
 
         $this->getConnection()->createTable($table);
         $this->createAttributeTypeTables($tableName);
+    }
+
+    /**
+     * Drop entity type tables
+     *
+     * @param EntityTypeInterface $entityType
+     */
+    public function dropEntityTypeTables(EntityTypeInterface $entityType): void
+    {
+        $tableName = $this->tableNameResolver->resolve($entityType);
+        foreach (array_keys($this->types) as $type) {
+            $typeTableName = sprintf('%s_%s', $tableName, $type);
+
+            $this->getConnection()->dropTable($typeTableName);
+        }
+
+        $this->getConnection()->dropTable($tableName);
     }
 
     private function createAttributeTypeTables(string $tableName): void
@@ -209,17 +273,12 @@ class EntityTypeSetup
                 'Attribute Value'
             );
 
-            $indexes = [
-                ['columns' => ['entity_id', 'attribute_id', 'store_id'], 'type' => AdapterInterface::INDEX_TYPE_UNIQUE],
-                ['columns' => ['store_id']],
-                ['columns' => ['attribute_id', 'value']],
-                ['columns' => ['entity_type_id', 'value']]
-            ];
+            $indexes = array_replace_recursive($this->defaultIndexes, $config['addIndexes'] ?? []);
             foreach ($indexes as $index) {
                 $table->addIndex(
                     $this->getConnection()->getIndexName(
                         $typeTableName,
-                        $index['columns'],
+                        array_keys($index['columns']),
                         $index['type'] ?? AdapterInterface::INDEX_TYPE_INDEX
                     ),
                     $index['columns'],

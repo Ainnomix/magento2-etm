@@ -4,4 +4,7 @@
     <event name="etm_entity_type_save_after">
         <observer name="etm_flush_menu_cache" instance="Ainnomix\EtmAdminUi\Observer\FlushMenuCacheObserver" />
     </event>
+    <event name="etm_entity_type_delete_after">
+        <observer name="etm_flush_menu_cache" instance="Ainnomix\EtmAdminUi\Observer\FlushMenuCacheObserver" />
+    </event>
 </config>
