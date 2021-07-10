@@ -6,7 +6,7 @@
  * @category  Ainnomix_EtmAdminhtml
  * @package   Ainnomix\EtmAdminhtml
  * @author    Roman Tomchak <romantomchak@gmail.com>
- * @copyright 2019 Ainnomix
+ * @copyright 2021 Ainnomix
  * @license   Open Software License ("OSL") v. 3.0
  */
 
@@ -24,9 +24,7 @@ use Ainnomix\EtmCore\Model\ResourceModel\EntityType\CollectionFactory;
 /**
  * Delete multiple entity types action class
  *
- * @category Ainnomix_EtmAdminhtml
- * @package  Ainnomix\EtmAdminhtml
- * @author   Roman Tomchak <romantomchak@gmail.com>
+ * @author Roman Tomchak <romantomchak@gmail.com>
  */
 class MassDelete extends AbstractAction
 {

@@ -5,8 +5,8 @@
  *
  * @category  Ainnomix
  * @package   Ainnomix\EtmCore
- * @author    Roman Tomchak <roman@ainnomix.com>
- * @copyright 2020 Ainnomix
+ * @author    Roman Tomchak <romantomchak@gmail.com>
+ * @copyright 2021 Ainnomix
  * @license   Open Software License ("OSL") v. 3.0
  */
 
@@ -21,9 +21,6 @@ use Magento\Framework\Exception\NoSuchEntityException;
 
 /**
  * Get Entity Type by typeId command
- *
- * @category Ainnomix
- * @package  Ainnomix\EtmCore
  */
 class GetById implements GetByIdInterface
 {

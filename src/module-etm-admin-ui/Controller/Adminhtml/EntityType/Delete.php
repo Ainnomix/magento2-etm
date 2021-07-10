@@ -3,10 +3,10 @@
  * Do not edit or add to this file if you wish to upgrade Entity Type Manager to newer
  * versions in the future.
  *
- * @category  Ainnomix_EtmAdminhtml
+ * @category  Ainnomix
  * @package   Ainnomix\EtmAdminhtml
  * @author    Roman Tomchak <romantomchak@gmail.com>
- * @copyright 2019 Ainnomix
+ * @copyright 2021 Ainnomix
  * @license   Open Software License ("OSL") v. 3.0
  */
 
@@ -25,8 +25,6 @@ use Ainnomix\EtmCore\Api\EntityTypeRepositoryInterface;
 /**
  * Delete entity type action class
  *
- * @category Ainnomix_EtmAdminhtml
- * @package  Ainnomix\EtmAdminhtml
  * @author   Roman Tomchak <romantomchak@gmail.com>
  */
 class Delete extends AbstractAction implements HttpGetActionInterface

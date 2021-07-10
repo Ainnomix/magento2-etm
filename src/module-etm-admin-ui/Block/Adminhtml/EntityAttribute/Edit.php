@@ -6,7 +6,7 @@
  * @category  Ainnomix
  * @package   Ainnomix\EtmAdminUi
  * @author    Roman Tomchak <romantomchak@gmail.com>
- * @copyright 2020 Ainnomix
+ * @copyright 2021 Ainnomix
  * @license   Open Software License ("OSL") v. 3.0
  */
 
@@ -15,7 +15,6 @@ declare(strict_types=1);
 namespace Ainnomix\EtmAdminUi\Block\Adminhtml\EntityAttribute;
 
 use Magento\Backend\Block\Widget\Form\Container;
-use Magento\Framework\Phrase;
 
 class Edit extends Container
 {

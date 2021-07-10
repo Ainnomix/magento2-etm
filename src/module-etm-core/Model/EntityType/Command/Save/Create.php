@@ -5,7 +5,7 @@
  *
  * @category  Ainnomix
  * @package   Ainnomix\EtmCore
- * @author    Roman Tomchak <roman@ainnomix.com>
+ * @author    Roman Tomchak <romantomchak@gmail.com>
  * @copyright 2021 Ainnomix
  * @license   Open Software License ("OSL") v. 3.0
  */
@@ -31,7 +31,7 @@ use Magento\Framework\Model\ResourceModel\Db\TransactionManagerInterface;
 /**
  * Entity type create handler class
  *
- * @author Roman Tomchak <roman@ainnomix.com>
+ * @author Roman Tomchak <romantomchak@gmail.com>
  */
 class Create implements OperationInterface
 {

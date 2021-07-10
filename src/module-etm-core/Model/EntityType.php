@@ -5,8 +5,8 @@
  *
  * @category  Ainnomix
  * @package   Ainnomix\EtmCore
- * @author    Roman Tomchak <roman@ainnomix.com>
- * @copyright 2020 Ainnomix
+ * @author    Roman Tomchak <romantomchak@gmail.com>
+ * @copyright 2021 Ainnomix
  * @license   Open Software License ("OSL") v. 3.0
  */
 
@@ -31,8 +31,7 @@ use Ainnomix\EtmCore\Model\ResourceModel\EntityType as ResourceEntityType;
 /**
  * Entity type model class
  *
- * @category Ainnomix
- * @author   Roman Tomchak <romantomchak@gmail.com>
+ * @author Roman Tomchak <romantomchak@gmail.com>
  */
 class EntityType extends EavEntityType implements EntityTypeInterface
 {
@@ -71,6 +70,8 @@ class EntityType extends EavEntityType implements EntityTypeInterface
 
     /**
      * Configure model
+     *
+     * @SuppressWarnings(PHPMD.CamelCaseMethodName)
      */
     protected function _construct(): void
     {
@@ -86,7 +87,7 @@ class EntityType extends EavEntityType implements EntityTypeInterface
     public function getEntityTypeId(): ?int
     {
         $entityTypeId = parent::getEntityTypeId();
-        return !is_null($entityTypeId) ? (int) $entityTypeId : null;
+        return null !== $entityTypeId ? (int) $entityTypeId : null;
     }
 
     /**

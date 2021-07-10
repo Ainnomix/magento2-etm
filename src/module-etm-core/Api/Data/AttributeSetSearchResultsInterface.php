@@ -5,8 +5,8 @@
  *
  * @category  Ainnomix
  * @package   Ainnomix\EtmCore
- * @author    Roman Tomchak <roman@ainnomix.com>
- * @copyright 2020 Ainnomix
+ * @author    Roman Tomchak <romantomchak@gmail.com>
+ * @copyright 2021 Ainnomix
  * @license   Open Software License ("OSL") v. 3.0
  */
 
@@ -19,9 +19,7 @@ use Magento\Framework\Api\SearchResultsInterface;
 /**
  * Entity type search result interface
  *
- * @category Ainnomix_Etm
- * @package  Ainnomix\EtmCore
- * @author   Roman Tomchak <romantomchak@gmail.com>
+ * @author Roman Tomchak <romantomchak@gmail.com>
  */
 interface AttributeSetSearchResultsInterface extends SearchResultsInterface
 {

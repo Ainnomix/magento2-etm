@@ -6,7 +6,7 @@
  * @category  Ainnomix
  * @package   Ainnomix\EtmAdminUi
  * @author    Roman Tomchak <romantomchak@gmail.com>
- * @copyright 2019 Ainnomix
+ * @copyright 2021 Ainnomix
  * @license   Open Software License ("OSL") v. 3.0
  */
 
@@ -27,9 +27,7 @@ use Ainnomix\EtmAdminUi\Controller\Adminhtml\EntityType\Initialization\Helper;
 /**
  * Save Entity type action class
  *
- * @category Ainnomix
- * @package  Ainnomix\EtmAdminUi
- * @author   Roman Tomchak <romantomchak@gmail.com>
+ * @author Roman Tomchak <romantomchak@gmail.com>
  */
 class Save extends AbstractAction implements HttpPostActionInterface
 {

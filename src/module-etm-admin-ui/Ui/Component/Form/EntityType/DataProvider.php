@@ -6,7 +6,7 @@
  * @category  Ainnomix_Etm
  * @package   Ainnomix\EtmAdminUi
  * @author    Roman Tomchak <romantomchak@gmail.com>
- * @copyright 2019 Ainnomix
+ * @copyright 2021 Ainnomix
  * @license   Open Software License ("OSL") v. 3.0
  */
 
@@ -20,9 +20,7 @@ use Magento\Framework\View\Element\UiComponent\DataProvider\DataProvider as UiDa
 /**
  * Entity type form data provider
  *
- * @category Ainnomix_Etm
- * @package  Ainnomix\EtmAdminUi
- * @author   Roman Tomchak <romantomchak@gmail.com>
+ * @author Roman Tomchak <romantomchak@gmail.com>
  */
 class DataProvider extends UiDataProvider
 {

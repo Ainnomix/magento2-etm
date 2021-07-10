@@ -6,7 +6,7 @@
  * @category  Ainnomix
  * @package   Ainnomix\EtmAdminUi
  * @author    Roman Tomchak <romantomchak@gmail.com>
- * @copyright 2019 Ainnomix
+ * @copyright 2021 Ainnomix
  * @license   Open Software License ("OSL") v. 3.0
  */
 
@@ -21,9 +21,7 @@ use Magento\Framework\App\Action\HttpGetActionInterface;
 /**
  * New entity type action class
  *
- * @category Ainnomix
- * @package  Ainnomix\EtmAdminUi
- * @author   Roman Tomchak <romantomchak@gmail.com>
+ * @author Roman Tomchak <romantomchak@gmail.com>
  */
 class NewAction extends AbstractAction implements HttpGetActionInterface
 {
