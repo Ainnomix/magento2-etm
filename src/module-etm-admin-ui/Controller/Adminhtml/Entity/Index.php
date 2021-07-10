@@ -55,17 +55,6 @@ class Index extends AbstractAction implements HttpGetActionInterface
     {
         $entityType = $this->getEntityType();
 
-        $customer = $this->customerFactory->create();
-        $customer->setEmail('bebe@example.com');
-        $customer->setFirstname('Bebe');
-        $customer->setLastname('Bebe');
-        $this->customerRepository->save($customer);
-
-        $entity = $this->entityFactory->create();
-        $entity->setBebe('Bebe Value');
-        $entityId = $this->entityRepository->save($entityType, $entity);
-
-
         $resultPage = $this->resultFactory->create(ResultFactory::TYPE_PAGE);
 
         $currentMenu = $this->aclIdProvider->get($entityType);

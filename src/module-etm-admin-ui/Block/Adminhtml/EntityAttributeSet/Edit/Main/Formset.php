@@ -54,6 +54,11 @@ class Formset extends Generic
         $this->attributeSetProvider = $attributeSetProvider;
     }
 
+    /**
+     * @return Formset
+     *
+     * @SuppressWarnings(PHPMD.CamelCaseMethodName)
+     */
     protected function _prepareForm()
     {
         $entityTypeId = (int) $this->getRequest()->getParam('entity_type_id');
@@ -83,6 +88,8 @@ class Formset extends Generic
         );
         $form->setOnsubmit('return false;');
         $this->setForm($form);
+
+        return $this;
     }
 
     protected function getAttributeSet(): AttributeSetInterface

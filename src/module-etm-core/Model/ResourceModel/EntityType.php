@@ -6,7 +6,7 @@
  * @category  Ainnomix
  * @package   Ainnomix\EtmCore
  * @author    Roman Tomchak <roman@ainnomix.com>
- * @copyright 2020 Ainnomix
+ * @copyright 2021 Ainnomix
  * @license   Open Software License ("OSL") v. 3.0
  */
 
@@ -20,8 +20,7 @@ use Zend_Validate_Callback;
 /**
  * Entity type resource model class
  *
- * @category Ainnomix
- * @author   Roman Tomchak <romantomchak@gmail.com>
+ * @author Roman Tomchak <romantomchak@gmail.com>
  */
 class EntityType extends EavEntityType
 {
@@ -63,6 +62,11 @@ class EntityType extends EavEntityType
         return empty($row);
     }
 
+    /**
+     * {@inheritDoc}
+     *
+     * @SuppressWarnings(PHPMD.CamelCaseMethodName)
+     */
     protected function _getLoadSelect($field, $value, $object)
     {
         $select = parent::_getLoadSelect($field, $value, $object);

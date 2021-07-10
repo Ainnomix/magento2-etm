@@ -9,6 +9,9 @@ use Magento\Eav\Model\Entity\AbstractEntity;
 class Entity extends AbstractEntity
 {
 
+    /**
+     * @SuppressWarnings(PHPMD.CamelCaseMethodName)
+     */
     protected function _construct()
     {
         parent::_construct();

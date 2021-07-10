@@ -19,6 +19,7 @@ use Magento\Backend\Block\Widget\Form\Generic;
 use Magento\Config\Model\Config\Source\Yesno;
 use Magento\Eav\Model\Adminhtml\System\Config\Source\InputtypeFactory;
 use Magento\Framework\Data\FormFactory;
+use Magento\Framework\Exception\LocalizedException;
 use Magento\Framework\Registry;
 use Ainnomix\EtmAdminUi\Block\Adminhtml\EntityAttribute\PropertyLocker;
 use Ainnomix\EtmAdminUi\Ui\Resolver\Attribute as AttributeResolver;
@@ -69,6 +70,13 @@ class Main extends Generic
         $this->attributeResolver = $attributeResolver;
     }
 
+    /**
+     * @return Main
+     *
+     * @throws LocalizedException
+     *
+     * @SuppressWarnings(PHPMD.CamelCaseMethodName)
+     */
     protected function _prepareForm()
     {
         $attributeObject = $this->getAttributeObject();
@@ -124,6 +132,11 @@ class Main extends Generic
         return parent::_prepareForm();
     }
 
+    /**
+     * @return Main
+     *
+     * @SuppressWarnings(PHPMD.CamelCaseMethodName)
+     */
     protected function _initFormValues()
     {
         $this->getForm()->addValues($this->getAttributeObject()->getData());
@@ -131,6 +144,13 @@ class Main extends Generic
         return parent::_initFormValues();
     }
 
+    /**
+     * @param string $html
+     *
+     * @return string
+     *
+     * @SuppressWarnings(PHPMD.CamelCaseMethodName)
+     */
     protected function _afterToHtml($html)
     {
         $jsScripts = $this->getLayout()->createBlock(\Magento\Eav\Block\Adminhtml\Attribute\Edit\Js::class)

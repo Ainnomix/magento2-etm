@@ -29,6 +29,8 @@ class Labels extends Template
 
     /**
      * @var string
+     *
+     * @SuppressWarnings(PHPMD.CamelCasePropertyName)
      */
     protected $_template = 'Ainnomix_EtmAdminUi::attribute/edit/labels.phtml';
 

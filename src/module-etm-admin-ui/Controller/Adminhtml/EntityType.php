@@ -6,7 +6,7 @@
  * @category  Ainnomix
  * @package   Ainnomix\EtmAdminUi
  * @author    Roman Tomchak <roman@ainnomix.com>
- * @copyright 2020 Ainnomix
+ * @copyright 2021 Ainnomix
  * @license   Open Software License ("OSL") v. 3.0
  */
 
@@ -71,6 +71,8 @@ abstract class EntityType extends Action
      * {@inheritDoc}
      *
      * @throws NotFoundException
+     *
+     * @SuppressWarnings(PHPMD.CamelCaseMethodName)
      */
     protected function _isAllowed()
     {

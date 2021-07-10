@@ -24,6 +24,8 @@ class Edit extends Container
      * Block group name
      *
      * @var string
+     *
+     * @SuppressWarnings(PHPMD.CamelCasePropertyName)
      */
     protected $_blockGroup = 'Ainnomix_EtmAdminUi';
 
@@ -31,6 +33,8 @@ class Edit extends Container
      * Block path
      *
      * @var string
+     *
+     * @SuppressWarnings(PHPMD.CamelCasePropertyName)
      */
     protected $_controller = 'adminhtml_entityAttribute';
 

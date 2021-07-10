@@ -158,6 +158,8 @@ class EntityType extends EavEntityType implements EntityTypeInterface
 
     /**
      * {@inheritDoc}
+     *
+     * @SuppressWarnings(PHPMD.CamelCaseMethodName)
      */
     protected function _getValidationRulesBeforeSave(): EntityTypeValidator
     {

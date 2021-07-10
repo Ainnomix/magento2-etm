@@ -23,6 +23,8 @@ class Tabs extends BaseTabs
      * Configure attribute tabs
      *
      * @return void
+     *
+     * @SuppressWarnings(PHPMD.CamelCaseMethodName)
      */
     protected function _construct()
     {
@@ -33,6 +35,11 @@ class Tabs extends BaseTabs
         $this->setTitle(__('Attribute Information'));
     }
 
+    /**
+     * @return Tabs
+     *
+     * @SuppressWarnings(PHPMD.CamelCaseMethodName)
+     */
     protected function _beforeToHtml()
     {
         $this->addTab(

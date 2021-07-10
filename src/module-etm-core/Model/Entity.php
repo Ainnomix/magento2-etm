@@ -10,6 +10,9 @@ use Magento\Framework\Model\AbstractModel;
 class Entity extends AbstractModel implements EntityInterface
 {
 
+    /**
+     * @SuppressWarnings(PHPMD.CamelCaseMethodName)
+     */
     protected function _construct()
     {
         $this->_init(ResourceModel\Entity::class);

@@ -18,6 +18,7 @@ use Ainnomix\EtmAdminUi\Model\Ui\AttributeSetProvider;
 use Ainnomix\EtmAdminUi\Model\Ui\EntityTypeProvider;
 use Magento\Backend\Block\Template\Context;
 use Magento\Backend\Block\Widget\Button;
+use Magento\Framework\Exception\NoSuchEntityException;
 
 class DeleteButton extends Button
 {
@@ -54,6 +55,8 @@ class DeleteButton extends Button
 
     /**
      * Configure button
+     *
+     * @SuppressWarnings(PHPMD.CamelCaseMethodName)
      */
     protected function _construct(): void
     {
@@ -83,7 +86,9 @@ class DeleteButton extends Button
      *
      * @return string
      *
-     * @throws \Magento\Framework\Exception\NoSuchEntityException
+     * @throws NoSuchEntityException
+     *
+     * @SuppressWarnings(PHPMD.CamelCaseMethodName)
      */
     protected function _toHtml(): string
     {

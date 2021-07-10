@@ -6,7 +6,7 @@
  * @category  Ainnomix
  * @package   Ainnomix\EtmCore
  * @author    Roman Tomchak <roman@ainnomix.com>
- * @copyright 2020 Ainnomix
+ * @copyright 2021 Ainnomix
  * @license   Open Software License ("OSL") v. 3.0
  */
 
@@ -21,14 +21,15 @@ use Magento\Eav\Model\ResourceModel\Entity\Type\Collection as EavCollection;
 /**
  * Entity type collection class
  *
- * @category Ainnomix
- * @author   Roman Tomchak <romantomchak@gmail.com>
+ * @author Roman Tomchak <romantomchak@gmail.com>
  */
 class Collection extends EavCollection
 {
 
     /**
      * Configure collection
+     *
+     * @SuppressWarnings(PHPMD.CamelCaseMethodName)
      */
     protected function _construct(): void
     {

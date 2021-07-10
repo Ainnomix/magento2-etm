@@ -72,6 +72,11 @@ class Advanced extends Generic
         $this->attributeResolver = $attributeResolver;
     }
 
+    /**
+     * @return Advanced
+     *
+     * @SuppressWarnings(PHPMD.CamelCaseMethodName)
+     */
     protected function _prepareForm()
     {
         $attributeObject = $this->getAttributeObject();
@@ -245,6 +250,8 @@ class Advanced extends Generic
      * Initialize form fields values
      *
      * @return Advanced
+     *
+     * @SuppressWarnings(PHPMD.CamelCaseMethodName)
      */
     protected function _initFormValues()
     {

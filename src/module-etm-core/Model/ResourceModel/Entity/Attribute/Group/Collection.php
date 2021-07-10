@@ -21,6 +21,9 @@ use Magento\Eav\Model\ResourceModel\Entity\Attribute\Group\Collection as EavColl
 class Collection extends EavCollection
 {
 
+    /**
+     * @SuppressWarnings(PHPMD.CamelCaseMethodName)
+     */
     protected function _construct()
     {
         $this->_init(
