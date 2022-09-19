@@ -1,0 +1,38 @@
+{
+    "name": "ainnomix/etm",
+    "description": "Magento 2 Entity type manager",
+    "type": "magento2-module",
+    "license": "OSL-3.0",
+    "keywords": [
+        "magento",
+        "magento2",
+        "entity-type",
+        "entity-type-manager",
+        "etm"
+    ],
+    "homepage": "https://github.com/Ainnomix/magento2-etm",
+    "authors": [
+        {
+            "name": "Roman Tomchak",
+            "email": "romantomchak@gmail.com"
+        }
+    ],
+    "support": {
+        "issues": "https://github.com/Ainnomix/magento2-etm/issues"
+    },
+    "autoload": {
+        "files": [
+            "src/module-etm-core/registration.php",
+            "src/module-etm-admin-ui/registration.php"
+        ],
+        "psr-4": {
+            "Ainnomix\\EtmCore\\": "src/module-etm-core",
+            "Ainnomix\\EtmAdminUi\\": "src/module-etm-admin-ui"
+        }
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "1.0-dev"
+        }
+    }
+}

@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * This file is part of the Ainnomix Entity Type Manager package.
+ *
+ * Do not edit or add to this file if you wish to upgrade Entity Type Manager to newer
+ * versions in the future.
+ *
+ * @category  Ainnomix
+ * @package   Ainnomix\EtmAdminUi
+ * @author    Roman Tomchak <roman@ainnomix.com>
+ * @copyright ${YEAR} Ainnomix
+ * @license   Open Software License ("OSL") v. 3.0
+ */
+ -->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Module/etc/module.xsd">
+    <module name="Ainnomix_EtmAdminUi" >
+        <sequence>
+            <module name="Ainnomix_EtmCore"/>
+        </sequence>
+    </module>
+</config>

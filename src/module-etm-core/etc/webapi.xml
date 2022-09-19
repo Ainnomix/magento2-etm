@@ -1,0 +1,55 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * This file is part of the Ainnomix Entity Type Manager package.
+ *
+ * Do not edit or add to this file if you wish to upgrade Entity Type Manager to newer
+ * versions in the future.
+ *
+ * @category  Ainnomix
+ * @package   Ainnomix\EtmCore
+ * @author    Roman Tomchak <roman@ainnomix.com>
+ * @copyright 2022 Ainnomix
+ * @license   Open Software License ("OSL") v. 3.0
+ */
+ -->
+<routes xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Webapi:etc/webapi.xsd">
+    <!-- Entity Type -->
+    <route url="/V1/etm/entityType/:typeId" method="GET">
+        <service class="Ainnomix\EtmCore\Api\EntityTypeRepositoryInterface" method="getById"/>
+        <resources>
+            <resource ref="Ainnomix_EtmCore::management"/>
+        </resources>
+    </route>
+    <route url="/V1/etm/entityType/byCode/:typeType" method="GET">
+        <service class="Ainnomix\EtmCore\Api\EntityTypeRepositoryInterface" method="get"/>
+        <resources>
+            <resource ref="Ainnomix_EtmCore::management"/>
+        </resources>
+    </route>
+    <route url="/V1/etm/entityType/search" method="GET">
+        <service class="Ainnomix\EtmCore\Api\EntityTypeRepositoryInterface" method="getList"/>
+        <resources>
+            <resource ref="Ainnomix_EtmCore::management"/>
+        </resources>
+    </route>
+    <route url="/V1/etm/entityType" method="POST">
+        <service class="Ainnomix\EtmCore\Api\EntityTypeRepositoryInterface" method="save"/>
+        <resources>
+            <resource ref="Ainnomix_EtmCore::management"/>
+        </resources>
+    </route>
+    <route url="/V1/etm/entityType/:typeId" method="PUT">
+        <service class="Ainnomix\EtmCore\Api\EntityTypeRepositoryInterface" method="save"/>
+        <resources>
+            <resource ref="Ainnomix_EtmCore::management"/>
+        </resources>
+    </route>
+    <route url="/V1/etm/entityType/:typeId" method="DELETE">
+        <service class="Ainnomix\EtmCore\Api\EntityTypeRepositoryInterface" method="deleteById"/>
+        <resources>
+            <resource ref="Ainnomix_EtmCore::management"/>
+        </resources>
+    </route>
+</routes>
