@@ -20,7 +20,9 @@ interface EntityTypeInterface
      * String constants for property names
      */
     public const ENTITY_TYPE_ID = "entity_type_id";
+    public const ENTITY_TYPE_CODE = "entity_type_code";
     public const ENTITY_TYPE_NAME = "entity_type_name";
+    public const DEFAULT_ATTRIBUTE_SET_ID = "default_attribute_set_id";
 
     /**
      * Get entity type ID.

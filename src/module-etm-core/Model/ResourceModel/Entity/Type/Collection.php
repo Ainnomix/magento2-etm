@@ -16,9 +16,18 @@ declare(strict_types=1);
 
 namespace Ainnomix\EtmCore\Model\ResourceModel\Entity\Type;
 
+use Ainnomix\EtmCore\Model\Entity\Type;
+use Ainnomix\EtmCore\Model\ResourceModel\Entity\Type as TypeAlias;
 use Magento\Eav\Model\ResourceModel\Entity\Type\Collection as EavCollection;
 
 class Collection extends EavCollection
 {
 
+    /**
+     * Resource initialization
+     */
+    protected function _construct()
+    {
+        $this->_init(Type::class, TypeAlias::class);
+    }
 }

@@ -22,7 +22,7 @@
             <resource ref="Ainnomix_EtmCore::management"/>
         </resources>
     </route>
-    <route url="/V1/etm/entityType/byCode/:typeType" method="GET">
+    <route url="/V1/etm/entityType/byCode/:typeCode" method="GET">
         <service class="Ainnomix\EtmCore\Api\EntityTypeRepositoryInterface" method="get"/>
         <resources>
             <resource ref="Ainnomix_EtmCore::management"/>

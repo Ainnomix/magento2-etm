@@ -24,10 +24,39 @@ class Type extends EavEntityType implements EntityTypeInterface
 
     /**
      * @inheritDoc
+     *
+     * NOTE. Temporary workaround to fix compatibility issues with interface
+     */
+    public function getEntityTypeId(): ?int
+    {
+        $typeId = parent::getEntityTypeId();
+        return null !== $typeId ? (int) $typeId : null;
+    }
+
+    /**
+     * @inheritDoc
      */
     public function setEntityTypeId(int $entityTypeId): EntityTypeInterface
     {
         return $this->setData(static::ENTITY_TYPE_ID, $entityTypeId);
+    }
+
+    /**
+     * @inheritDoc
+     *
+     * NOTE. Temporary workaround to fix compatibility issues with interface
+     */
+    public function getEntityTypeCode(): ?string
+    {
+        return parent::getEntityTypeCode();
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function setEntityTypeCode(string $value): EntityTypeInterface
+    {
+        return $this->setData(static::ENTITY_TYPE_CODE, $value);
     }
 
     /**
@@ -45,5 +74,24 @@ class Type extends EavEntityType implements EntityTypeInterface
     public function setEntityTypeName(string $entityTypeName): EntityTypeInterface
     {
         return $this->setData(static::ENTITY_TYPE_NAME, $entityTypeName);
+    }
+
+    /**
+     * @inheritDoc
+     *
+     * NOTE. Temporary workaround to fix compatibility issues with interface
+     */
+    public function getDefaultAttributeSetId(): ?int
+    {
+        $setId = parent::getDefaultAttributeSetId();
+        return null !== $setId ? (int) $setId : null;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function setDefaultAttributeSetId(int $value): EntityTypeInterface
+    {
+        return $this->setData(static::DEFAULT_ATTRIBUTE_SET_ID, $value);
     }
 }
