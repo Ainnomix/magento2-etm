@@ -23,7 +23,7 @@ interface GetListInterface
     /**
      * Find entity types by given SearchCriteria
      *
-     * @param SearchCriteriaInterface $criteria
+     * @param SearchCriteriaInterface|null $criteria
      *
      * @return EntityTypeSearchResultsInterface
      */

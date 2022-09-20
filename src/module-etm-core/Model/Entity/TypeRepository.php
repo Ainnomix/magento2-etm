@@ -112,7 +112,7 @@ class TypeRepository implements EntityTypeRepositoryInterface
     /**
      * @inheritDoc
      */
-    public function getList(SearchCriteriaInterface $criteria): EntityTypeSearchResultsInterface
+    public function getList(SearchCriteriaInterface $criteria = null): EntityTypeSearchResultsInterface
     {
         return $this->commandGetList->execute($criteria);
     }

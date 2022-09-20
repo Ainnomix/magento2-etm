@@ -18,4 +18,10 @@
     <preference for="Ainnomix\EtmCore\Api\Data\EntityTypeInterface" type="Ainnomix\EtmCore\Model\Entity\Type"/>
     <preference for="Ainnomix\EtmCore\Api\Data\EntityTypeSearchResultsInterface" type="Ainnomix\EtmCore\Model\Entity\TypeSearchResults"/>
     <preference for="Ainnomix\EtmCore\Api\EntityTypeRepositoryInterface" type="Ainnomix\EtmCore\Model\Entity\TypeRepository"/>
+
+    <preference for="Ainnomix\EtmCore\Model\Entity\Type\Command\GetInterface" type="Ainnomix\EtmCore\Model\Entity\Type\Command\Get"/>
+    <preference for="Ainnomix\EtmCore\Model\Entity\Type\Command\GetByIdInterface" type="Ainnomix\EtmCore\Model\Entity\Type\Command\GetById"/>
+    <preference for="Ainnomix\EtmCore\Model\Entity\Type\Command\GetListInterface" type="Ainnomix\EtmCore\Model\Entity\Type\Command\GetList"/>
+    <preference for="Ainnomix\EtmCore\Model\Entity\Type\Command\SaveInterface" type="Ainnomix\EtmCore\Model\Entity\Type\Command\Save"/>
+    <preference for="Ainnomix\EtmCore\Model\Entity\Type\Command\DeleteByIdInterface" type="Ainnomix\EtmCore\Model\Entity\Type\Command\DeleteById"/>
 </config>

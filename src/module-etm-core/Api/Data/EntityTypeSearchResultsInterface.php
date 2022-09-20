@@ -33,5 +33,5 @@ interface EntityTypeSearchResultsInterface extends SearchResultsInterface
      *
      * @return self
      */
-    public function setItems(array $items): self;
+    public function setItems(array $items);
 }
