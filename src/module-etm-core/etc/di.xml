@@ -24,4 +24,90 @@
     <preference for="Ainnomix\EtmCore\Model\Entity\Type\Command\GetListInterface" type="Ainnomix\EtmCore\Model\Entity\Type\Command\GetList"/>
     <preference for="Ainnomix\EtmCore\Model\Entity\Type\Command\SaveInterface" type="Ainnomix\EtmCore\Model\Entity\Type\Command\Save"/>
     <preference for="Ainnomix\EtmCore\Model\Entity\Type\Command\DeleteByIdInterface" type="Ainnomix\EtmCore\Model\Entity\Type\Command\DeleteById"/>
+
+    <preference for="Ainnomix\EtmCore\Api\Data\AttributeSetInterface" type="Ainnomix\EtmCore\Model\Attribute\Set"/>
+    <preference for="Ainnomix\EtmCore\Api\AttributeSetRepositoryInterface" type="Ainnomix\EtmCore\Model\Attribute\SetRepository"/>
+
+    <preference for="Ainnomix\EtmCore\Api\Data\AttributeGroupInterface" type="Ainnomix\EtmCore\Model\Attribute\Group"/>
+    <preference for="Ainnomix\EtmCore\Api\AttributeGroupRepositoryInterface" type="Ainnomix\EtmCore\Model\Attribute\GroupRepository"/>
+
+    <type name="Ainnomix\EtmCore\Model\Entity\TypeRepository">
+        <arguments>
+            <argument name="commandGet" xsi:type="object">Ainnomix\EtmCore\Model\Entity\Type\Command\Get\Proxy</argument>
+            <argument name="commandGetById" xsi:type="object">Ainnomix\EtmCore\Model\Entity\Type\Command\GetById\Proxy</argument>
+            <argument name="commandSave" xsi:type="object">Ainnomix\EtmCore\Model\Entity\Type\Command\Save\Proxy</argument>
+            <argument name="commandDeleteById" xsi:type="object">Ainnomix\EtmCore\Model\Entity\Type\Command\DeleteById\Proxy</argument>
+            <argument name="commandGetList"xsi:type="object">Ainnomix\EtmCore\Model\Entity\Type\Command\GetList\Proxy</argument>
+        </arguments>
+    </type>
+
+    <!-- Entity type setup configuration -->
+    <type name="Ainnomix\EtmCore\Setup\EntityTypeSetup">
+        <arguments>
+            <argument name="typedTablesSetupPool" xsi:type="array">
+                <item name="varchar" xsi:type="object">Ainnomix\EtmCore\Setup\EntityTypeSetup\VarcharTableSetup</item>
+                <item name="int" xsi:type="object">Ainnomix\EtmCore\Setup\EntityTypeSetup\IntTableSetup</item>
+                <item name="datetime" xsi:type="object">Ainnomix\EtmCore\Setup\EntityTypeSetup\DatetimeTableSetup</item>
+                <item name="decimal" xsi:type="object">Ainnomix\EtmCore\Setup\EntityTypeSetup\DecimalTableSetup</item>
+                <item name="text" xsi:type="object">Ainnomix\EtmCore\Setup\EntityTypeSetup\TextTableSetup</item>
+            </argument>
+        </arguments>
+    </type>
+    <virtualType name="Ainnomix\EtmCore\Setup\EntityTypeSetup\VarcharTableSetup" type="Ainnomix\EtmCore\Setup\EntityTypeSetup\TypeTableSetup">
+        <arguments>
+            <argument name="tableSuffix" xsi:type="string">varchar</argument>
+            <argument name="columnType" xsi:type="const">Magento\Framework\DB\Ddl\Table::TYPE_TEXT</argument>
+            <argument name="options" xsi:type="array">
+                <item name="length" xsi:type="number">255</item>
+            </argument>
+        </arguments>
+    </virtualType>
+    <virtualType name="Ainnomix\EtmCore\Setup\EntityTypeSetup\IntTableSetup" type="Ainnomix\EtmCore\Setup\EntityTypeSetup\TypeTableSetup">
+        <arguments>
+            <argument name="tableSuffix" xsi:type="string">int</argument>
+            <argument name="columnType" xsi:type="const">Magento\Framework\DB\Ddl\Table::TYPE_INTEGER</argument>
+            <argument name="options" xsi:type="array">
+                <item name="unsigned" xsi:type="boolean">false</item>
+                <item name="nullable" xsi:type="boolean">false</item>
+                <item name="default" xsi:type="number">0</item>
+            </argument>
+        </arguments>
+    </virtualType>
+    <virtualType name="Ainnomix\EtmCore\Setup\EntityTypeSetup\DatetimeTableSetup" type="Ainnomix\EtmCore\Setup\EntityTypeSetup\TypeTableSetup">
+        <arguments>
+            <argument name="tableSuffix" xsi:type="string">datetime</argument>
+            <argument name="columnType" xsi:type="const">Magento\Framework\DB\Ddl\Table::TYPE_DATETIME</argument>
+        </arguments>
+    </virtualType>
+    <virtualType name="Ainnomix\EtmCore\Setup\EntityTypeSetup\DecimalTableSetup" type="Ainnomix\EtmCore\Setup\EntityTypeSetup\TypeTableSetup">
+        <arguments>
+            <argument name="tableSuffix" xsi:type="string">decimal</argument>
+            <argument name="columnType" xsi:type="const">Magento\Framework\DB\Ddl\Table::TYPE_DECIMAL</argument>
+            <argument name="options" xsi:type="array">
+                <item name="scale" xsi:type="number">4</item>
+                <item name="precision" xsi:type="number">12</item>
+                <item name="nullable" xsi:type="boolean">false</item>
+                <item name="default" xsi:type="number">0.0</item>
+            </argument>
+        </arguments>
+    </virtualType>
+    <virtualType name="Ainnomix\EtmCore\Setup\EntityTypeSetup\TextTableSetup" type="Ainnomix\EtmCore\Setup\EntityTypeSetup\TypeTableSetup">
+        <arguments>
+            <argument name="tableSuffix" xsi:type="string">text</argument>
+            <argument name="columnType" xsi:type="const">Magento\Framework\DB\Ddl\Table::TYPE_TEXT</argument>
+            <argument name="indexes" xsi:type="array">
+                <item name="attributeValue" xsi:type="array">
+                    <item name="columns" xsi:type="array">
+                        <item name="attribute_id" xsi:type="array">
+                            <item name="name" xsi:type="string">attribute_id</item>
+                        </item>
+                        <item name="value" xsi:type="array">
+                            <item name="name" xsi:type="string">value</item>
+                            <item name="size" xsi:type="number">255</item>
+                        </item>
+                    </item>
+                </item>
+            </argument>
+        </arguments>
+    </virtualType>
 </config>

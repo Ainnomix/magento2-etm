@@ -30,31 +30,6 @@ class TypeRepository implements EntityTypeRepositoryInterface
 {
 
     /**
-     * @var GetInterface
-     */
-    protected GetInterface $commandGet;
-
-    /**
-     * @var GetByIdInterface
-     */
-    protected GetByIdInterface $commandGetById;
-
-    /**
-     * @var SaveInterface
-     */
-    protected SaveInterface $commandSave;
-
-    /**
-     * @var DeleteByIdInterface
-     */
-    protected DeleteByIdInterface $commandDeleteById;
-
-    /**
-     * @var GetListInterface
-     */
-    protected GetListInterface $commandGetList;
-
-    /**
      * Repository dependencies configuration
      *
      * @param GetInterface $commandGet
@@ -64,17 +39,12 @@ class TypeRepository implements EntityTypeRepositoryInterface
      * @param GetListInterface $commandGetList
      */
     public function __construct(
-        GetInterface $commandGet,
-        GetByIdInterface $commandGetById,
-        SaveInterface $commandSave,
-        DeleteByIdInterface $commandDeleteById,
-        GetListInterface $commandGetList
+        protected GetInterface $commandGet,
+        protected GetByIdInterface $commandGetById,
+        protected SaveInterface $commandSave,
+        protected DeleteByIdInterface $commandDeleteById,
+        protected GetListInterface $commandGetList
     ) {
-        $this->commandGet = $commandGet;
-        $this->commandGetById = $commandGetById;
-        $this->commandSave = $commandSave;
-        $this->commandDeleteById = $commandDeleteById;
-        $this->commandGetList = $commandGetList;
     }
 
     /**

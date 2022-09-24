@@ -25,25 +25,13 @@ class GetById implements GetByIdInterface
 {
 
     /**
-     * @var EntityTypeInterfaceFactory
-     */
-    protected EntityTypeInterfaceFactory $entityTypeFactory;
-
-    /**
-     * @var Resource
-     */
-    protected Resource $resource;
-
-    /**
      * @param EntityTypeInterfaceFactory $entityTypeFactory
      * @param Resource $resource
      */
     public function __construct(
-        EntityTypeInterfaceFactory $entityTypeFactory,
-        Resource $resource
+        protected EntityTypeInterfaceFactory $entityTypeFactory,
+        protected Resource $resource
     ) {
-        $this->entityTypeFactory = $entityTypeFactory;
-        $this->resource = $resource;
     }
 
     /**

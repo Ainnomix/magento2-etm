@@ -27,41 +27,17 @@ class GetList implements GetListInterface
 {
 
     /**
-     * @var CollectionProcessorInterface
-     */
-    protected CollectionProcessorInterface $collectionProcessor;
-
-    /**
-     * @var EntityTypeSearchResultsInterfaceFactory
-     */
-    protected EntityTypeSearchResultsInterfaceFactory $searchResultsFactory;
-
-    /**
-     * @var CollectionFactory
-     */
-    protected CollectionFactory $collectionFactory;
-
-    /**
-     * @var SearchCriteriaBuilder
-     */
-    protected SearchCriteriaBuilder $searchCriteriaBuilder;
-
-    /**
      * @param CollectionProcessorInterface $collectionProcessor
      * @param EntityTypeSearchResultsInterfaceFactory $searchResultsFactory
      * @param CollectionFactory $collectionFactory
      * @param SearchCriteriaBuilder $searchCriteriaBuilder
      */
     public function __construct(
-        CollectionProcessorInterface $collectionProcessor,
-        EntityTypeSearchResultsInterfaceFactory $searchResultsFactory,
-        CollectionFactory $collectionFactory,
-        SearchCriteriaBuilder $searchCriteriaBuilder
+        protected CollectionProcessorInterface $collectionProcessor,
+        protected EntityTypeSearchResultsInterfaceFactory $searchResultsFactory,
+        protected CollectionFactory $collectionFactory,
+        protected SearchCriteriaBuilder $searchCriteriaBuilder
     ) {
-        $this->collectionProcessor = $collectionProcessor;
-        $this->searchResultsFactory = $searchResultsFactory;
-        $this->collectionFactory = $collectionFactory;
-        $this->searchCriteriaBuilder = $searchCriteriaBuilder;
     }
 
     /**
