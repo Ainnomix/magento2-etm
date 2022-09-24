@@ -43,7 +43,9 @@ class Get implements GetInterface
         $this->resource->loadByCode($entityType, $typeCode);
 
         if ($entityType->getEntityTypeId() === null) {
-            throw new NoSuchEntityException(__('No such entity type with code "%1"', $typeCode));
+            throw new NoSuchEntityException(
+                __('There is no entity type with code "%1". Verify and try again.', $typeCode)
+            );
         }
 
         return $entityType;

@@ -37,7 +37,7 @@
             <argument name="commandGetById" xsi:type="object">Ainnomix\EtmCore\Model\Entity\Type\Command\GetById\Proxy</argument>
             <argument name="commandSave" xsi:type="object">Ainnomix\EtmCore\Model\Entity\Type\Command\Save\Proxy</argument>
             <argument name="commandDeleteById" xsi:type="object">Ainnomix\EtmCore\Model\Entity\Type\Command\DeleteById\Proxy</argument>
-            <argument name="commandGetList"xsi:type="object">Ainnomix\EtmCore\Model\Entity\Type\Command\GetList\Proxy</argument>
+            <argument name="commandGetList" xsi:type="object">Ainnomix\EtmCore\Model\Entity\Type\Command\GetList\Proxy</argument>
         </arguments>
     </type>
 

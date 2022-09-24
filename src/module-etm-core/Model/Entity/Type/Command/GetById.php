@@ -43,7 +43,9 @@ class GetById implements GetByIdInterface
         $this->resource->load($entityType, $typeId);
 
         if ($entityType->getEntityTypeId() === null) {
-            throw new NoSuchEntityException(__('No such entity type with ID "%1"', $typeId));
+            throw new NoSuchEntityException(
+                __('There is no entity type with ID "%1". Verify and try again.', $typeId)
+            );
         }
 
         return $entityType;
