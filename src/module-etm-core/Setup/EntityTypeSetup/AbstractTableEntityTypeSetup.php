@@ -16,48 +16,28 @@ declare(strict_types=1);
 
 namespace Ainnomix\EtmCore\Setup\EntityTypeSetup;
 
-use Ainnomix\EtmCore\Api\Data\EntityTypeInterface;
 use Ainnomix\EtmCore\Model\ResourceModel\Entity\TableNameResolver;
-use Magento\Framework\App\ResourceConnection;
+use Ainnomix\EtmCore\Setup\EntityTypeSetupInterface;
 use Magento\Framework\DB\Adapter\AdapterInterface;
-use Magento\Framework\DB\Ddl\Table;
+use Magento\Framework\Setup\ModuleDataSetupInterface;
 use Magento\Framework\Stdlib\StringUtils;
-use Zend_Db_Exception;
 
-abstract class AbstractTableSetup
+abstract class AbstractTableEntityTypeSetup implements EntityTypeSetupInterface
 {
 
     /**
      * Class dependencies and configuration
      *
-     * @param ResourceConnection $resources
+     * @param ModuleDataSetupInterface $setup
      * @param StringUtils $string
      * @param TableNameResolver $tableNameResolver
-     * @param string|null $connectionName
      */
     public function __construct(
-        protected ResourceConnection $resources,
+        protected ModuleDataSetupInterface $setup,
         protected StringUtils $string,
-        protected TableNameResolver $tableNameResolver,
-        protected string|null $connectionName = null
+        protected TableNameResolver $tableNameResolver
     ) {
     }
-
-    /**
-     * Create database table
-     *
-     * @param EntityTypeInterface $entityType
-     *
-     * @throws Zend_Db_Exception
-     */
-    abstract public function createTable(EntityTypeInterface $entityType): void;
-
-    /**
-     * Drop database table
-     *
-     * @param EntityTypeInterface $entityType
-     */
-    abstract public function dropTable(EntityTypeInterface $entityType): void;
 
     /**
      * Get current DB connection
@@ -66,6 +46,6 @@ abstract class AbstractTableSetup
      */
     protected function getConnection(): AdapterInterface
     {
-        return $this->resources->getConnection($this->connectionName);
+        return $this->setup->getConnection();
     }
 }

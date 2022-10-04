@@ -18,16 +18,19 @@ namespace Ainnomix\EtmCore\Setup\EntityTypeSetup;
 
 use Ainnomix\EtmCore\Api\Data\EntityTypeInterface;
 use Magento\Framework\DB\Ddl\Table;
+use Zend_Db_Exception;
 
-class MainTableSetup extends AbstractTableSetup
+class MainTableSetup extends AbstractTableEntityTypeSetup
 {
 
     /**
      * @inheritDoc
+     *
+     * @throws Zend_Db_Exception
      */
-    public function createTable(EntityTypeInterface $entityType): void
+    public function install(EntityTypeInterface $entity): void
     {
-        $tableName = $this->tableNameResolver->resolve($entityType);
+        $tableName = $this->tableNameResolver->resolve($entity);
 
         $table = $this->getConnection()->newTable($tableName)
             ->setComment($this->string->upperCaseWords($tableName, '_', ' '));
@@ -85,9 +88,9 @@ class MainTableSetup extends AbstractTableSetup
     /**
      * @inheritDoc
      */
-    public function dropTable(EntityTypeInterface $entityType): void
+    public function uninstall(EntityTypeInterface $entity): void
     {
-        $tableName = $this->tableNameResolver->resolve($entityType);
+        $tableName = $this->tableNameResolver->resolve($entity);
 
         $this->getConnection()->dropTable($tableName);
     }

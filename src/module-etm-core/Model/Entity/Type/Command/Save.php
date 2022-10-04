@@ -16,14 +16,13 @@ declare(strict_types=1);
 
 namespace Ainnomix\EtmCore\Model\Entity\Type\Command;
 
-use Ainnomix\EtmCore\Api\AttributeGroupRepositoryInterface;
-use Ainnomix\EtmCore\Api\AttributeSetRepositoryInterface;
-use Ainnomix\EtmCore\Api\Data\AttributeGroupInterfaceFactory;
-use Ainnomix\EtmCore\Api\Data\AttributeSetInterfaceFactory;
 use Ainnomix\EtmCore\Api\Data\EntityTypeInterface;
+use Ainnomix\EtmCore\Model\Entity;
 use Ainnomix\EtmCore\Model\ResourceModel\Entity\TableNameResolver;
 use Ainnomix\EtmCore\Model\ResourceModel\Entity\Type as Resource;
-use Ainnomix\EtmCore\Setup\EntityTypeSetup;
+use Ainnomix\EtmCore\Setup\EntityTypeSetupInterface;
+use Exception;
+use Magento\Eav\Model\Config;
 use Magento\Framework\Exception\CouldNotSaveException;
 use Magento\Framework\Model\ResourceModel\Db\TransactionManagerInterface;
 
@@ -33,24 +32,20 @@ class Save implements SaveInterface
     /**
      * Class dependencies
      *
-     * @param AttributeSetRepositoryInterface $attributeSetRepository
-     * @param AttributeGroupRepositoryInterface $attributeGroupRepository
-     * @param AttributeSetInterfaceFactory $attributeSetFactory
-     * @param AttributeGroupInterfaceFactory $attributeGroupFactory
      * @param TransactionManagerInterface $transactionManager
      * @param TableNameResolver $tableNameResolver
      * @param Resource $resource
-     * @param EntityTypeSetup $entityTypeSetup
+     * @param EntityTypeSetupInterface $typeDataSetup
+     * @param EntityTypeSetupInterface $typeTableSetup
+     * @param Config $eavConfig
      */
     public function __construct(
-        protected AttributeSetRepositoryInterface $attributeSetRepository,
-        protected AttributeGroupRepositoryInterface $attributeGroupRepository,
-        protected AttributeSetInterfaceFactory $attributeSetFactory,
-        protected AttributeGroupInterfaceFactory $attributeGroupFactory,
         protected TransactionManagerInterface $transactionManager,
         protected TableNameResolver $tableNameResolver,
         protected Resource $resource,
-        protected EntityTypeSetup $entityTypeSetup
+        protected EntityTypeSetupInterface $typeDataSetup,
+        protected EntityTypeSetupInterface $typeTableSetup,
+        protected Config $eavConfig
     ) {
     }
 
@@ -67,18 +62,20 @@ class Save implements SaveInterface
             $this->resource->save($entityType);
 
             if ($creationFlag) {
-                $this->createDefaultSetAndGroup($entityType);
+                $this->typeDataSetup->install($entityType);
             }
 
             $this->transactionManager->commit();
 
             if ($creationFlag) {
-                $this->entityTypeSetup->createEntityTypeTables($entityType);
+                $this->typeTableSetup->install($entityType);
             }
-        } catch (\Exception $exception) {
+        } catch (Exception $exception) {
             $this->transactionManager->rollBack();
 
             throw new CouldNotSaveException(__('Could not save entity type'), $exception);
+        } finally {
+            $this->eavConfig->clear();
         }
 
         return $entityType;
@@ -91,31 +88,7 @@ class Save implements SaveInterface
      */
     private function populateDefaultValues(EntityTypeInterface $entityType): void
     {
-        $entityType->setEntityModel(\Magento\Eav\Model\Entity::class);
+        $entityType->setEntityModel(Entity::class);
         $entityType->setEntityTable($this->tableNameResolver->resolve($entityType));
-    }
-
-    /**
-     * Create default entity type attribute set and attribute group
-     *
-     * @param EntityTypeInterface $entityType
-     */
-    private function createDefaultSetAndGroup(EntityTypeInterface $entityType): void
-    {
-        $attributeSet = $this->attributeSetFactory->create();
-        $attributeSet->setAttributeSetName('Default');
-        $attributeSet->setEntityTypeId($entityType->getEntityTypeId());
-        $attributeSet->setSortOrder(1);
-
-        $this->attributeSetRepository->save($attributeSet);
-
-        $entityType->setDefaultAttributeSetId((int) $attributeSet->getAttributeSetId());
-        $this->resource->save($entityType);
-
-        $attributeGroup = $this->attributeGroupFactory->create(['data' => ['sort_order' => 1]]);
-        $attributeGroup->setAttributeSetId($attributeSet->getAttributeSetId());
-        $attributeGroup->setAttributeGroupName('General');
-
-        $this->attributeGroupRepository->save($attributeGroup);
     }
 }

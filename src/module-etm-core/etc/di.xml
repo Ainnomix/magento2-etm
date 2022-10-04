@@ -25,6 +25,15 @@
     <preference for="Ainnomix\EtmCore\Model\Entity\Type\Command\SaveInterface" type="Ainnomix\EtmCore\Model\Entity\Type\Command\Save"/>
     <preference for="Ainnomix\EtmCore\Model\Entity\Type\Command\DeleteByIdInterface" type="Ainnomix\EtmCore\Model\Entity\Type\Command\DeleteById"/>
 
+    <preference for="Ainnomix\EtmCore\Api\Data\EntityInterface" type="Ainnomix\EtmCore\Model\Entity"/>
+    <preference for="Ainnomix\EtmCore\Api\Data\EntitySearchResultsInterface" type="Ainnomix\EtmCore\Model\EntitySearchResults"/>
+    <preference for="Ainnomix\EtmCore\Api\EntityRepositoryInterface" type="Ainnomix\EtmCore\Model\EntityRepository"/>
+
+    <preference for="Ainnomix\EtmCore\Model\Entity\Command\GetByIdInterface" type="Ainnomix\EtmCore\Model\Entity\Command\GetById"/>
+    <preference for="Ainnomix\EtmCore\Model\Entity\Command\GetListInterface" type="Ainnomix\EtmCore\Model\Entity\Command\GetList"/>
+    <preference for="Ainnomix\EtmCore\Model\Entity\Command\SaveInterface" type="Ainnomix\EtmCore\Model\Entity\Command\Save"/>
+    <preference for="Ainnomix\EtmCore\Model\Entity\Command\DeleteByIdInterface" type="Ainnomix\EtmCore\Model\Entity\Command\DeleteById"/>
+
     <preference for="Ainnomix\EtmCore\Api\Data\AttributeSetInterface" type="Ainnomix\EtmCore\Model\Attribute\Set"/>
     <preference for="Ainnomix\EtmCore\Api\AttributeSetRepositoryInterface" type="Ainnomix\EtmCore\Model\Attribute\SetRepository"/>
 
@@ -33,18 +42,41 @@
 
     <type name="Ainnomix\EtmCore\Model\Entity\TypeRepository">
         <arguments>
-            <argument name="commandGet" xsi:type="object">Ainnomix\EtmCore\Model\Entity\Type\Command\Get\Proxy</argument>
-            <argument name="commandGetById" xsi:type="object">Ainnomix\EtmCore\Model\Entity\Type\Command\GetById\Proxy</argument>
-            <argument name="commandSave" xsi:type="object">Ainnomix\EtmCore\Model\Entity\Type\Command\Save\Proxy</argument>
-            <argument name="commandDeleteById" xsi:type="object">Ainnomix\EtmCore\Model\Entity\Type\Command\DeleteById\Proxy</argument>
-            <argument name="commandGetList" xsi:type="object">Ainnomix\EtmCore\Model\Entity\Type\Command\GetList\Proxy</argument>
+            <argument name="commandGet" xsi:type="object">Ainnomix\EtmCore\Model\Entity\Type\Command\GetInterface\Proxy</argument>
+            <argument name="commandGetById" xsi:type="object">Ainnomix\EtmCore\Model\Entity\Type\Command\GetByIdInterface\Proxy</argument>
+            <argument name="commandSave" xsi:type="object">Ainnomix\EtmCore\Model\Entity\Type\Command\SaveInterface\Proxy</argument>
+            <argument name="commandDeleteById" xsi:type="object">Ainnomix\EtmCore\Model\Entity\Type\Command\DeleteByIdInterface\Proxy</argument>
+            <argument name="commandGetList" xsi:type="object">Ainnomix\EtmCore\Model\Entity\Type\Command\GetListInterface\Proxy</argument>
+        </arguments>
+    </type>
+    <type name="Ainnomix\EtmCore\Model\Entity\Type\Command\Save">
+        <arguments>
+            <argument name="typeDataSetup" xsi:type="object">Ainnomix\EtmCore\Setup\EntityTypeDataSetup</argument>
+            <argument name="typeTableSetup" xsi:type="object">Ainnomix\EtmCore\Setup\EntityTypeTableSetup</argument>
+        </arguments>
+    </type>
+
+    <type name="Ainnomix\EtmCore\Model\EntityRepository">
+        <arguments>
+            <argument name="commandGetById" xsi:type="object">Ainnomix\EtmCore\Model\Entity\Command\GetByIdInterface\Proxy</argument>
+            <argument name="commandSave" xsi:type="object">Ainnomix\EtmCore\Model\Entity\Command\SaveInterface\Proxy</argument>
+            <argument name="commandDeleteById" xsi:type="object">Ainnomix\EtmCore\Model\Entity\Command\DeleteByIdInterface\Proxy</argument>
+            <argument name="commandGetList" xsi:type="object">Ainnomix\EtmCore\Model\Entity\Command\GetListInterface\Proxy</argument>
         </arguments>
     </type>
 
     <!-- Entity type setup configuration -->
-    <type name="Ainnomix\EtmCore\Setup\EntityTypeSetup">
+    <virtualType name="Ainnomix\EtmCore\Setup\EntityTypeDataSetup" type="Ainnomix\EtmCore\Setup\EntityTypeSetupPool">
         <arguments>
-            <argument name="typedTablesSetupPool" xsi:type="array">
+            <argument name="setupPool" xsi:type="array">
+                <item name="attributeSetGroup" xsi:type="object">Ainnomix\EtmCore\Setup\EntityTypeSetup\AttributeSetGroupSetup</item>
+            </argument>
+        </arguments>
+    </virtualType>
+    <virtualType name="Ainnomix\EtmCore\Setup\EntityTypeTableSetup" type="Ainnomix\EtmCore\Setup\EntityTypeSetupPool">
+        <arguments>
+            <argument name="setupPool" xsi:type="array">
+                <item name="entity" xsi:type="object">Ainnomix\EtmCore\Setup\EntityTypeSetup\MainTableSetup</item>
                 <item name="varchar" xsi:type="object">Ainnomix\EtmCore\Setup\EntityTypeSetup\VarcharTableSetup</item>
                 <item name="int" xsi:type="object">Ainnomix\EtmCore\Setup\EntityTypeSetup\IntTableSetup</item>
                 <item name="datetime" xsi:type="object">Ainnomix\EtmCore\Setup\EntityTypeSetup\DatetimeTableSetup</item>
@@ -52,7 +84,7 @@
                 <item name="text" xsi:type="object">Ainnomix\EtmCore\Setup\EntityTypeSetup\TextTableSetup</item>
             </argument>
         </arguments>
-    </type>
+    </virtualType>
     <virtualType name="Ainnomix\EtmCore\Setup\EntityTypeSetup\VarcharTableSetup" type="Ainnomix\EtmCore\Setup\EntityTypeSetup\TypeTableSetup">
         <arguments>
             <argument name="tableSuffix" xsi:type="string">varchar</argument>

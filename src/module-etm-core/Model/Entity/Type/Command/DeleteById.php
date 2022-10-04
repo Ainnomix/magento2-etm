@@ -25,6 +25,13 @@ use Magento\Framework\Exception\NoSuchEntityException;
 class DeleteById implements DeleteByIdInterface
 {
 
+    /**
+     * Class dependencies
+     *
+     * @param EntityTypeInterfaceFactory $entityTypeFactory
+     * @param EntityTypeSetup $entityTypeSetup
+     * @param Resource $resource
+     */
     public function __construct(
         protected EntityTypeInterfaceFactory $entityTypeFactory,
         protected EntityTypeSetup $entityTypeSetup,

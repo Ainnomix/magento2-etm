@@ -16,6 +16,7 @@ namespace Ainnomix\EtmCore\Api;
 
 use Ainnomix\EtmCore\Api\Data\EntityTypeInterface;
 use Ainnomix\EtmCore\Api\Data\EntityTypeSearchResultsInterface;
+use Magento\Framework\Api\SearchCriteriaInterface;
 
 /**
  * Entity type repository interface.
@@ -77,5 +78,5 @@ interface EntityTypeRepositoryInterface
      *
      * @throw \Magento\Framework\Exception\LocalizedException
      */
-    public function getList(\Magento\Framework\Api\SearchCriteriaInterface $criteria = null): EntityTypeSearchResultsInterface;
+    public function getList(SearchCriteriaInterface $criteria = null): EntityTypeSearchResultsInterface;
 }

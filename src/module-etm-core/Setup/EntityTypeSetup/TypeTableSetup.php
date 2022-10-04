@@ -18,12 +18,13 @@ namespace Ainnomix\EtmCore\Setup\EntityTypeSetup;
 
 use Ainnomix\EtmCore\Api\Data\EntityTypeInterface;
 use Ainnomix\EtmCore\Model\ResourceModel\Entity\TableNameResolver;
-use Magento\Framework\App\ResourceConnection;
 use Magento\Framework\DB\Adapter\AdapterInterface;
 use Magento\Framework\DB\Ddl\Table;
+use Magento\Framework\Setup\ModuleDataSetupInterface;
 use Magento\Framework\Stdlib\StringUtils;
+use Zend_Db_Exception;
 
-class TypeTableSetup extends AbstractTableSetup
+class TypeTableSetup extends AbstractTableEntityTypeSetup
 {
 
     /**
@@ -56,30 +57,27 @@ class TypeTableSetup extends AbstractTableSetup
     /**
      * Class dependencies and configuration
      *
-     * @param ResourceConnection $resources
+     * @param ModuleDataSetupInterface $setup
      * @param StringUtils $string
      * @param TableNameResolver $tableNameResolver
      * @param string $tableSuffix
      * @param string $columnType
      * @param array $options
      * @param array|null $indexes
-     * @param string|null $connectionName
      */
     public function __construct(
-        ResourceConnection $resources,
+        ModuleDataSetupInterface $setup,
         StringUtils $string,
         TableNameResolver $tableNameResolver,
         protected string $tableSuffix,
         protected string $columnType,
         protected array $options = [],
-        array $indexes = null,
-        string $connectionName = null
+        array $indexes = null
     ) {
         parent::__construct(
-            $resources,
+            $setup,
             $string,
-            $tableNameResolver,
-            $connectionName
+            $tableNameResolver
         );
 
         if (is_array($indexes)) {
@@ -89,10 +87,12 @@ class TypeTableSetup extends AbstractTableSetup
 
     /**
      * @inheritDoc
+     *
+     * @throws Zend_Db_Exception
      */
-    public function createTable(EntityTypeInterface $entityType): void
+    public function install(EntityTypeInterface $entity): void
     {
-        $tableName = $this->tableNameResolver->resolve($entityType);
+        $tableName = $this->tableNameResolver->resolve($entity);
         $typeTableName = sprintf('%s_%s', $tableName, $this->tableSuffix);
 
         $table = $this->getConnection()->newTable($typeTableName)
@@ -212,9 +212,9 @@ class TypeTableSetup extends AbstractTableSetup
     /**
      * @inheritDoc
      */
-    public function dropTable(EntityTypeInterface $entityType): void
+    public function uninstall(EntityTypeInterface $entity): void
     {
-        $tableName = $this->tableNameResolver->resolve($entityType);
+        $tableName = $this->tableNameResolver->resolve($entity);
         $typeTableName = sprintf('%s_%s', $tableName, $this->tableSuffix);
 
         $this->getConnection()->dropTable($typeTableName);

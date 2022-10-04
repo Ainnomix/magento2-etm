@@ -16,20 +16,20 @@ namespace Ainnomix\EtmCore\Api\Data;
 
 use Magento\Framework\Api\SearchResultsInterface;
 
-interface EntityTypeSearchResultsInterface extends SearchResultsInterface
+interface EntitySearchResultsInterface extends SearchResultsInterface
 {
 
     /**
-     * Get entity types list.
+     * Get entities list.
      *
-     * @return \Ainnomix\EtmCore\Api\Data\EntityTypeInterface[]
+     * @return \Ainnomix\EtmCore\Api\Data\EntityInterface[]
      */
     public function getItems();
 
     /**
-     * Set entity types list.
+     * Set entities list.
      *
-     * @param \Ainnomix\EtmCore\Api\Data\EntityTypeInterface[] $items
+     * @param \Ainnomix\EtmCore\Api\Data\EntityInterface[] $items
      *
      * @return self
      */
